@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "my-expo-app",
-    "slug": "my-expo-app",
+    "name": "kid-go",
+    "slug": "kid-go",
     "version": "1.0.0",
-    "scheme": "my-expo-app",
+    "scheme": "kid-go",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -24,7 +24,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kid-go"
     },
     "android": {
       "adaptiveIcon": {

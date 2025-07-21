@@ -2,7 +2,7 @@
 // It is safe to delete this file as it does not affect the functionality of your application.
 {
   "cesVersion": "2.18.6",
-  "projectName": "my-expo-app",
+  "projectName": "kid-go",
   "packages": [
     {
       "name": "nativewindui",
