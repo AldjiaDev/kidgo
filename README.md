@@ -1,6 +1,6 @@
-# Kid Go App
+# Kid GO App
 
-> This is a React Native application for Kid Go, a collection of activities for families.
+> This is a React Native application for Kid GO, a collection of activities for families.
 
 ## Getting Started
 

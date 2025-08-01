@@ -11,6 +11,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@bacons/apple-colors": "^0.0.8",
     "@expo/react-native-action-sheet": "^4.1.1",
     "@expo/vector-icons": "^14.0.0",
     "@gorhom/bottom-sheet": "^4.6.4",
@@ -48,7 +49,8 @@
     "react-native-screens": "~4.11.1",
     "react-native-uitextview": "2.0.0-rc.10",
     "react-native-web": "^0.20.0",
-    "tailwind-merge": "^2.2.1"
+    "tailwind-merge": "^2.2.1",
+    "vaul": "^1.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
