@@ -17,8 +17,6 @@ import { Drawer } from "vaul";
 
 import modalStyles from "./modal.module.css";
 
-import * as AC from "@bacons/apple-colors";
-
 /** Extend NativeStackNavigationOptions with extra sheet/detent props */
 type MyModalStackNavigationOptions = NativeStackNavigationOptions & {
   presentation?:
@@ -194,8 +192,7 @@ function MyModalStackView({
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          backgroundColor:
-                            AC.systemGroupedBackground as unknown as string,
+                          backgroundColor: "hsl(var(--background))",
                         }}
                       >
                         <div
@@ -203,7 +200,7 @@ function MyModalStackView({
                             width: 36,
                             height: 4,
                             borderRadius: 2,
-                            backgroundColor: AC.separator as unknown as string,
+                            backgroundColor: "hsl(var(--muted))",
                           }}
                         />
                       </div>

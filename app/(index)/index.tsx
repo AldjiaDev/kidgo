@@ -5,14 +5,12 @@ import { ScrollView, View } from "react-native";
 // import { BodyScrollView } from "@/components/ui/BodyScrollView";
 // import { renderSearchContents } from "@/functions/render-search";
 // import { useHeaderSearch } from "@/hooks/useHeaderSearch";
-import * as AC from "@bacons/apple-colors";
 import React from "react";
 
 const POSTER_WIDTH = 140;
 const POSTER_HEIGHT = 210;
 
 export default function HomeScreen() {
-  const text = "Search"; 
   // const text = useHeaderSearch({
   //   placeholder: "Shows, Movies, and More",
   // });
@@ -54,65 +52,60 @@ function SkeletonItem() {
   return (
     <View style={{ marginHorizontal: 4 }}>
       <View
+        className="bg-background rounded-xl overflow-hidden"
         style={{
           width: POSTER_WIDTH,
-          backgroundColor: AC.secondarySystemBackground,
-        borderRadius: 12,
-        overflow: "hidden",
-      }}
-    >
-      <View
-        style={{
-          width: POSTER_WIDTH,
-          height: POSTER_HEIGHT,
-          borderRadius: 12,
-          backgroundColor: AC.systemGray5,
         }}
-      />
-      <View style={{ padding: 8, gap: 4 }}>
+      >
         <View
+          className="bg-muted rounded-xl"
           style={{
-            height: 14,
-            width: "80%",
-            backgroundColor: AC.systemGray5,
-            borderRadius: 4,
+            width: POSTER_WIDTH,
+            height: POSTER_HEIGHT,
           }}
         />
-        <View
-          style={{
-            height: 12,
-            width: "30%",
-            backgroundColor: AC.systemGray5,
-            borderRadius: 4,
-          }}
-        />
+        <View style={{ padding: 8, gap: 4 }}>
+          <View
+            className="bg-muted rounded"
+            style={{
+              height: 14,
+              width: "80%",
+            }}
+          />
+          <View
+            className="bg-muted rounded"
+            style={{
+              height: 12,
+              width: "30%",
+            }}
+          />
+        </View>
       </View>
     </View>
-  </View>
-);}
+  );
+}
 
 function SkeletonSection() {
   return (
     <View>
       <View
+        className="bg-muted rounded"
         style={{
           width: 100,
           height: 20,
-        backgroundColor: AC.systemGray5,
-        borderRadius: 4,
-        marginBottom: 12,
-        marginLeft: 16,
-      }}
-    />
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ paddingHorizontal: 12 }}
-    >
-      {[...Array(4)].map((_, i) => (
-        <SkeletonItem key={i} />
-      ))}
-    </ScrollView>
-  </View>
+          marginBottom: 12,
+          marginLeft: 16,
+        }}
+      />
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingHorizontal: 12 }}
+      >
+        {[...Array(4)].map((_, i) => (
+          <SkeletonItem key={i} />
+        ))}
+      </ScrollView>
+    </View>
   );
 }
