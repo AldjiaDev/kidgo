@@ -1,5 +1,5 @@
 import { AppleMaps, GoogleMaps } from 'expo-maps';
-import { Platform, Text } from 'react-native';
+import { Platform, StyleSheet, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import activitiesData from '~/api/lille-activities.json';
@@ -64,7 +64,7 @@ export function Maps(props: MapsProps) {
   if (Platform.OS === 'ios') {
     return (
       <AppleMaps.View 
-        style={{ flex: 1 }}
+        style={StyleSheet.absoluteFill}
         markers={appleMarkers}
         cameraPosition={location ? {
           coordinates: {
