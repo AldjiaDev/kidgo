@@ -1,16 +1,16 @@
-import Stack from "~/components/ui/Stack";
+import Stack from '~/components/ui/Stack';
 
 export const unstable_settings = {
-  anchor: "index",
+  anchor: 'index',
 };
 
-export { ErrorBoundary } from "expo-router";
+export { ErrorBoundary } from 'expo-router';
 
 export default function TabLayout() {
   return (
     <Stack
       screenOptions={{
-        title: "Settings",
+        title: 'Settings',
       }}
     />
   );

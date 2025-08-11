@@ -1,8 +1,6 @@
-import { useHeaderHeight } from '@react-navigation/elements';
-import { LegendList } from '@legendapp/list';
-import { cssInterop } from 'nativewind';
 import * as React from 'react';
 import {
+  Alert,
   Button as RNButton,
   ButtonProps,
   Linking,
@@ -10,34 +8,24 @@ import {
   Share,
   useWindowDimensions,
   View,
-  Alert,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
 import { useActionSheet } from '@expo/react-native-action-sheet';
-
+import { LegendList } from '@legendapp/list';
+import { useHeaderHeight } from '@react-navigation/elements';
 import { Icon } from '@roninoss/icons';
-
 import * as StoreReview from 'expo-store-review';
+import { cssInterop } from 'nativewind';
 
 import { ActivityIndicator } from '~/components/nativewindui/ActivityIndicator';
-
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/nativewindui/Avatar';
-
 import { DatePicker } from '~/components/nativewindui/DatePicker';
-
 import { Picker, PickerItem } from '~/components/nativewindui/Picker';
-
 import { ProgressIndicator } from '~/components/nativewindui/ProgressIndicator';
-
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
-
 import { Slider } from '~/components/nativewindui/Slider';
-
 import { Text } from '~/components/nativewindui/Text';
-
 import { Toggle } from '~/components/nativewindui/Toggle';
-
 import { useColorScheme } from '~/lib/useColorScheme';
 import { useHeaderSearchBar } from '~/lib/useHeaderSearchBar';
 

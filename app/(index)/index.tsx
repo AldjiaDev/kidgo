@@ -1,11 +1,10 @@
 /// <reference types="react/canary" />
-import { ScrollView, View } from "react-native";
-
 // import { SearchPlaceholder } from "@/components/SearchPlaceholder";
 // import { BodyScrollView } from "@/components/ui/BodyScrollView";
 // import { renderSearchContents } from "@/functions/render-search";
 // import { useHeaderSearch } from "@/hooks/useHeaderSearch";
-import React from "react";
+import React from 'react';
+import { ScrollView, View } from 'react-native';
 
 const POSTER_WIDTH = 140;
 const POSTER_HEIGHT = 210;
@@ -52,13 +51,12 @@ function SkeletonItem() {
   return (
     <View style={{ marginHorizontal: 4 }}>
       <View
-        className="bg-background rounded-xl overflow-hidden"
+        className="overflow-hidden rounded-xl bg-background"
         style={{
           width: POSTER_WIDTH,
-        }}
-      >
+        }}>
         <View
-          className="bg-muted rounded-xl"
+          className="rounded-xl bg-muted"
           style={{
             width: POSTER_WIDTH,
             height: POSTER_HEIGHT,
@@ -66,17 +64,17 @@ function SkeletonItem() {
         />
         <View style={{ padding: 8, gap: 4 }}>
           <View
-            className="bg-muted rounded"
+            className="rounded bg-muted"
             style={{
               height: 14,
-              width: "80%",
+              width: '80%',
             }}
           />
           <View
-            className="bg-muted rounded"
+            className="rounded bg-muted"
             style={{
               height: 12,
-              width: "30%",
+              width: '30%',
             }}
           />
         </View>
@@ -89,7 +87,7 @@ function SkeletonSection() {
   return (
     <View>
       <View
-        className="bg-muted rounded"
+        className="rounded bg-muted"
         style={{
           width: 100,
           height: 20,
@@ -100,8 +98,7 @@ function SkeletonSection() {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 12 }}
-      >
+        contentContainerStyle={{ paddingHorizontal: 12 }}>
         {[...Array(4)].map((_, i) => (
           <SkeletonItem key={i} />
         ))}

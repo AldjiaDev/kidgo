@@ -1,12 +1,10 @@
 import { PropsWithChildren } from 'react';
-
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NAV_THEME } from '~/theme/theme';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
-
 import { StatusBar } from 'expo-status-bar';
 
 import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
+import { NAV_THEME } from '~/theme/theme';
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   useInitialAndroidBarSync();

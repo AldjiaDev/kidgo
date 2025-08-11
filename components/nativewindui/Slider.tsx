@@ -1,5 +1,5 @@
-import RNSlider from '@react-native-community/slider';
 import { Platform } from 'react-native';
+import RNSlider from '@react-native-community/slider';
 
 import { useColorScheme } from '~/lib/useColorScheme';
 import { COLORS } from '~/theme/colors';

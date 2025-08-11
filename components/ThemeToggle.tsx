@@ -1,6 +1,6 @@
-import { Icon } from '@roninoss/icons';
 import { Pressable, View } from 'react-native';
 import Animated, { LayoutAnimationConfig, ZoomInRotate } from 'react-native-reanimated';
+import { Icon } from '@roninoss/icons';
 
 import { cn } from '~/lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';

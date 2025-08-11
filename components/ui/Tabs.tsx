@@ -1,19 +1,17 @@
-import {
-  BottomTabBarButtonProps,
-  BottomTabNavigationOptions,
-} from "@react-navigation/bottom-tabs";
-import * as Haptics from "expo-haptics";
-import React from "react";
+import React from 'react';
+import { Platform, useWindowDimensions } from 'react-native';
+import { BottomTabBarButtonProps, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
 // Better transitions on web, no changes on native.
-import { PlatformPressable } from "@react-navigation/elements";
-import { Tabs as NativeTabs } from "expo-router";
-import { Platform, useWindowDimensions } from "react-native";
-import BlurTabBarBackground from "./TabBarBackground";
-import { Icon, type MaterialIconName } from "@roninoss/icons";
+import { PlatformPressable } from '@react-navigation/elements';
+import { Icon, type MaterialIconName } from '@roninoss/icons';
+import * as Haptics from 'expo-haptics';
+import { Tabs as NativeTabs } from 'expo-router';
+
+import BlurTabBarBackground from './TabBarBackground';
 
 // These are the default tab options for iOS, they disable on other platforms.
 const DEFAULT_TABS: BottomTabNavigationOptions =
-  process.env.EXPO_OS !== "ios"
+  process.env.EXPO_OS !== 'ios'
     ? {
         headerShown: false,
       }
@@ -23,7 +21,7 @@ const DEFAULT_TABS: BottomTabNavigationOptions =
         tabBarBackground: BlurTabBarBackground,
         tabBarStyle: {
           // Use a transparent background on iOS to show the blur effect
-          position: "absolute",
+          position: 'absolute',
         },
       };
 
@@ -65,32 +63,31 @@ export default function Tabs({
         ...Platform.select({
           ios: isMd
             ? {
-                tabBarPosition: "left",
-                tabBarVariant: "material",
-                tabBarLabelPosition: isLg ? undefined : "below-icon",
+                tabBarPosition: 'left',
+                tabBarVariant: 'material',
+                tabBarLabelPosition: isLg ? undefined : 'below-icon',
                 tabBarStyle: {
                   // Use a transparent background on iOS to show the blur effect
-                  position: "relative",
+                  position: 'relative',
                 },
               }
             : {
-                tabBarPosition: "bottom",
+                tabBarPosition: 'bottom',
               },
           default: isMd
             ? {
-                tabBarPosition: "left",
-                tabBarVariant: "material",
-                tabBarLabelPosition: isLg ? undefined : "below-icon",
+                tabBarPosition: 'left',
+                tabBarVariant: 'material',
+                tabBarLabelPosition: isLg ? undefined : 'below-icon',
               }
             : {
-                tabBarPosition: "bottom",
+                tabBarPosition: 'bottom',
               },
         } as any),
 
         ...screenOptions,
       }}
-      {...props}
-    >
+      {...props}>
       {processedChildren}
     </NativeTabs>
   );
@@ -110,7 +107,7 @@ function HapticTab(props: BottomTabBarButtonProps) {
     <PlatformPressable
       {...props}
       onPressIn={(ev) => {
-        if (process.env.EXPO_OS === "ios") {
+        if (process.env.EXPO_OS === 'ios') {
           // Add a soft haptic feedback when pressing down on the tabs.
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         }

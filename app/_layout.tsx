@@ -1,17 +1,19 @@
-import '../global.css';
 import 'expo-dev-client';
 
-import { Icon } from '@roninoss/icons';
+import { Pressable, View } from 'react-native';
+import { ReanimatedScreenProvider } from 'react-native-screens/reanimated';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { Icon } from '@roninoss/icons';
 import { Link } from 'expo-router';
-import { Pressable, View } from 'react-native';
+
+import '../global.css';
+
 import { ThemeToggle } from '~/components/ThemeToggle';
+import Tabs from '~/components/ui/Tabs';
+import { ThemeProvider } from '~/components/ui/ThemeProvider';
 import { cn } from '~/lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { ThemeProvider } from '~/components/ui/ThemeProvider';
-import { ReanimatedScreenProvider } from 'react-native-screens/reanimated';
-import Tabs from '~/components/ui/Tabs';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -34,7 +36,7 @@ export default function RootLayout() {
                 <Tabs.Screen name="(index)" title="Search" systemImage="magnify" />
                 <Tabs.Screen name="(map)" title="Map" systemImage="map" />
                 <Tabs.Screen name="(settings)" title="From Expo" systemImage="cog" />
-                <Tabs.Screen name="+not-found" title="Not Found" options={{ href: null}} />
+                <Tabs.Screen name="+not-found" title="Not Found" options={{ href: null }} />
               </Tabs>
             </ActionSheetProvider>
           </BottomSheetModalProvider>

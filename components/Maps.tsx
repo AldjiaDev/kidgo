@@ -1,7 +1,8 @@
-import { AppleMaps, GoogleMaps } from 'expo-maps';
+import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, Text } from 'react-native';
-import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
+import { AppleMaps, GoogleMaps } from 'expo-maps';
+
 import activitiesData from '~/api/lille-activities.json';
 
 interface Activity {
@@ -63,22 +64,26 @@ export function Maps(props: MapsProps) {
 
   if (Platform.OS === 'ios') {
     return (
-      <AppleMaps.View 
+      <AppleMaps.View
         style={StyleSheet.absoluteFill}
         markers={appleMarkers}
-        cameraPosition={location ? {
-          coordinates: {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          },
-          zoom: 13,
-        } : {
-          coordinates: {
-            latitude: 50.6292, // Default to Lille center
-            longitude: 3.0573,
-          },
-          zoom: 13,
-        }}
+        cameraPosition={
+          location
+            ? {
+                coordinates: {
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                },
+                zoom: 13,
+              }
+            : {
+                coordinates: {
+                  latitude: 50.6292, // Default to Lille center
+                  longitude: 3.0573,
+                },
+                zoom: 13,
+              }
+        }
         properties={{
           selectionEnabled: false,
           mapType: AppleMaps.MapType.STANDARD,
@@ -87,22 +92,26 @@ export function Maps(props: MapsProps) {
     );
   } else if (Platform.OS === 'android') {
     return (
-      <GoogleMaps.View 
+      <GoogleMaps.View
         style={{ flex: 1 }}
         markers={googleMarkers}
-        cameraPosition={location ? {
-          coordinates: {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          },
-          zoom: 13,
-        } : {
-          coordinates: {
-            latitude: 50.6292, // Default to Lille center
-            longitude: 3.0573,
-          },
-          zoom: 13,
-        }}
+        cameraPosition={
+          location
+            ? {
+                coordinates: {
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                },
+                zoom: 13,
+              }
+            : {
+                coordinates: {
+                  latitude: 50.6292, // Default to Lille center
+                  longitude: 3.0573,
+                },
+                zoom: 13,
+              }
+        }
         properties={{
           selectionEnabled: false,
           mapType: GoogleMaps.MapType.NORMAL,
@@ -110,6 +119,10 @@ export function Maps(props: MapsProps) {
       />
     );
   } else {
-    return errorMsg ? <Text>{errorMsg}</Text> : <Text>Maps are only available on Android and iOS</Text>;
+    return errorMsg ? (
+      <Text>{errorMsg}</Text>
+    ) : (
+      <Text>Maps are only available on Android and iOS</Text>
+    );
   }
 }

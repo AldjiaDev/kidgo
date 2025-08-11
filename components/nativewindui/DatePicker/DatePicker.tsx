@@ -1,5 +1,5 @@
-import DateTimePicker from '@react-native-community/datetimepicker';
 import * as React from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export function DatePicker({
   materialDateClassName: _materialDateClassName,

@@ -1,3 +1,5 @@
+import React from 'react';
+import { Platform } from 'react-native';
 import {
   createNavigatorFactory,
   DefaultRouterOptions,
@@ -5,26 +7,16 @@ import {
   StackNavigationState,
   StackRouter,
   useNavigationBuilder,
-} from "@react-navigation/native";
-import {
-  NativeStackNavigationOptions,
-  NativeStackView,
-} from "@react-navigation/native-stack";
-import { withLayoutContext } from "expo-router";
-import React from "react";
-import { Platform } from "react-native";
-import { Drawer } from "vaul";
+} from '@react-navigation/native';
+import { NativeStackNavigationOptions, NativeStackView } from '@react-navigation/native-stack';
+import { withLayoutContext } from 'expo-router';
+import { Drawer } from 'vaul';
 
-import modalStyles from "./modal.module.css";
+import modalStyles from './modal.module.css';
 
 /** Extend NativeStackNavigationOptions with extra sheet/detent props */
 type MyModalStackNavigationOptions = NativeStackNavigationOptions & {
-  presentation?:
-    | "modal"
-    | "formSheet"
-    | "containedModal"
-    | "card"
-    | "fullScreenModal";
+  presentation?: 'modal' | 'formSheet' | 'containedModal' | 'card' | 'fullScreenModal';
   /**
    * If you want to mimic iOS sheet detents on native (iOS 16+ w/ react-native-screens),
    * you might do something like:
@@ -50,29 +42,20 @@ type Props = {
   children: React.ReactNode;
 };
 
-function MyModalStackNavigator({
-  initialRouteName,
-  children,
-  screenOptions,
-}: Props) {
-  const { state, navigation, descriptors, NavigationContent } =
-    useNavigationBuilder<
-      StackNavigationState<ParamListBase>,
-      MyModalStackRouterOptions,
-      MyModalStackNavigationOptions
-    >(StackRouter, {
-      children,
-      screenOptions,
-      initialRouteName,
-    });
+function MyModalStackNavigator({ initialRouteName, children, screenOptions }: Props) {
+  const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder<
+    StackNavigationState<ParamListBase>,
+    MyModalStackRouterOptions,
+    MyModalStackNavigationOptions
+  >(StackRouter, {
+    children,
+    screenOptions,
+    initialRouteName,
+  });
 
   return (
     <NavigationContent>
-      <MyModalStackView
-        state={state}
-        navigation={navigation}
-        descriptors={descriptors}
-      />
+      <MyModalStackView state={state} navigation={navigation} descriptors={descriptors} />
     </NavigationContent>
   );
 }
@@ -96,24 +79,22 @@ function MyModalStackView({
     }
   >;
 }) {
-  const isWeb = Platform.OS === "web";
+  const isWeb = Platform.OS === 'web';
 
   // Filter out any route that wants to be shown as a modal on web
   const nonModalRoutes = state.routes.filter((route) => {
     const descriptor = descriptors[route.key];
     const { presentation } = descriptor.options || {};
     const isModalType =
-      presentation === "modal" ||
-      presentation === "formSheet" ||
-      presentation === "fullScreenModal" ||
-      presentation === "containedModal";
+      presentation === 'modal' ||
+      presentation === 'formSheet' ||
+      presentation === 'fullScreenModal' ||
+      presentation === 'containedModal';
     return !(isWeb && isModalType);
   });
 
   // Recalculate index so we don't point to a missing route on web
-  let nonModalIndex = nonModalRoutes.findIndex(
-    (r) => r.key === state.routes[state.index]?.key
-  );
+  let nonModalIndex = nonModalRoutes.findIndex((r) => r.key === state.routes[state.index]?.key);
   if (nonModalIndex < 0) {
     nonModalIndex = nonModalRoutes.length - 1;
   }
@@ -127,14 +108,9 @@ function MyModalStackView({
   return (
     <div
       // data-vaul-drawer-wrapper=""
-      style={{ flex: 1, display: "flex", overflow: "hidden" }}
-    >
+      style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
       {/* Normal stack rendering for native & non-modal routes on web */}
-      <NativeStackView
-        state={newStackState}
-        navigation={navigation}
-        descriptors={descriptors}
-      />
+      <NativeStackView state={newStackState} navigation={navigation} descriptors={descriptors} />
 
       {/* Render vaul Drawer for active "modal" route on web, with snap points */}
       {isWeb &&
@@ -144,10 +120,10 @@ function MyModalStackView({
             descriptor.options || {};
 
           const isModalType =
-            presentation === "modal" ||
-            presentation === "formSheet" ||
-            presentation === "fullScreenModal" ||
-            presentation === "containedModal";
+            presentation === 'modal' ||
+            presentation === 'formSheet' ||
+            presentation === 'fullScreenModal' ||
+            presentation === 'containedModal';
           const isActive = i === state.index && isModalType;
           if (!isActive) return null;
 
@@ -163,44 +139,41 @@ function MyModalStackView({
               // Provide snap points to vaul
               snapPoints={rawDetents}
               // For a "sheet" style, might want to scale background slightly
-              shouldScaleBackground={presentation !== "formSheet"}
+              shouldScaleBackground={presentation !== 'formSheet'}
               onOpenChange={(open) => {
                 if (!open) {
                   navigation.goBack();
                 }
-              }}
-            >
+              }}>
               <Drawer.Portal>
                 <Drawer.Overlay
                   style={{
-                    position: "fixed",
+                    position: 'fixed',
                     inset: 0,
-                    backgroundColor: "rgba(0,0,0,0.4)",
+                    backgroundColor: 'rgba(0,0,0,0.4)',
                   }}
                 />
                 <Drawer.Content
                   className={modalStyles.drawerContent}
-                  style={{ pointerEvents: "none" }}
-                >
+                  style={{ pointerEvents: 'none' }}>
                   <div className={modalStyles.modal}>
                     {/* Optional "grabber" */}
                     {sheetGrabberVisible && (
                       <div
                         style={{
                           padding: 16,
-                          width: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          backgroundColor: "hsl(var(--background))",
-                        }}
-                      >
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          backgroundColor: 'hsl(var(--background))',
+                        }}>
                         <div
                           style={{
                             width: 36,
                             height: 4,
                             borderRadius: 2,
-                            backgroundColor: "hsl(var(--muted))",
+                            backgroundColor: 'hsl(var(--muted))',
                           }}
                         />
                       </div>

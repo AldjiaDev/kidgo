@@ -1,9 +1,9 @@
+import * as React from 'react';
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetModal,
 } from '@gorhom/bottom-sheet';
-import * as React from 'react';
 
 import { useColorScheme } from '~/lib/useColorScheme';
 

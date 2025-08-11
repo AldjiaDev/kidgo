@@ -1,21 +1,21 @@
 // import { Stack as NativeStack } from "expo-router";
-import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
-import React from "react";
+import React from 'react';
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 
 // Better transitions on web, no changes on native.
-import NativeStack from "~/components/layout/modalNavigator";
+import NativeStack from '~/components/layout/modalNavigator';
 
 // These are the default stack options for iOS, they disable on other platforms.
 const DEFAULT_STACK_HEADER: NativeStackNavigationOptions =
-  process.env.EXPO_OS !== "ios"
+  process.env.EXPO_OS !== 'ios'
     ? {}
     : {
         headerTransparent: true,
-        headerBlurEffect: "systemChromeMaterial",
+        headerBlurEffect: 'systemChromeMaterial',
         headerShadowVisible: true,
         headerLargeTitleShadowVisible: false,
         headerLargeStyle: {
-          backgroundColor: "transparent",
+          backgroundColor: 'transparent',
         },
         headerLargeTitle: true,
       };
@@ -23,9 +23,9 @@ const DEFAULT_STACK_HEADER: NativeStackNavigationOptions =
 /** Create a bottom sheet on iOS with extra snap points (`sheetAllowedDetents`) */
 export const BOTTOM_SHEET: NativeStackNavigationOptions = {
   // https://github.com/software-mansion/react-native-screens/blob/main/native-stack/README.md#sheetalloweddetents
-  presentation: "formSheet",
-  gestureDirection: "vertical",
-  animation: "slide_from_bottom",
+  presentation: 'formSheet',
+  gestureDirection: 'vertical',
+  animation: 'slide_from_bottom',
   sheetGrabberVisible: true,
   sheetInitialDetentIndex: 0,
   sheetAllowedDetents: [0.5, 1.0],
@@ -51,7 +51,7 @@ export default function Stack({
         return React.cloneElement(child, {
           ...props,
           options: {
-            presentation: "modal",
+            presentation: 'modal',
             ...props.options,
           },
         });
@@ -66,8 +66,7 @@ export default function Stack({
         ...DEFAULT_STACK_HEADER,
         ...screenOptions,
       }}
-      {...props}
-    >
+      {...props}>
       {processedChildren}
     </NativeStack>
   );
