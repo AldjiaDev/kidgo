@@ -34,6 +34,7 @@ export default function RootLayout() {
                 <Tabs.Screen name="(index)" title="Search" systemImage="magnify" />
                 <Tabs.Screen name="(map)" title="Map" systemImage="map" />
                 <Tabs.Screen name="(settings)" title="From Expo" systemImage="cog" />
+                <Tabs.Screen name="+not-found" title="Not Found" options={{ href: null}} />
               </Tabs>
             </ActionSheetProvider>
           </BottomSheetModalProvider>
