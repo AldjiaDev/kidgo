@@ -4,6 +4,14 @@
 
 ## Getting Started
 
+install the package manager with
+
+```console
+brew install oven-sh/bun/bun
+```
+
+install dependencies
+
 ```console
 bun install
 bun start
