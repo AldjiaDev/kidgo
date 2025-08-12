@@ -51,6 +51,7 @@
     "react-native-screens": "~4.11.1",
     "react-native-uitextview": "2.0.0-rc.10",
     "react-native-web": "^0.20.0",
+    "supabase": "^2.34.3",
     "tailwind-merge": "^2.2.1",
     "vaul": "^1.1.2"
   },
