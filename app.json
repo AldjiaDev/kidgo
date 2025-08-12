@@ -1,15 +1,18 @@
 {
   "expo": {
-    "name": "kid-go",
-    "slug": "kid-go",
+    "name": "kidgo",
+    "slug": "kidgo",
     "version": "1.0.0",
-    "scheme": "kid-go",
+    "scheme": "kidgo",
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-router", "expo-web-browser"],
+    "plugins": [
+      "expo-router",
+      "expo-web-browser"
+    ],
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true
@@ -22,16 +25,25 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kid-go"
+      "bundleIdentifier": "com.kidgo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "deebf523-c9e6-43a0-9e68-e04966557e2b"
+      }
+    },
+    "owner": "weshipit"
   }
 }
