@@ -17,6 +17,13 @@ bun install
 bun start
 ```
 
+create ios build with
+
+```console
+npx expo prebuild --platform=ios
+bun ios
+```
+
 ## Stack
 
 - React Native with Expo
