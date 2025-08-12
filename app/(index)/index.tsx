@@ -49,7 +49,7 @@ function Loading() {
 
 function SkeletonItem() {
   return (
-    <View style={{ marginHorizontal: 4 }}>
+    <View className="mx-4">
       <View
         className="overflow-hidden rounded-xl bg-background"
         style={{
