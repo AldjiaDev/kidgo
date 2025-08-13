@@ -4,24 +4,13 @@
 
 ## Getting Started
 
-install the package manager with
+First time here? Follow [setup guide](./docs/setup.md) to get started.
 
-```console
-brew install oven-sh/bun/bun
-```
-
-install dependencies
+Install dependencies and launch the app:
 
 ```console
 bun install
 bun start
-```
-
-create ios build with
-
-```console
-npx expo prebuild --platform=ios
-bun ios
 ```
 
 ## Stack
