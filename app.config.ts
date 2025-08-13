@@ -39,10 +39,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         usesNonExemptEncryption: false,
       },
       infoPlist: {
-        NSLocationWhenInUseUsageDescription: `${APP_NAME} nécessite votre position pour afficher les évènements les plus proches.`,
-        NSLocationAlwaysUsageDescription: `${APP_NAME} nécessite votre position pour afficher les évènements les plus proches.`,
-        NSLocationAlwaysAndWhenInUseUsageDescription: `${APP_NAME} nécessite votre position pour afficher les évènements les plus proches.`,
-        NSLocationUsageDescription: `${APP_NAME} nécessite votre position pour afficher les évènements les plus proches.`,
+        NSLocationWhenInUseUsageDescription: `Pour vous montrer les meilleures sorties autour de vous !`,
+        NSLocationAlwaysUsageDescription: `Pour vous montrer les meilleures sorties autour de vous !`,
+        NSLocationAlwaysAndWhenInUseUsageDescription: `Pour vous montrer les meilleures sorties autour de vous !`,
+        NSLocationUsageDescription: `Pour vous montrer les meilleures sorties autour de vous !`,
       },
     },
     android: {
