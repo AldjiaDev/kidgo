@@ -30,7 +30,7 @@ jobs:
         run: bun run lint
 
       - name: Run type checks
-        run: bun run typecheck || bunx tsc --noEmit
+        run: bun run typecheck
 
       # add this one day
       # - name: Run tests
