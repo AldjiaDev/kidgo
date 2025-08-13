@@ -33,10 +33,10 @@ export default function RootLayout() {
             </Stack> */}
 
               <Tabs>
-                <Tabs.Screen name="(index)" title="Search" systemImage="magnify" />
-                <Tabs.Screen name="(map)" title="Map" systemImage="map" />
-                <Tabs.Screen name="(settings)" title="Settings" systemImage="cog" />
-                <Tabs.Screen name="+not-found" title="Not Found" options={{ href: null }} />
+                <Tabs.Screen name="(index)" title="Recherche" systemImage="magnify" />
+                <Tabs.Screen name="(map)" title="Carte" systemImage="map" />
+                <Tabs.Screen name="(settings)" title="Profile" systemImage="cog" />
+                <Tabs.Screen name="+not-found" title="Non trouvé" options={{ href: null }} />
               </Tabs>
             </ActionSheetProvider>
           </BottomSheetModalProvider>
