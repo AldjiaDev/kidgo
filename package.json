@@ -8,6 +8,7 @@
     "start": "expo start",
     "lint": "eslint --ignore-pattern .gitignore --ext .js,.ts,.tsx .",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
+    "typecheck": "bun tsc --noEmit",
     "cache:clear": "watchman watch-del-all && rm -rf node_modules bun.lock && bun install",
     "web": "expo start --web"
   },
