@@ -6,6 +6,9 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
+import { Text } from '~/components/nativewindui/Text';
+import { BodyScrollView } from '~/components/ui/BodyScrollView';
+
 const POSTER_WIDTH = 140;
 const POSTER_HEIGHT = 210;
 
@@ -18,24 +21,26 @@ export default function HomeScreen() {
   //   return <SearchPlaceholder />;
   // }
 
-  // return <SearchPage text={text} />;
-  return <Loading />;
+  const text = 'Activités, Musée et plus';
+
+  return <SearchPage text={text} />;
+  // return <Loading />;
 }
 
-// function SearchPage({ text }: { text: string }) {
-//   return (
-//     <BodyScrollView
-//       contentContainerStyle={{
-//         paddingVertical: 16,
-//         gap: 2,
-//       }}
-//     >
-//       <React.Suspense fallback={<Loading />}>
-//         {renderSearchContents(text)}
-//       </React.Suspense>
-//     </BodyScrollView>
-//   );
-// }
+function SearchPage({ text }: { text: string }) {
+  return (
+    <BodyScrollView
+      contentContainerStyle={{
+        paddingVertical: 16,
+        gap: 2,
+      }}>
+      <React.Suspense fallback={<Loading />}>
+        {/* {renderSearchContents(text)} */}
+        <Text variant="body">{text}</Text>
+      </React.Suspense>
+    </BodyScrollView>
+  );
+}
 
 function Loading() {
   return (
