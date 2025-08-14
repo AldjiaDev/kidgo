@@ -10,7 +10,7 @@ export default function TabLayout() {
   return (
     <Stack
       screenOptions={{
-        title: 'Search',
+        title: 'Recherche',
       }}
     />
   );
