@@ -65,10 +65,10 @@ export default ({ config }: ConfigContext): ExpoConfig => {
         'expo-splash-screen',
         {
           resizeMode: 'contain',
-          image: './assets/images/splash-icon-light.png',
+          // image: './assets/images/splash-icon-light.png',
           backgroundColor: '#f2f1f6',
           dark: {
-            image: './assets/images/splash-icon-dark.png',
+            // image: './assets/images/splash-icon-dark.png',
             backgroundColor: '#020204',
           },
           ios: {
