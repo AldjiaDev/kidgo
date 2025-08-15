@@ -1,10 +1,12 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { FlatList, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { observer } from '@legendapp/state/react';
+import { Link } from 'expo-router';
 
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
+import { Tables } from '~/utils/database.types';
 import { addTodo, todos$ as _todos$, toggleDone } from '~/utils/supabase-legend';
 
 // Emojis to decorate each todo.
@@ -54,7 +56,7 @@ const Todos = observer(({ todos$ }: { todos$: typeof _todos$ }) => {
   if (todos)
     return <FlatList data={Object.values(todos)} renderItem={renderItem} style={styles.todos} />;
 
-  return <Fragment></Fragment>;
+  return <></>;
 });
 
 export default function SettingsScreen() {
@@ -64,6 +66,11 @@ export default function SettingsScreen() {
         paddingVertical: 16,
         gap: 2,
       }}>
+      <Link href="/(settings)/playground" asChild>
+        <Button>
+          <Text>Go to Playground</Text>
+        </Button>
+      </Link>
       <NewTodo />
       <Todos todos$={_todos$} />
     </BodyScrollView>

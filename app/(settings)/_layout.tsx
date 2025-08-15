@@ -11,7 +11,9 @@ export default function TabLayout() {
     <Stack
       screenOptions={{
         title: 'Settings',
-      }}
-    />
+      }}>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="playground" />
+    </Stack>
   );
 }
