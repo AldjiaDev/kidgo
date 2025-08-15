@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Alert, AppState, StyleSheet, View } from 'react-native';
-import { Button, Input } from '@rneui/themed';
+import { Alert, AppState, View } from 'react-native';
+import { Input } from '@rneui/themed';
 
 import { supabase } from '../lib/supabase';
+
+import { Button } from '~/components/nativewindui/Button';
+import { Text } from '~/components/nativewindui/Text';
 
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
@@ -43,13 +46,13 @@ export default function Auth() {
     });
 
     if (error) Alert.alert(error.message);
-    if (!session) Alert.alert('Please check your inbox for email verification!');
+    if (!session) Alert.alert('Vérifiez votre email pour confirmer votre compte.');
     setLoading(false);
   }
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+    <View className="mt-10 p-3">
+      <View className="mb-5 w-full py-1">
         <Input
           label="Email"
           leftIcon={{ type: 'font-awesome', name: 'envelope' }}
@@ -59,7 +62,7 @@ export default function Auth() {
           autoCapitalize={'none'}
         />
       </View>
-      <View style={styles.verticallySpaced}>
+      <View className="w-full py-1">
         <Input
           label="Password"
           leftIcon={{ type: 'font-awesome', name: 'lock' }}
@@ -70,27 +73,25 @@ export default function Auth() {
           autoCapitalize={'none'}
         />
       </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button title="Sign in" disabled={loading} onPress={() => signInWithEmail()} />
+      <View className="mt-5 w-full py-1">
+        <Button
+          disabled={loading}
+          onPress={() => {
+            signInWithEmail();
+          }}
+          variant="tonal">
+          <Text>Se connecter</Text>
+        </Button>
       </View>
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
+      <View className="w-full py-1">
+        <Button
+          disabled={loading}
+          onPress={() => {
+            signUpWithEmail();
+          }}>
+          <Text>Créer un compte</Text>
+        </Button>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: 12,
-  },
-  mt20: {
-    marginTop: 20,
-  },
-  verticallySpaced: {
-    alignSelf: 'stretch',
-    paddingBottom: 4,
-    paddingTop: 4,
-  },
-});
