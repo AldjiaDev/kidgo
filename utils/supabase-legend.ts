@@ -10,10 +10,17 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Database } from '~/utils/database.types';
 
-const supabase = createClient<Database>(
-  process.env.EXPO_PUBLIC_SUPABASE_URL || 'change_me',
-  process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || 'change_me'
-);
+const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || 'change_me';
+const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || 'change_me';
+
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    storage: AsyncStorage,
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false,
+  },
+});
 
 // Provide a function to generate ids locally
 const generateId = () => uuidv4();

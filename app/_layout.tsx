@@ -13,8 +13,8 @@ import { ThemeToggle } from '~/components/ThemeToggle';
 import Tabs from '~/components/ui/Tabs';
 import { ThemeProvider } from '~/components/ui/ThemeProvider';
 import { cn } from '~/lib/cn';
-import { supabase } from '~/lib/supabase';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { supabase } from '~/utils/supabase-legend';
 
 export {
   // Catch any errors thrown by the Layout component.

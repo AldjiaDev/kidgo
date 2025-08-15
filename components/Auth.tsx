@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Input } from '@rneui/themed';
 
-import { supabase } from '../lib/supabase';
-
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
+import { supabase } from '~/utils/supabase-legend';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
@@ -65,19 +64,19 @@ export default function Auth() {
         <Button
           disabled={loading}
           onPress={() => {
-            signInWithEmail();
-          }}
-          variant="tonal">
-          <Text>Se connecter</Text>
+            signUpWithEmail();
+          }}>
+          <Text>Créer un compte</Text>
         </Button>
       </View>
       <View className="w-full py-1">
         <Button
           disabled={loading}
           onPress={() => {
-            signUpWithEmail();
-          }}>
-          <Text>Créer un compte</Text>
+            signInWithEmail();
+          }}
+          variant="tonal">
+          <Text>Se connecter</Text>
         </Button>
       </View>
     </View>

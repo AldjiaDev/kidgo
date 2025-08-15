@@ -4,7 +4,7 @@ import { Session } from '@supabase/supabase-js';
 import Account from '~/components/Account';
 import Auth from '~/components/Auth';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { supabase } from '~/lib/supabase';
+import { supabase } from '~/utils/supabase-legend';
 
 export default function ProfileScreen() {
   const [session, setSession] = useState<Session | null>(null);

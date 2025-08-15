@@ -3,10 +3,9 @@ import { Alert, StyleSheet, View } from 'react-native';
 import { Input } from '@rneui/themed';
 import { Session } from '@supabase/supabase-js';
 
-import { supabase } from '../lib/supabase';
-
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
+import { supabase } from '~/utils/supabase-legend';
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
