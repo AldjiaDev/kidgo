@@ -1,23 +1,11 @@
-import React, { useState } from 'react';
-import { Alert, AppState, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, View } from 'react-native';
 import { Input } from '@rneui/themed';
 
 import { supabase } from '../lib/supabase';
 
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
-
-// Tells Supabase Auth to continuously refresh the session automatically if
-// the app is in the foreground. When this is added, you will continue to receive
-// `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
-// if the user's session is terminated. This should only be registered once.
-AppState.addEventListener('change', (state) => {
-  if (state === 'active') {
-    supabase.auth.startAutoRefresh();
-  } else {
-    supabase.auth.stopAutoRefresh();
-  }
-});
 
 export default function Auth() {
   const [email, setEmail] = useState('');
