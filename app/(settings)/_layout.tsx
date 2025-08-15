@@ -14,6 +14,7 @@ export default function TabLayout() {
       }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="playground" />
+      <Stack.Screen name="playground-todos" />
     </Stack>
   );
 }
