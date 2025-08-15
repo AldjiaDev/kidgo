@@ -1,5 +1,14 @@
 # Supabase
 
+## Database
+
+```console
+supabase migrations new xxxxx
+supabase db push
+```
+
+##  Generating Types
+
 Generate types for your project to produce the `database.types.ts` file:
 
 ```console
