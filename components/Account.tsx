@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import { Button, Input } from '@rneui/themed';
+import { Input } from '@rneui/themed';
 import { Session } from '@supabase/supabase-js';
 
 import { supabase } from '../lib/supabase';
+
+import { Button } from '~/components/nativewindui/Button';
+import { Text } from '~/components/nativewindui/Text';
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
@@ -73,18 +76,24 @@ export default function Account({ session }: { session: Session }) {
         <Input label="Email" value={session?.user?.email} disabled />
       </View>
       <View style={styles.verticallySpaced}>
-        <Input label="Username" value={username || ''} onChangeText={(text) => setUsername(text)} />
+        <Input
+          label="Nom d'utilisateur"
+          value={username || ''}
+          onChangeText={(text) => setUsername(text)}
+        />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Button
-          title={loading ? 'Loading ...' : 'Update'}
           onPress={() => updateProfile({ username, avatar_url: avatarUrl })}
-          disabled={loading}
-        />
+          disabled={loading}>
+          <Text>{loading ? 'Chargement ...' : 'Mettre à jour'}</Text>
+        </Button>
       </View>
 
       <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
+        <Button onPress={() => supabase.auth.signOut()} variant="tonal">
+          <Text>Se déconnecter</Text>
+        </Button>
       </View>
     </View>
   );
