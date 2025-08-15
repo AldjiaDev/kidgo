@@ -30,7 +30,6 @@
     "@supabase/supabase-js": "^2.55.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "eas-cli": "^16.17.4",
     "expo": "^53.0.17",
     "expo-blur": "^14.1.5",
     "expo-constants": "~17.1.4",

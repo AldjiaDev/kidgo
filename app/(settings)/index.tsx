@@ -13,7 +13,6 @@ import { addTodo, todos$ as _todos$, toggleDone } from '~/utils/supabase-legend'
 const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
 const DONE_ICON = String.fromCodePoint(0x2705);
 
-// The text input component to add a new todo.
 const NewTodo = () => {
   const [text, setText] = useState('');
   const handleSubmitEditing = ({ nativeEvent: { text } }) => {
@@ -69,6 +68,11 @@ export default function SettingsScreen() {
       <Link href="/(settings)/playground" asChild>
         <Button>
           <Text>Go to Playground</Text>
+        </Button>
+      </Link>
+      <Link href="/(settings)/profile" asChild>
+        <Button variant="primary" className="w-full">
+          <Text>Mon profil</Text>
         </Button>
       </Link>
       <NewTodo />
