@@ -79,7 +79,7 @@ export const places$ = observable(
     collection: 'places',
     select: (from) =>
       from.select(
-        'id,name,latitude,longitude,description,category,tags,address,opening_hours,price_range,age_category,website,created_at,updated_at,deleted'
+        'id,name,opening_hours,address,age_groups,description,website_url,category,area_type,latitude,longitude,price_range,created_at,updated_at,deleted'
       ),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,

@@ -6,11 +6,11 @@ import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { Tables } from '~/utils/database.types';
 import { addTodo, todos$ as _todos$, toggleDone } from '~/utils/supabase-legend';
 
-export default function PlaygroundTodosScreen() {
-  // Emojis to decorate each todo.
-  const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
-  const DONE_ICON = String.fromCodePoint(0x2705);
+// Emojis to decorate each todo.
+const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
+const DONE_ICON = String.fromCodePoint(0x2705);
 
+export default function PlaygroundTodosScreen() {
   // The text input component to add a new todo.
   function NewTodo() {
     const [text, setText] = useState('');
@@ -51,7 +51,9 @@ export default function PlaygroundTodosScreen() {
   const Todos = observer(({ todos$ }: { todos$: typeof _todos$ }) => {
     // Get the todos from the state and subscribe to updates
     const todos = todos$.get();
+
     const renderItem = ({ item: todo }: { item: Tables<'todos'> }) => <Todo todo={todo} />;
+
     if (todos)
       return (
         <FlatList data={Object.values(todos)} renderItem={renderItem} className="mt-4 flex-1" />
