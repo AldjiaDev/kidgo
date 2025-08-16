@@ -1,3 +1,4 @@
+import { ThemeToggle } from '~/components/ThemeToggle';
 import Stack from '~/components/ui/Stack';
 
 export const unstable_settings = {
@@ -11,7 +12,16 @@ export default function TabLayout() {
     <Stack
       screenOptions={{
         title: 'Recherche',
-      }}
-    />
+      }}>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="modal" options={MODAL_OPTIONS} />
+    </Stack>
   );
 }
+
+const MODAL_OPTIONS = {
+  presentation: 'modal',
+  animation: 'fade_from_bottom', // for android
+  title: 'Settings',
+  headerRight: () => <ThemeToggle />,
+} as const;

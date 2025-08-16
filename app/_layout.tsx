@@ -9,7 +9,6 @@ import { Link } from 'expo-router';
 
 import '../global.css';
 
-import { ThemeToggle } from '~/components/ThemeToggle';
 import Tabs from '~/components/ui/Tabs';
 import { ThemeProvider } from '~/components/ui/ThemeProvider';
 import { cn } from '~/lib/cn';
@@ -83,10 +82,3 @@ function SettingsIcon() {
     </Link>
   );
 }
-
-const MODAL_OPTIONS = {
-  presentation: 'modal',
-  animation: 'fade_from_bottom', // for android
-  title: 'Settings',
-  headerRight: () => <ThemeToggle />,
-} as const;

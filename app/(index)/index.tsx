@@ -1,11 +1,7 @@
-/// <reference types="react/canary" />
-// import { SearchPlaceholder } from "@/components/SearchPlaceholder";
-// import { BodyScrollView } from "@/components/ui/BodyScrollView";
-// import { renderSearchContents } from "@/functions/render-search";
-// import { useHeaderSearch } from "@/hooks/useHeaderSearch";
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { observer } from '@legendapp/state/react';
+import { Link } from 'expo-router';
 
 import { Text } from '~/components/nativewindui/Text';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
@@ -16,21 +12,6 @@ const POSTER_WIDTH = 140;
 const POSTER_HEIGHT = 210;
 
 export default function HomeScreen() {
-  // const text = useHeaderSearch({
-  //   placeholder: "Shows, Movies, and More",
-  // });
-
-  // if (!text || text.length < 2) {
-  //   return <SearchPlaceholder />;
-  // }
-
-  const text = 'Activités, Musée et plus';
-
-  return <SearchPage text={text} />;
-  // return <Loading />;
-}
-
-function SearchPage({ text }: { text: string }) {
   return (
     <BodyScrollView
       contentContainerStyle={{
@@ -39,7 +20,6 @@ function SearchPage({ text }: { text: string }) {
       }}>
       <React.Suspense fallback={<Loading />}>
         {/* {renderSearchContents(text)} */}
-        <Text variant="body">{text}</Text>
         <PlacesSection priceRange="Gratuit" />
         <PlacesSection priceRange="€" />
         <PlacesSection priceRange="€€" />
@@ -101,40 +81,44 @@ const PlacesSection = observer(({ priceRange }: { priceRange: string }) => {
 
 function PlaceItem({ place }: { place: Tables<'places'> }) {
   return (
-    <View className="mx-4">
-      <View
-        className="overflow-hidden rounded-xl bg-background"
-        style={{
-          width: POSTER_WIDTH,
+    <View className="mr-4">
+      <Link
+        href={{
+          pathname: '/(index)/modal',
+          params: { ...place },
         }}>
         <View
-          className="rounded-xl bg-muted"
+          className="overflow-hidden rounded-xl bg-background"
           style={{
             width: POSTER_WIDTH,
-            height: POSTER_HEIGHT,
-          }}
-        />
-        <View style={{ padding: 8, gap: 4 }}>
-          <Text
-            variant="caption1"
-            numberOfLines={2}
+          }}>
+          <View
+            className="rounded-xl bg-muted"
             style={{
-              height: 28,
-              width: '100%',
-            }}>
-            {place.name}
-          </Text>
-          <Text
-            variant="caption2"
-            className="text-muted-foreground"
-            style={{
-              height: 12,
-              width: '100%',
-            }}>
-            {place.category || 'Activité'}
-          </Text>
+              width: POSTER_WIDTH,
+              height: POSTER_HEIGHT,
+            }}
+          />
+          <View style={{ padding: 8, gap: 4 }}>
+            <Text
+              variant="caption1"
+              numberOfLines={2}
+              style={{
+                width: '100%',
+              }}>
+              {place.name}
+            </Text>
+            <Text
+              variant="caption2"
+              className="text-muted-foreground"
+              style={{
+                width: '100%',
+              }}>
+              {place.category || 'Activité'}
+            </Text>
+          </View>
         </View>
-      </View>
+      </Link>
     </View>
   );
 }
