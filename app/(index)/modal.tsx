@@ -1,8 +1,10 @@
 import { Linking, Platform, ScrollView, View } from 'react-native';
 import { Icon } from '@roninoss/icons';
+import * as Clipboard from 'expo-clipboard';
 import { useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
+import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import Stack from '~/components/ui/Stack';
 import { useColorScheme } from '~/lib/useColorScheme';
@@ -20,11 +22,15 @@ export default function ModalScreen() {
     website_url,
   } = useLocalSearchParams();
 
-  const handleWebsitePress = () => {
+  function handleWebsitePress() {
     if (website_url && website_url !== '#') {
       Linking.openURL(website_url);
     }
-  };
+  }
+
+  async function copyToClipboard() {
+    await Clipboard.setStringAsync(address);
+  }
 
   return (
     <>
@@ -40,81 +46,52 @@ export default function ModalScreen() {
               {name}
             </Text>
             <View className="flex-row items-center gap-2">
-              <Text variant="subhead" color="secondary">
-                {category}
-              </Text>
+              <Text variant="subhead">{category}</Text>
             </View>
           </View>
 
           {/* Description */}
           {description && (
             <View className="gap-2">
-              <Text variant="heading" className="font-semibold">
-                Description
-              </Text>
-              <Text variant="body" color="secondary">
-                {description}
-              </Text>
+              <Text variant="body">{description}</Text>
             </View>
           )}
 
           {/* Details Section */}
           <View className="gap-4">
-            <Text variant="heading" className="font-semibold">
-              Informations
-            </Text>
-
-            {/* Address */}
-            {address && (
-              <View className="flex-row gap-3">
-                <Icon name="map-marker-outline" size={20} color={colors.grey} />
-                <View className="flex-1">
-                  <Text variant="body" color="secondary">
-                    {address}
-                  </Text>
-                </View>
-              </View>
-            )}
-
             {/* Price Range */}
             {price_range && (
-              <View className="flex-row gap-3">
+              <View className="flex-row items-center gap-3">
                 <Icon name="cart-outline" size={20} color={colors.grey} />
                 <View className="flex-1">
-                  <Text variant="body" color="secondary">
-                    {price_range}
-                  </Text>
-                </View>
-              </View>
-            )}
-
-            {/* Opening Hours */}
-            {opening_hours && (
-              <View className="flex-row gap-3">
-                <Icon name="clock-outline" size={20} color={colors.grey} />
-                <View className="flex-1">
-                  <Text variant="body" color="secondary">
-                    {opening_hours}
-                  </Text>
+                  <Text variant="body">{price_range}</Text>
                 </View>
               </View>
             )}
 
             {/* Area Type */}
             {area_type && (
-              <View className="flex-row gap-3">
+              <View className="flex-row items-center gap-3">
                 <Icon name="home-outline" size={20} color={colors.grey} />
                 <View className="flex-1">
-                  <Text variant="body" color="secondary">
-                    {area_type}
-                  </Text>
+                  <Text variant="body">{area_type}</Text>
+                </View>
+              </View>
+            )}
+
+            {/* Opening Hours */}
+            {opening_hours && (
+              <View className="flex-row items-center gap-3">
+                <Icon name="clock-outline" size={20} color={colors.grey} />
+                <View className="flex-1">
+                  <Text variant="body">{opening_hours}</Text>
                 </View>
               </View>
             )}
 
             {/* Website */}
             {website_url && website_url !== '#' && (
-              <View className="flex-row gap-3">
+              <View className="flex-row items-center gap-3">
                 <Icon name="web" size={20} color={colors.grey} />
                 <View className="flex-1">
                   <Text variant="subhead" className="font-medium">
@@ -126,6 +103,34 @@ export default function ModalScreen() {
                 </View>
               </View>
             )}
+
+            {/* Address */}
+            {address && (
+              <>
+                <View className="flex-row items-center gap-3">
+                  <Icon name="map-marker-outline" size={20} color={colors.grey} />
+                  <View className="flex-1">
+                    <Text variant="body">{address}</Text>
+                  </View>
+                </View>
+
+              <View className='gap-2'>
+                <Button onPress={copyToClipboard}>
+                  <Text>Copier l’adresse</Text>
+                </Button>
+
+                {/* add a Button open on Waze mobile app */}
+                <Button
+                  onPress={() => {
+                    Linking.openURL(`https://waze.com/ul?q=${encodeURIComponent(address)}`);
+                  }}
+                  variant="tonal">
+                  <Text>Ouvrir Waze</Text>
+                </Button>
+                </View>
+              </>
+            )}
+
           </View>
         </View>
       </ScrollView>
