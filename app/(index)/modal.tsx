@@ -114,23 +114,22 @@ export default function ModalScreen() {
                   </View>
                 </View>
 
-              <View className='gap-2'>
-                <Button onPress={copyToClipboard}>
-                  <Text>Copier l’adresse</Text>
-                </Button>
+                <View className="gap-2">
+                  <Button onPress={copyToClipboard}>
+                    <Text>Copier l’adresse</Text>
+                  </Button>
 
-                {/* add a Button open on Waze mobile app */}
-                <Button
-                  onPress={() => {
-                    Linking.openURL(`https://waze.com/ul?q=${encodeURIComponent(address)}`);
-                  }}
-                  variant="tonal">
-                  <Text>Ouvrir Waze</Text>
-                </Button>
+                  {/* add a Button open on Waze mobile app */}
+                  <Button
+                    onPress={() => {
+                      Linking.openURL(`https://waze.com/ul?q=${encodeURIComponent(address)}`);
+                    }}
+                    variant="tonal">
+                    <Text>Ouvrir Waze</Text>
+                  </Button>
                 </View>
               </>
             )}
-
           </View>
         </View>
       </ScrollView>

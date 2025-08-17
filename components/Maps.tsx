@@ -24,6 +24,7 @@ const MapsContent = observer(() => {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  // @todo migrate Location state to a context provider
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();

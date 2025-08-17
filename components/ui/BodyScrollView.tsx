@@ -12,7 +12,6 @@ export function BodyScrollView(props: ScrollViewProps & { ref?: React.Ref<Animat
   const { bottom } = useSafeAreaInsets();
 
   const statusBarInset = useSafeAreaInsets().top; // inset of the status bar
-
   const largeHeaderInset = statusBarInset + 92; // inset to use for a large header since it's frame is equal to 96 + the frame of status bar
 
   useScrollToTop(props.ref!, -largeHeaderInset);

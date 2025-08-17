@@ -3,6 +3,10 @@ import RNSegmentedControl from '@react-native-segmented-control/segmented-contro
 
 import { useColorScheme } from '~/lib/useColorScheme';
 
+/**
+ * Segmented control component for selecting between different options.
+ * @deprecated
+ */
 function SegmentedControl(props: React.ComponentPropsWithoutRef<typeof RNSegmentedControl>) {
   const { colorScheme, colors } = useColorScheme();
   return (
