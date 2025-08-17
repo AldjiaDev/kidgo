@@ -9,6 +9,7 @@ export default function SettingsScreen() {
     <BodyScrollView
       contentContainerStyle={{
         paddingVertical: 16,
+        paddingHorizontal: 8,
         gap: 2,
       }}>
       <Link href="/(settings)/playground" asChild>

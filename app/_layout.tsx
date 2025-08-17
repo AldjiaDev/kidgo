@@ -61,24 +61,3 @@ export default function RootLayout() {
 const SCREEN_OPTIONS = {
   animation: 'ios_from_right', // for android
 } as const;
-
-const INDEX_OPTIONS = {
-  headerLargeTitle: true,
-  title: 'Kid GO',
-  headerRight: () => <SettingsIcon />,
-} as const;
-
-function SettingsIcon() {
-  const { colors } = useColorScheme();
-  return (
-    <Link href="/modal" asChild>
-      <Pressable className="opacity-80">
-        {({ pressed }) => (
-          <View className={cn(pressed ? 'opacity-50' : 'opacity-90')}>
-            <Icon name="cog-outline" color={colors.foreground} />
-          </View>
-        )}
-      </Pressable>
-    </Link>
-  );
-}
