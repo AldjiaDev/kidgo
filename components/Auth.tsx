@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { Alert, View } from 'react-native';
-import { Input } from '@rneui/themed';
 
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
+import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { supabase } from '~/utils/supabase-legend';
 
 export default function Auth() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isVisble, setIsVisble] = useState(true);
   const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
@@ -37,28 +38,35 @@ export default function Auth() {
     setLoading(false);
   }
 
+  function toggleSecureText() {
+    setIsVisble((prev) => !prev);
+  }
+
   return (
     <View className="mt-10 p-3">
       <View className="mb-5 w-full py-1">
-        <Input
+        <TextField
           label="Email"
-          leftIcon={{ type: 'font-awesome', name: 'envelope' }}
           onChangeText={(text) => setEmail(text)}
           value={email}
           placeholder="email@address.com"
-          autoCapitalize={'none'}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoComplete="email"
+          autoCorrect={false}
         />
       </View>
       <View className="w-full py-1">
-        <Input
+        <TextField
           label="Password"
-          leftIcon={{ type: 'font-awesome', name: 'lock' }}
           onChangeText={(text) => setPassword(text)}
           value={password}
-          secureTextEntry={true}
-          placeholder="Password"
-          autoCapitalize={'none'}
+          placeholder="********"
+          secureTextEntry={isVisble}
         />
+        <Text className="text-muted" onPress={toggleSecureText}>
+          {!isVisble ? 'Masquer' : 'Afficher'} le mot de passe
+        </Text>
       </View>
       <View className="mt-5 w-full py-1">
         <Button
