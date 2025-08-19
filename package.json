@@ -26,7 +26,6 @@
     "@react-navigation/native": "^7.0.3",
     "@rn-primitives/avatar": "^1.2.0",
     "@rn-primitives/slot": "^1.2.0",
-    "@rneui/themed": "^4.0.0-rc.8",
     "@roninoss/icons": "^0.0.4",
     "@supabase/supabase-js": "^2.55.0",
     "class-variance-authority": "^0.7.0",

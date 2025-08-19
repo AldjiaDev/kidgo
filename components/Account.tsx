@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import { Input } from '@rneui/themed';
 import { Session } from '@supabase/supabase-js';
 
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
+import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { supabase } from '~/utils/supabase-legend';
 
 export default function Account({ session }: { session: Session }) {
@@ -72,10 +72,10 @@ export default function Account({ session }: { session: Session }) {
   return (
     <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Input label="Email" value={session?.user?.email} disabled />
+        <TextField label="Email" value={session?.user?.email} disabled />
       </View>
       <View style={styles.verticallySpaced}>
-        <Input
+        <TextField
           label="Nom d'utilisateur"
           value={username || ''}
           onChangeText={(text) => setUsername(text)}

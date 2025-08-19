@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Maps } from '~/components/Maps';
+import { SegmentedControl } from '~/components/nativewindui/SegmentedControl/SegmentedControl';
 import { PlacesList } from '~/components/PlacesList';
-import { SegmentedControl } from '~/components/ui/SegmentedControl';
 
 export default function MapScreen() {
   const statusBarInset = useSafeAreaInsets().top; // inset of the status bar
@@ -18,8 +18,8 @@ export default function MapScreen() {
         <SegmentedControl
           values={['Carte', 'Liste']}
           selectedIndex={selectedIndex}
-          onChange={(event) => {
-            setSelectedIndex(event.nativeEvent.selectedSegmentIndex);
+          onIndexChange={(index) => {
+            setSelectedIndex(index);
           }}
         />
       </View>
