@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Alert, View } from 'react-native';
 
 import { Button } from '~/components/nativewindui/Button';
+import { Form, FormItem, FormSection } from '~/components/nativewindui/Form';
 import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { supabase } from '~/utils/supabase-legend';
@@ -45,16 +46,22 @@ export default function Auth() {
   return (
     <View className="mt-10 p-3">
       <View className="mb-5 w-full py-1">
-        <TextField
-          label="Email"
-          onChangeText={(text) => setEmail(text)}
-          value={email}
-          placeholder="email@address.com"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoComplete="email"
-          autoCorrect={false}
-        />
+        <Form>
+          <FormSection>
+            <FormItem>
+              <TextField
+                label="Email"
+                onChangeText={(text) => setEmail(text)}
+                value={email}
+                placeholder="email@address.com"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect={false}
+              />
+            </FormItem>
+          </FormSection>
+        </Form>
       </View>
       <View className="w-full py-1">
         <TextField
@@ -64,7 +71,7 @@ export default function Auth() {
           placeholder="********"
           secureTextEntry={isVisble}
         />
-        <Text className="text-muted" onPress={toggleSecureText}>
+        <Text className="ml-2 text-muted" onPress={toggleSecureText}>
           {!isVisble ? 'Masquer' : 'Afficher'} le mot de passe
         </Text>
       </View>
