@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { Session } from '@supabase/supabase-js';
 
 import { Button } from '~/components/nativewindui/Button';
@@ -70,18 +70,18 @@ export default function Account({ session }: { session: Session }) {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+    <View className="mt-10 p-3">
+      <View className="mt-5 self-stretch py-1">
         <TextField label="Email" value={session?.user?.email} disabled />
       </View>
-      <View style={styles.verticallySpaced}>
+      <View className="self-stretch py-1">
         <TextField
           label="Nom d'utilisateur"
           value={username || ''}
           onChangeText={(text) => setUsername(text)}
         />
       </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
+      <View className="mt-5 self-stretch py-1">
         <Button
           onPress={() => updateProfile({ username, avatar_url: avatarUrl })}
           disabled={loading}>
@@ -89,7 +89,7 @@ export default function Account({ session }: { session: Session }) {
         </Button>
       </View>
 
-      <View style={styles.verticallySpaced}>
+      <View className="self-stretch py-1">
         <Button onPress={() => supabase.auth.signOut()} variant="tonal">
           <Text>Se déconnecter</Text>
         </Button>
@@ -97,18 +97,3 @@ export default function Account({ session }: { session: Session }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 40,
-    padding: 12,
-  },
-  mt20: {
-    marginTop: 20,
-  },
-  verticallySpaced: {
-    alignSelf: 'stretch',
-    paddingBottom: 4,
-    paddingTop: 4,
-  },
-});
