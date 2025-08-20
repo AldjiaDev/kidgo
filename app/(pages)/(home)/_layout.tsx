@@ -1,4 +1,3 @@
-import { ThemeToggle } from '~/components/ThemeToggle';
 import Stack from '~/components/ui/Stack';
 
 export const unstable_settings = {

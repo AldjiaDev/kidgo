@@ -104,7 +104,7 @@ const PlacesListContent = observer(() => {
     return (
       <Link
         href={{
-          pathname: '/(index)/modal',
+          pathname: '/(pages)/(home)/modal',
           params: {
             id: place.id,
             name: place.name || '',

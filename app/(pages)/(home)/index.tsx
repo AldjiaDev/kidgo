@@ -24,18 +24,22 @@ export default function HomeScreen() {
         paddingVertical: 16,
         gap: 2,
       }}>
-      <React.Suspense fallback={<Loading />}>
-        {searchValue ? (
-          <SearchResults searchValue={searchValue} />
-        ) : (
-          <>
-            <PlacesSection priceRange="Gratuit" />
-            <PlacesSection priceRange="€" />
-            <PlacesSection priceRange="€€" />
-            <PlacesSection priceRange="€€€" />
-          </>
-        )}
-      </React.Suspense>
+      {process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true' ? (
+        <Link href="/(storybook)">Open Storybook</Link>
+      ) : (
+        <React.Suspense fallback={<Loading />}>
+          {searchValue ? (
+            <SearchResults searchValue={searchValue} />
+          ) : (
+            <>
+              <PlacesSection priceRange="Gratuit" />
+              <PlacesSection priceRange="€" />
+              <PlacesSection priceRange="€€" />
+              <PlacesSection priceRange="€€€" />
+            </>
+          )}
+        </React.Suspense>
+      )}
     </BodyScrollView>
   );
 }
@@ -145,7 +149,7 @@ function PlaceItem({ place }: { place: Tables<'places'> }) {
     <View className="mr-4">
       <Link
         href={{
-          pathname: '/(index)/modal',
+          pathname: '/(pages)/(home)/modal',
           params: {
             id: place.id,
             name: place.name || '',
