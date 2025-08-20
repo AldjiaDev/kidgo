@@ -1,5 +1,6 @@
 import { Link } from 'expo-router';
 
+import { AppVersion } from '~/components/AppVersion';
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
@@ -27,6 +28,7 @@ export default function SettingsScreen() {
           <Text>Mon profil</Text>
         </Button>
       </Link>
+      <AppVersion />
     </BodyScrollView>
   );
 }
