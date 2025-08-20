@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Container } from '~/components/Container';
 import { Maps } from '~/components/Maps';
 import { SegmentedControl } from '~/components/nativewindui/SegmentedControl/SegmentedControl';
 import { PlacesList } from '~/components/PlacesList';
@@ -24,7 +25,11 @@ export default function MapScreen() {
         />
       </View>
       {selectedIndex === 0 && <Maps />}
-      {selectedIndex === 1 && <PlacesList />}
+      {selectedIndex === 1 && (
+        <Container>
+          <PlacesList />
+        </Container>
+      )}
     </View>
   );
 }

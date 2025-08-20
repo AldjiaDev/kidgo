@@ -19,6 +19,7 @@ bun start
 - Expo Router
 - [NativeWind](https://www.nativewind.dev/) and [NativeWindUI](https://nativewindui.com/component/button)
 - [icons](https://github.com/roninoss/icons)
+- [Supabase](https://supabase.com/) for authentication and database
 
 ## Design
 
