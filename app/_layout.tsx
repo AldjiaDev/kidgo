@@ -1,18 +1,14 @@
 import 'expo-dev-client';
 
-import { AppState, Pressable, View } from 'react-native';
+import { AppState } from 'react-native';
 import { ReanimatedScreenProvider } from 'react-native-screens/reanimated';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { Icon } from '@roninoss/icons';
-import { Link } from 'expo-router';
+import { Stack } from 'expo-router';
 
 import '../global.css';
 
-import Tabs from '~/components/ui/Tabs';
 import { ThemeProvider } from '~/components/ui/ThemeProvider';
-import { cn } from '~/lib/cn';
-import { useColorScheme } from '~/lib/useColorScheme';
 import { supabase } from '~/utils/supabase-legend';
 
 export {
@@ -32,32 +28,33 @@ AppState.addEventListener('change', (state) => {
   }
 });
 
+const StorybookEnabled = process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true';
+
+export const unstable_settings = {
+  initialRouteName: StorybookEnabled ? '(storybook)/index' : '(pages)/index',
+};
+
 export default function RootLayout() {
   return (
-    <>
-      <ThemeProvider>
-        <ReanimatedScreenProvider>
-          <BottomSheetModalProvider>
-            <ActionSheetProvider>
-              {/* <Stack screenOptions={SCREEN_OPTIONS}>
-              <Stack.Screen name="index" options={INDEX_OPTIONS} />
-              <Stack.Screen name="modal" options={MODAL_OPTIONS} />
-            </Stack> */}
+    <ThemeProvider>
+      <ReanimatedScreenProvider>
+        <BottomSheetModalProvider>
+          <ActionSheetProvider>
+            <Stack screenOptions={SCREEN_OPTIONS}>
+              <Stack.Protected guard={StorybookEnabled}>
+                <Stack.Screen name="(storybook)/index" />
+              </Stack.Protected>
 
-              <Tabs>
-                <Tabs.Screen name="(index)" title="Recherche" systemImage="magnify" />
-                <Tabs.Screen name="(map)" title="Carte" systemImage="map" />
-                <Tabs.Screen name="(settings)" title="Profile" systemImage="cog" />
-                <Tabs.Screen name="+not-found" title="Non trouvé" options={{ href: null }} />
-              </Tabs>
-            </ActionSheetProvider>
-          </BottomSheetModalProvider>
-        </ReanimatedScreenProvider>
-      </ThemeProvider>
-    </>
+              <Stack.Screen name="(pages)/index" />
+            </Stack>
+          </ActionSheetProvider>
+        </BottomSheetModalProvider>
+      </ReanimatedScreenProvider>
+    </ThemeProvider>
   );
 }
 
 const SCREEN_OPTIONS = {
+  headerShown: false,
   animation: 'ios_from_right', // for android
 } as const;
