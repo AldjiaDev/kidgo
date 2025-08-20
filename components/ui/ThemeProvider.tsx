@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 
@@ -17,7 +18,9 @@ export function ThemeProvider({ children }: PropsWithChildren) {
         style={isDarkColorScheme ? 'light' : 'dark'}
       />
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <NavThemeProvider value={NAV_THEME[colorScheme]}>{children}</NavThemeProvider>
+        <KeyboardProvider statusBarTranslucent navigationBarTranslucent>
+          <NavThemeProvider value={NAV_THEME[colorScheme]}>{children}</NavThemeProvider>
+        </KeyboardProvider>
       </GestureHandlerRootView>
     </>
   );
