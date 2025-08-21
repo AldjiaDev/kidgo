@@ -23,6 +23,11 @@ export default function SettingsScreen() {
           <Text>Playground Todos</Text>
         </Button>
       </Link>
+      <Link href="/(settings)/playground-categories" asChild>
+        <Button>
+          <Text>Playground Categories</Text>
+        </Button>
+      </Link>
       <Link href="/(settings)/profile" asChild>
         <Button variant="primary" className="w-full">
           <Text>Mon profil</Text>

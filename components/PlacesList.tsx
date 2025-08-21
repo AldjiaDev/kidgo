@@ -8,6 +8,7 @@ import { Link } from 'expo-router';
 import { cssInterop } from 'nativewind';
 
 import { useColorScheme } from '~/lib/useColorScheme';
+import { getCategoryInfo } from '~/utils/categoryFormatter';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -15,9 +16,6 @@ cssInterop(LegendList, {
   className: 'style',
   contentContainerClassName: 'contentContainerStyle',
 });
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface PlacesListProps {}
 
 const PlacesListContent = observer(() => {
   const places = places$.get();
@@ -101,6 +99,8 @@ const PlacesListContent = observer(() => {
   }
 
   function renderItem({ item: place }: { item: Tables<'places'> & { distance: number | null } }) {
+    const categoryInfo = getCategoryInfo(place.category);
+
     return (
       <Link
         href={{
@@ -122,8 +122,15 @@ const PlacesListContent = observer(() => {
         asChild>
         <TouchableOpacity className="px-4 py-3">
           <View className="flex-row items-center gap-3">
-            <View className="h-12 w-12 items-center justify-center rounded-lg bg-muted">
-              <Icon name="map-marker-outline" size={20} color={colors.grey} />
+            <View
+              className={`h-12 w-12 items-center justify-center rounded-lg ${categoryInfo.backgroundColor}`}>
+              <Text
+                style={{
+                  fontSize: 20,
+                  lineHeight: 28,
+                }}>
+                {categoryInfo.emoji}
+              </Text>
             </View>
             <View className="flex-1 gap-1">
               <View className="flex-row items-center justify-between">
@@ -175,6 +182,6 @@ const PlacesListContent = observer(() => {
   );
 });
 
-export function PlacesList(props: PlacesListProps) {
+export function PlacesList() {
   return <PlacesListContent />;
 }
