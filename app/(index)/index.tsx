@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'expo-router';
 
-import { PlaceItem, PlacesSection } from '~/components/PlacesSection';
+import { PlacesSection } from '~/components/PlacesSection';
 import { SearchResults } from '~/components/SearchResuts';
-import { Loading, SkeletonSection } from '~/components/Skeleton';
+import { Loading } from '~/components/Skeleton';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { useHeaderSearchBar } from '~/lib/useHeaderSearchBar';
 
