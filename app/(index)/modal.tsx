@@ -112,7 +112,9 @@ export default function ModalScreen() {
                 <View className="flex-row items-center gap-3">
                   <Icon name="map-marker-outline" size={20} color={colors.grey} />
                   <View className="flex-1">
-                    <Text variant="body">{address}</Text>
+                    <Text variant="body" selectable>
+                      {address}
+                    </Text>
                   </View>
                 </View>
 

@@ -17,7 +17,7 @@ export function AppVersion({ className }: AppVersionProps) {
     : `v${version}.${buildNumber}`;
 
   return (
-    <Text variant="caption1" className={`text-muted-foreground ${className || ''}`}>
+    <Text variant="caption1" className={`py-4 text-muted-foreground ${className || ''}`}>
       {displayVersion}
     </Text>
   );
