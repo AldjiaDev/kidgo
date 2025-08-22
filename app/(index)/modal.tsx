@@ -1,9 +1,9 @@
 import { Linking, Platform, ScrollView, View } from 'react-native';
 import { Icon } from '@roninoss/icons';
-import * as Clipboard from 'expo-clipboard';
 import { useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
+import { ClipboardButton } from '~/components/ClipboardButton';
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import Stack from '~/components/ui/Stack';
@@ -26,10 +26,6 @@ export default function ModalScreen() {
     if (website_url && website_url !== '#') {
       Linking.openURL(website_url);
     }
-  }
-
-  async function copyToClipboard() {
-    await Clipboard.setStringAsync(address);
   }
 
   return (
@@ -119,9 +115,7 @@ export default function ModalScreen() {
                 </View>
 
                 <View className="gap-2">
-                  <Button onPress={copyToClipboard}>
-                    <Text>Copier l’adresse</Text>
-                  </Button>
+                  <ClipboardButton address={address} />
 
                   {/* add a Button open on Waze mobile app */}
                   <Button
