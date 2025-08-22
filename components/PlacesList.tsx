@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { LegendList } from '@legendapp/list';
 import { observer } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
-import * as Location from 'expo-location';
 import { Link } from 'expo-router';
 import { cssInterop } from 'nativewind';
 
+import { useLocation } from '~/contexts/LocationContext';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { getCategoryInfo } from '~/utils/categoryFormatter';
 import { Tables } from '~/utils/database.types';
@@ -20,21 +20,14 @@ cssInterop(LegendList, {
 const PlacesListContent = observer(() => {
   const places = places$.get();
   const { colors } = useColorScheme();
-
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  const { location, requestPermission, hasPermission } = useLocation();
 
   // Get user's current location
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
+    if (!hasPermission) {
+      requestPermission();
+    }
+  }, [hasPermission, requestPermission]);
 
   // Calculate distance between two coordinates using Haversine formula
   function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {

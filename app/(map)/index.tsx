@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Container } from '~/components/Container';
+import { LocationPermissionBanner } from '~/components/LocationPermissionBanner';
 import { Maps } from '~/components/Maps';
 import { SegmentedControl } from '~/components/nativewindui/SegmentedControl/SegmentedControl';
 import { PlacesList } from '~/components/PlacesList';
@@ -15,6 +16,7 @@ export default function MapScreen() {
 
   return (
     <View className="flex-1">
+      <LocationPermissionBanner />
       <View className={`absolute left-4 right-4 z-10`} style={{ bottom: largeHeaderInset }}>
         <SegmentedControl
           values={['Carte', 'Liste']}

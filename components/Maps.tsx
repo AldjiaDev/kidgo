@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 import { observer } from '@legendapp/state/react';
-import * as Location from 'expo-location';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
 import { ClipboardButton } from '~/components/ClipboardButton';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
+import { useLocation } from '~/contexts/LocationContext';
 import { getCategoryInfo } from '~/utils/categoryFormatter';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
@@ -61,11 +61,10 @@ function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'pla
 
 const MapsContent = observer(() => {
   const places = places$.get();
+  const { location, requestPermission, hasPermission } = useLocation();
 
   const bottomSheetModalRef = useSheetRef();
 
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
 
   // Function to handle marker clicks
@@ -92,17 +91,10 @@ const MapsContent = observer(() => {
 
   // @todo migrate Location state to a context provider
   useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
-  }, []);
+    if (!hasPermission) {
+      requestPermission();
+    }
+  }, [hasPermission, requestPermission]);
 
   // Filter places that have valid coordinates
   const validPlaces = places
@@ -177,11 +169,7 @@ const MapsContent = observer(() => {
         />
       );
     } else {
-      return errorMsg ? (
-        <Text>{errorMsg}</Text>
-      ) : (
-        <Text>Maps are only available on Android and iOS</Text>
-      );
+      return <Text>Maps are only available on Android and iOS</Text>;
     }
   };
 
