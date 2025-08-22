@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Platform, StyleSheet, Text } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { observer } from '@legendapp/state/react';
 import * as Location from 'expo-location';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
+import { ClipboardButton } from '~/components/ClipboardButton';
+import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
+import { Text } from '~/components/nativewindui/Text';
+import { getCategoryInfo } from '~/utils/categoryFormatter';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface MapsProps {}
 
 const LILLE_COORDINATES = {
   coordinates: {
@@ -18,11 +19,76 @@ const LILLE_COORDINATES = {
   zoom: 13,
 };
 
+// Bottom sheet content component
+function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'places'> | null }) {
+  return (
+    <View className="flex-1 p-4">
+      {selectedPlace ? (
+        <View className="gap-3">
+          <View className="flex-row items-center gap-3">
+            <Text variant="heading">{getCategoryInfo(selectedPlace.category).emoji}</Text>
+            <View className="flex-1">
+              <Text variant="heading" numberOfLines={2}>
+                {selectedPlace.name}
+              </Text>
+              <Text className="text-sm text-muted-foreground">
+                {selectedPlace.category || 'Activité'}
+              </Text>
+            </View>
+          </View>
+          {selectedPlace.description && (
+            <Text className="text-sm" numberOfLines={3}>
+              {selectedPlace.description}
+            </Text>
+          )}
+          {selectedPlace.address && (
+            <>
+              <Text className="text-sm text-muted-foreground">📍 {selectedPlace.address}</Text>
+              <ClipboardButton address={selectedPlace.address} />
+            </>
+          )}
+        </View>
+      ) : (
+        <View className="flex-1 items-center justify-center">
+          <Text className="text-muted-foreground">
+            Appuyez sur un marqueur pour voir les détails
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
 const MapsContent = observer(() => {
   const places = places$.get();
 
+  const bottomSheetModalRef = useSheetRef();
+
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
+
+  // Function to handle marker clicks
+  const handleMarkerClick = (markerId: string) => {
+    const place = validPlaces.find((p) => p.id === markerId);
+    if (place) {
+      setSelectedPlace(place);
+      bottomSheetModalRef.current?.present();
+    }
+  };
+
+  // Common camera position logic
+  const getCameraPosition = () => {
+    return location
+      ? {
+          coordinates: {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          },
+          zoom: 13,
+        }
+      : LILLE_COORDINATES;
+  };
 
   // @todo migrate Location state to a context provider
   useEffect(() => {
@@ -49,80 +115,91 @@ const MapsContent = observer(() => {
       )
     : [];
 
-  // Create markers for Apple Maps
-  const appleMarkers: AppleMaps.Marker[] = validPlaces.map((place: Tables<'places'>) => ({
+  // Create base marker data
+  const createBaseMarker = (place: Tables<'places'>) => ({
     id: place.id,
     coordinates: {
       latitude: place.latitude!,
       longitude: place.longitude!,
     },
     title: place.name!,
-  }));
+  });
 
-  // Create markers for Google Maps
-  const googleMarkers: GoogleMaps.Marker[] = validPlaces.map((place: Tables<'places'>) => ({
-    id: place.id,
-    coordinates: {
-      latitude: place.latitude!,
-      longitude: place.longitude!,
-    },
-    title: place.name!,
+  // Create markers for Apple Maps
+  const appleMarkers: AppleMaps.Marker[] = validPlaces.map(createBaseMarker);
+
+  // Create markers for Google Maps (with snippet)
+  const googleMarkers: GoogleMaps.Marker[] = validPlaces.map((place) => ({
+    ...createBaseMarker(place),
     snippet: place.category || undefined,
   }));
 
-  if (Platform.OS === 'ios') {
-    return (
-      <AppleMaps.View
-        style={StyleSheet.absoluteFill}
-        markers={appleMarkers}
-        cameraPosition={
-          location
-            ? {
-                coordinates: {
-                  latitude: location.coords.latitude,
-                  longitude: location.coords.longitude,
-                },
-                zoom: 13,
-              }
-            : LILLE_COORDINATES
-        }
-        properties={{
-          selectionEnabled: false,
-          mapType: AppleMaps.MapType.STANDARD,
-        }}
-      />
-    );
-  } else if (Platform.OS === 'android') {
-    return (
-      <GoogleMaps.View
-        style={{ flex: 1 }}
-        markers={googleMarkers}
-        cameraPosition={
-          location
-            ? {
-                coordinates: {
-                  latitude: location.coords.latitude,
-                  longitude: location.coords.longitude,
-                },
-                zoom: 13,
-              }
-            : LILLE_COORDINATES
-        }
-        properties={{
-          selectionEnabled: false,
-          mapType: GoogleMaps.MapType.NORMAL,
-        }}
-      />
-    );
-  } else {
-    return errorMsg ? (
-      <Text>{errorMsg}</Text>
-    ) : (
-      <Text>Maps are only available on Android and iOS</Text>
-    );
-  }
+  // Common marker click handler
+  const markerClickHandler = (marker: { id?: string }) => {
+    if (marker.id) {
+      handleMarkerClick(marker.id);
+    }
+  };
+
+  // Common map properties
+  const commonMapProps = {
+    onMarkerClick: markerClickHandler,
+    cameraPosition: getCameraPosition(),
+    properties: {
+      selectionEnabled: false,
+    },
+  };
+
+  // Render map based on platform
+  const renderMap = () => {
+    if (Platform.OS === 'ios') {
+      return (
+        <AppleMaps.View
+          style={StyleSheet.absoluteFill}
+          markers={appleMarkers}
+          {...commonMapProps}
+          properties={{
+            ...commonMapProps.properties,
+            mapType: AppleMaps.MapType.STANDARD,
+          }}
+        />
+      );
+    } else if (Platform.OS === 'android') {
+      return (
+        <GoogleMaps.View
+          style={{ flex: 1 }}
+          markers={googleMarkers}
+          {...commonMapProps}
+          properties={{
+            ...commonMapProps.properties,
+            mapType: GoogleMaps.MapType.NORMAL,
+          }}
+        />
+      );
+    } else {
+      return errorMsg ? (
+        <Text>{errorMsg}</Text>
+      ) : (
+        <Text>Maps are only available on Android and iOS</Text>
+      );
+    }
+  };
+
+  // Only show bottom sheet on mobile platforms
+  const showBottomSheet = Platform.OS === 'ios' || Platform.OS === 'android';
+
+  return (
+    <>
+      {renderMap()}
+      {showBottomSheet && (
+        <Sheet ref={bottomSheetModalRef} snapPoints={[300]}>
+          <PlaceBottomSheetContent selectedPlace={selectedPlace} />
+        </Sheet>
+      )}
+    </>
+  );
 });
 
-export function Maps(props: MapsProps) {
+export function Maps() {
   return <MapsContent />;
 }
