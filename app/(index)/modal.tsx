@@ -4,10 +4,11 @@ import { useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
 import { ClipboardButton } from '~/components/ClipboardButton';
-import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import Stack from '~/components/ui/Stack';
+import { WazeButton } from '~/components/WazeButton';
 import { useColorScheme } from '~/lib/useColorScheme';
+import { parseArrayToString } from '~/utils/parseArrayToString';
 
 export default function ModalScreen() {
   const { colors, colorScheme } = useColorScheme();
@@ -24,7 +25,7 @@ export default function ModalScreen() {
 
   function handleWebsitePress() {
     if (website_url && website_url !== '#') {
-      Linking.openURL(website_url);
+      Linking.openURL(parseArrayToString(website_url));
     }
   }
 
@@ -118,13 +119,7 @@ export default function ModalScreen() {
                   <ClipboardButton address={address} />
 
                   {/* add a Button open on Waze mobile app */}
-                  <Button
-                    onPress={() => {
-                      Linking.openURL(`https://waze.com/ul?q=${encodeURIComponent(address)}`);
-                    }}
-                    variant="tonal">
-                    <Text>Ouvrir Waze</Text>
-                  </Button>
+                  <WazeButton address={address} />
                 </View>
               </>
             )}
