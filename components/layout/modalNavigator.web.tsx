@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-color-literals */
+
 import React from 'react';
 import { Platform } from 'react-native';
 import {

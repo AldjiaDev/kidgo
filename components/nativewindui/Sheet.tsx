@@ -49,4 +49,6 @@ function useSheetRef() {
   return React.useRef<BottomSheetModal>(null);
 }
 
+Sheet.displayName = 'Sheet';
+
 export { Sheet, useSheetRef };

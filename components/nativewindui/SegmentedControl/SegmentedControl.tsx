@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 import { SegmentControlProps } from '~/components/nativewindui/SegmentedControl/SegmentedControl.ios';
 import { Text } from '~/components/nativewindui/Text';
