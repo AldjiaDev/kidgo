@@ -52,5 +52,11 @@
       }
     }
   },
-  "submit": {}
+  "submit": {
+    "production": {
+      "ios": {
+        "companyName": "weshipit.today"
+      }
+    }
+  }
 }
