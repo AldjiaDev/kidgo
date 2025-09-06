@@ -48,6 +48,8 @@ const CATEGORIES = [
   'Zoo',
 ];
 
+const PRICE_RANGES = ['Gratuit', '€', '€€', '€€€'];
+
 interface AddPlaceFormProps {
   onSubmit?: () => void;
   onCancel?: () => void;
@@ -58,13 +60,16 @@ interface FormData {
   category: string;
   description: string;
   address: string;
+  price_range: string;
 }
 
 export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [categoryOnChange, setCategoryOnChange] = useState<((value: string) => void) | null>(null);
+  const [priceOnChange, setPriceOnChange] = useState<((value: string) => void) | null>(null);
   const { location } = useLocation();
   const categorySheetRef = useSheetRef();
+  const priceSheetRef = useSheetRef();
 
   const {
     control,
@@ -77,6 +82,7 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
       category: '',
       description: '',
       address: '',
+      price_range: '',
     },
     mode: 'onChange',
   });
@@ -90,6 +96,7 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         category: data.category.trim() || undefined,
         description: data.description.trim() || undefined,
         address: data.address.trim() || undefined,
+        price_range: data.price_range.trim() || undefined,
         latitude: location?.coords.latitude,
         longitude: location?.coords.longitude,
       });
@@ -182,6 +189,34 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
 
       <Controller
         control={control}
+        name="price_range"
+        render={({ field: { onChange, value } }) => {
+          // Store the onChange function for use in the sheet
+          if (priceOnChange !== onChange) {
+            setPriceOnChange(() => onChange);
+          }
+
+          return (
+            <View className="mb-4">
+              <Text className="mb-2 text-sm font-medium text-foreground">Prix</Text>
+              <Pressable
+                onPress={() => priceSheetRef.current?.present()}
+                className="rounded-md border border-input bg-background px-3 py-3"
+                disabled={isSubmitting}>
+                <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
+                  {value || 'Sélectionnez une gamme de prix...'}
+                </Text>
+              </Pressable>
+              {errors.price_range && (
+                <Text className="mt-1 text-sm text-destructive">{errors.price_range.message}</Text>
+              )}
+            </View>
+          );
+        }}
+      />
+
+      <Controller
+        control={control}
         name="address"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextField
@@ -227,6 +262,24 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
               </Pressable>
             ))}
           </ScrollView>
+        </View>
+      </Sheet>
+
+      {/* Price Selection Sheet */}
+      <Sheet ref={priceSheetRef} snapPoints={['40%']}>
+        <View className="flex-1 p-4">
+          <Text className="mb-4 text-lg font-semibold">Sélectionnez une gamme de prix</Text>
+          {PRICE_RANGES.map((price) => (
+            <Pressable
+              key={price}
+              onPress={() => {
+                priceOnChange?.(price);
+                priceSheetRef.current?.dismiss();
+              }}
+              className="border-b border-border py-3">
+              <Text className="text-foreground">{price}</Text>
+            </Pressable>
+          ))}
         </View>
       </Sheet>
     </View>
