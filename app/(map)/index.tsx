@@ -17,7 +17,7 @@ export default function MapScreen() {
   return (
     <View className="flex-1">
       <LocationPermissionBanner />
-      <View className={`absolute left-4 right-4 z-10`} style={{ bottom: largeHeaderInset }}>
+      <View className="absolute left-4 right-4 z-10" style={{ top: largeHeaderInset }}>
         <SegmentedControl
           values={['Carte', 'Liste']}
           selectedIndex={selectedIndex}

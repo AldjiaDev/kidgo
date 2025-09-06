@@ -73,6 +73,27 @@ export function toggleDone(id: string) {
   todos$[id].done.set((prev) => !prev);
 }
 
+export function addPlace(placeData: {
+  name: string;
+  category?: string;
+  description?: string;
+  address?: string;
+  latitude?: number;
+  longitude?: number;
+  age_groups?: number[];
+  area_type?: string;
+  price_range?: string;
+  opening_hours?: string;
+  website_url?: string;
+}) {
+  const id = generateId();
+  // Add keyed by id to the places$ observable to trigger a create in Supabase
+  places$[id].assign({
+    id,
+    ...placeData,
+  });
+}
+
 export const places$ = observable(
   customSynced({
     supabase,

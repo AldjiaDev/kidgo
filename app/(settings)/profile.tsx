@@ -1,23 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Session } from '@supabase/supabase-js';
-
 import Account from '~/components/Account';
 import Auth from '~/components/Auth';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { supabase } from '~/utils/supabase-legend';
+import { useAuth } from '~/hooks/useAuth';
 
 export default function ProfileScreen() {
-  const [session, setSession] = useState<Session | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
-
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-  }, []);
+  const { session, isAuthenticated } = useAuth();
 
   return (
     <BodyScrollView
