@@ -1,5 +1,6 @@
 import { Linking, View } from 'react-native';
 import { Icon } from '@roninoss/icons';
+import * as WebBrowser from 'expo-web-browser';
 
 import { ClipboardButton } from '~/components/ClipboardButton';
 import { Text } from '~/components/nativewindui/Text';
@@ -26,9 +27,9 @@ export function PlaceDetails({ data }: PlaceDetailsProps) {
     website_url,
   } = data;
 
-  function handleWebsitePress() {
+  async function handleWebsitePress() {
     if (website_url && website_url !== '#') {
-      Linking.openURL(parseArrayToString(website_url));
+      await WebBrowser.openBrowserAsync(parseArrayToString(website_url));
     }
   }
 

@@ -1,6 +1,7 @@
 import { Alert } from 'react-native';
-import Constants from 'expo-constants';
+import * as Device from 'expo-device';
 import * as Linking from 'expo-linking';
+import { toast } from 'sonner-native';
 
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
@@ -24,7 +25,7 @@ function openWaze({
 }) {
   return async function () {
     // Check if running on simulator
-    const isSimulator = !Constants.isDevice;
+    const isSimulator = !Device.isDevice;
 
     if (isSimulator) {
       Alert.alert(
@@ -49,6 +50,8 @@ function openWaze({
     } else {
       // @todo add a toast here
       // Optionally show a toast or alert here
+      console.warn('Aucune adresse ou coordonnées fournies pour Waze.');
+      toast.error("Impossible d'ouvrir Waze : adresse ou coordonnées manquantes.");
       return;
     }
 

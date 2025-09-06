@@ -80,6 +80,12 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           },
         },
       ],
+      [
+        'expo-web-browser',
+        {
+          experimentalLauncherActivity: true,
+        },
+      ],
     ],
     extra: {
       router: {},
