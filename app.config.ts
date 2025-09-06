@@ -80,6 +80,17 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           },
         },
       ],
+      [
+        'react-native-app-clip',
+        {
+          name: 'Kid GO Clip',
+          bundleIdSuffix: 'Clip',
+          targetSuffix: 'Clip',
+          deploymentTarget: '16.0',
+          requestEphemeralUserNotification: true,
+          requestLocationConfirmation: true,
+        },
+      ],
     ],
     extra: {
       router: {},
