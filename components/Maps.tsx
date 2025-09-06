@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { observer } from '@legendapp/state/react';
+import { Icon } from '@roninoss/icons';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
+import { AddPlaceForm } from '~/components/AddPlaceForm';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
+import { useColorScheme } from '~/lib/useColorScheme';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -41,6 +44,7 @@ const MapsContent = observer(() => {
   const { location, requestPermission, hasPermission } = useLocation();
 
   const bottomSheetModalRef = useSheetRef();
+  const addPlaceSheetRef = useSheetRef();
 
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
 
@@ -51,6 +55,16 @@ const MapsContent = observer(() => {
       setSelectedPlace(place);
       bottomSheetModalRef.current?.present();
     }
+  };
+
+  // Function to handle add place button click
+  const handleAddPlaceClick = () => {
+    addPlaceSheetRef.current?.present();
+  };
+
+  // Function to handle successful place addition
+  const handlePlaceAdded = () => {
+    addPlaceSheetRef.current?.dismiss();
   };
 
   // Common camera position logic
@@ -156,11 +170,34 @@ const MapsContent = observer(() => {
   return (
     <>
       {renderMap()}
+      {/* Floating Action Button */}
+      {showBottomSheet && (
+        <View className="absolute bottom-4 right-4 z-20 shadow-lg">
+          <Pressable
+            onPress={handleAddPlaceClick}
+            className="h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.8 : 1,
+            })}>
+            <Icon name="plus" size={24} color="white" />
+          </Pressable>
+        </View>
+      )}
+      {/* Place Details Bottom Sheet */}
       {showBottomSheet && (
         <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
           <BottomSheetScrollView>
             <PlaceBottomSheetContent selectedPlace={selectedPlace} />
           </BottomSheetScrollView>
+        </Sheet>
+      )}
+      {/* Add Place Bottom Sheet */}
+      {showBottomSheet && (
+        <Sheet ref={addPlaceSheetRef} snapPoints={['80%']}>
+          <AddPlaceForm
+            onSubmit={handlePlaceAdded}
+            onCancel={() => addPlaceSheetRef.current?.dismiss()}
+          />
         </Sheet>
       )}
     </>
