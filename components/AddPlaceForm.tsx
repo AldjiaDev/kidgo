@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { Button } from '~/components/nativewindui/Button';
@@ -12,40 +13,49 @@ interface AddPlaceFormProps {
   onCancel?: () => void;
 }
 
-export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
-  const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [address, setAddress] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+interface FormData {
+  name: string;
+  category: string;
+  description: string;
+  address: string;
+}
 
+export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { location } = useLocation();
 
-  const handleSubmit = () => {
-    if (!name.trim()) {
-      return;
-    }
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    defaultValues: {
+      name: '',
+      category: '',
+      description: '',
+      address: '',
+    },
+    mode: 'onChange',
+  });
 
+  const onSubmitForm = async (data: FormData) => {
     setIsSubmitting(true);
 
     try {
       addPlace({
-        name: name.trim(),
-        category: category.trim() || undefined,
-        description: description.trim() || undefined,
-        address: address.trim() || undefined,
+        name: data.name.trim(),
+        category: data.category.trim() || undefined,
+        description: data.description.trim() || undefined,
+        address: data.address.trim() || undefined,
         latitude: location?.coords.latitude,
         longitude: location?.coords.longitude,
       });
 
       // Reset form
-      setName('');
-      setCategory('');
-      setDescription('');
-      setAddress('');
-
+      reset();
       onSubmit?.();
-    } catch (error) {
+    } catch {
       // Handle error silently - Legend State will retry automatically
     } finally {
       setIsSubmitting(false);
@@ -56,42 +66,81 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
     <View className="flex-1 p-4">
       <Text className="mb-4 text-2xl font-bold">Ajouter un lieu</Text>
 
-      <TextField
-        label="Nom du lieu *"
-        value={name}
-        onChangeText={setName}
-        placeholder="Nom du lieu"
-        className="mb-4"
-        editable={!isSubmitting}
+      <Controller
+        control={control}
+        name="name"
+        rules={{
+          required: 'Le nom du lieu est obligatoire',
+          minLength: {
+            value: 2,
+            message: 'Le nom doit contenir au moins 2 caractères',
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextField
+            label="Nom du lieu *"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="Nom du lieu"
+            className="mb-4"
+            editable={!isSubmitting}
+            errorMessage={errors.name?.message}
+          />
+        )}
       />
 
-      <TextField
-        label="Catégorie"
-        value={category}
-        onChangeText={setCategory}
-        placeholder="ex: Parc, Musée, Restaurant..."
-        className="mb-4"
-        editable={!isSubmitting}
+      <Controller
+        control={control}
+        name="category"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextField
+            label="Catégorie"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="ex: Parc, Musée, Restaurant..."
+            className="mb-4"
+            editable={!isSubmitting}
+            errorMessage={errors.category?.message}
+          />
+        )}
       />
 
-      <TextField
-        label="Adresse"
-        value={address}
-        onChangeText={setAddress}
-        placeholder="Adresse complète"
-        className="mb-4"
-        editable={!isSubmitting}
+      <Controller
+        control={control}
+        name="address"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextField
+            label="Adresse"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="Adresse complète"
+            className="mb-4"
+            editable={!isSubmitting}
+            errorMessage={errors.address?.message}
+          />
+        )}
       />
 
-      <TextField
-        label="Description"
-        value={description}
-        onChangeText={setDescription}
-        placeholder="Décrivez ce lieu..."
-        multiline
-        numberOfLines={3}
-        className="mb-6"
-        editable={!isSubmitting}
+      <Controller
+        control={control}
+        name="description"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextField
+            label="Description"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="Décrivez ce lieu..."
+            multiline
+            numberOfLines={3}
+            className="mb-6"
+            editable={!isSubmitting}
+            errorMessage={errors.description?.message}
+          />
+        )}
       />
 
       <View className="flex-row gap-3">
@@ -99,7 +148,10 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
           <Text>Annuler</Text>
         </Button>
 
-        <Button onPress={handleSubmit} className="flex-1" disabled={!name.trim() || isSubmitting}>
+        <Button
+          onPress={handleSubmit(onSubmitForm)}
+          className="flex-1"
+          disabled={!isValid || isSubmitting}>
           <Text>{isSubmitting ? 'Ajout...' : 'Ajouter'}</Text>
         </Button>
       </View>
