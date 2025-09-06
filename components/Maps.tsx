@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { observer } from '@legendapp/state/react';
-import { AppleMaps, GoogleMaps } from 'expo-maps';
 import { Icon } from '@roninoss/icons';
+import { AppleMaps, GoogleMaps } from 'expo-maps';
 
 import { AddPlaceForm } from '~/components/AddPlaceForm';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
-import { useColorScheme } from '~/lib/useColorScheme';
 import { useLocation } from '~/contexts/LocationContext';
+import { useColorScheme } from '~/lib/useColorScheme';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -42,7 +42,6 @@ function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'pla
 const MapsContent = observer(() => {
   const places = places$.get();
   const { location, requestPermission, hasPermission } = useLocation();
-  const { colors } = useColorScheme();
 
   const bottomSheetModalRef = useSheetRef();
   const addPlaceSheetRef = useSheetRef();
@@ -173,18 +172,10 @@ const MapsContent = observer(() => {
       {renderMap()}
       {/* Floating Action Button */}
       {showBottomSheet && (
-        <View
-          className="absolute right-4 bottom-4 z-20"
-          style={{
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-          }}>
+        <View className="absolute bottom-4 right-4 z-20 shadow-lg">
           <Pressable
             onPress={handleAddPlaceClick}
-            className="h-14 w-14 items-center justify-center rounded-full bg-primary"
+            className="h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
             style={({ pressed }) => ({
               opacity: pressed ? 0.8 : 1,
             })}>

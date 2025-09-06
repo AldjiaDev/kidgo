@@ -21,15 +21,15 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
 
   const { location } = useLocation();
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!name.trim()) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
-      await addPlace({
+      addPlace({
         name: name.trim(),
         category: category.trim() || undefined,
         description: description.trim() || undefined,
@@ -37,16 +37,16 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         latitude: location?.coords.latitude,
         longitude: location?.coords.longitude,
       });
-      
+
       // Reset form
       setName('');
       setCategory('');
       setDescription('');
       setAddress('');
-      
+
       onSubmit?.();
     } catch (error) {
-      console.error('Error adding place:', error);
+      // Handle error silently - Legend State will retry automatically
     } finally {
       setIsSubmitting(false);
     }
@@ -55,7 +55,7 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
   return (
     <View className="flex-1 p-4">
       <Text className="mb-4 text-2xl font-bold">Ajouter un lieu</Text>
-      
+
       <TextField
         label="Nom du lieu *"
         value={name}
@@ -64,7 +64,7 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         className="mb-4"
         editable={!isSubmitting}
       />
-      
+
       <TextField
         label="Catégorie"
         value={category}
@@ -73,7 +73,7 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         className="mb-4"
         editable={!isSubmitting}
       />
-      
+
       <TextField
         label="Adresse"
         value={address}
@@ -82,7 +82,7 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         className="mb-4"
         editable={!isSubmitting}
       />
-      
+
       <TextField
         label="Description"
         value={description}
@@ -93,20 +93,13 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         className="mb-6"
         editable={!isSubmitting}
       />
-      
+
       <View className="flex-row gap-3">
-        <Button
-          variant="secondary"
-          onPress={onCancel}
-          className="flex-1"
-          disabled={isSubmitting}>
+        <Button variant="secondary" onPress={onCancel} className="flex-1" disabled={isSubmitting}>
           <Text>Annuler</Text>
         </Button>
-        
-        <Button
-          onPress={handleSubmit}
-          className="flex-1"
-          disabled={!name.trim() || isSubmitting}>
+
+        <Button onPress={handleSubmit} className="flex-1" disabled={!name.trim() || isSubmitting}>
           <Text>{isSubmitting ? 'Ajout...' : 'Ajouter'}</Text>
         </Button>
       </View>
