@@ -10,7 +10,7 @@ import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
-import { useColorScheme } from '~/lib/useColorScheme';
+import { useAuth } from '~/hooks/useAuth';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -42,6 +42,7 @@ function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'pla
 const MapsContent = observer(() => {
   const places = places$.get();
   const { location, requestPermission, hasPermission } = useLocation();
+  const { isAuthenticated } = useAuth();
 
   const bottomSheetModalRef = useSheetRef();
   const addPlaceSheetRef = useSheetRef();
@@ -170,8 +171,8 @@ const MapsContent = observer(() => {
   return (
     <>
       {renderMap()}
-      {/* Floating Action Button */}
-      {showBottomSheet && (
+      {/* Floating Action Button - Only show for authenticated users */}
+      {showBottomSheet && isAuthenticated && (
         <View className="absolute bottom-28 right-4 z-20 shadow-lg">
           <Pressable
             onPress={handleAddPlaceClick}

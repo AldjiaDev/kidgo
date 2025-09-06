@@ -94,6 +94,25 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
 
       <Controller
         control={control}
+        name="description"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextField
+            label="Description"
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="Décrivez ce lieu..."
+            multiline
+            numberOfLines={3}
+            className="mb-6"
+            editable={!isSubmitting}
+            errorMessage={errors.description?.message}
+          />
+        )}
+      />
+
+      <Controller
+        control={control}
         name="category"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextField
@@ -122,25 +141,6 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
             className="mb-4"
             editable={!isSubmitting}
             errorMessage={errors.address?.message}
-          />
-        )}
-      />
-
-      <Controller
-        control={control}
-        name="description"
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextField
-            label="Description"
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            placeholder="Décrivez ce lieu..."
-            multiline
-            numberOfLines={3}
-            className="mb-6"
-            editable={!isSubmitting}
-            errorMessage={errors.description?.message}
           />
         )}
       />
