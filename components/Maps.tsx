@@ -172,7 +172,7 @@ const MapsContent = observer(() => {
       {renderMap()}
       {/* Floating Action Button */}
       {showBottomSheet && (
-        <View className="absolute bottom-4 right-4 z-20 shadow-lg">
+        <View className="absolute bottom-28 right-4 z-20 shadow-lg">
           <Pressable
             onPress={handleAddPlaceClick}
             className="h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"

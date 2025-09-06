@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View } from 'react-native';
+import { toast } from 'sonner-native';
 
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
@@ -55,6 +56,7 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
       // Reset form
       reset();
       onSubmit?.();
+      toast.success('Lieu ajouté ! Notre équipe va vérifier les informations.');
     } catch {
       // Handle error silently - Legend State will retry automatically
     } finally {
