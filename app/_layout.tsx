@@ -4,6 +4,7 @@ import { AppState } from 'react-native';
 import { ReanimatedScreenProvider } from 'react-native-screens/reanimated';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { Toaster } from 'sonner-native';
 
 import '../global.css';
 
@@ -31,29 +32,27 @@ AppState.addEventListener('change', (state) => {
 
 export default function RootLayout() {
   return (
-    <>
-      <ThemeProvider>
-        <LocationProvider>
-          <ReanimatedScreenProvider>
-            <BottomSheetModalProvider>
-              <ActionSheetProvider>
-                {/* <Stack screenOptions={SCREEN_OPTIONS}>
+    <ThemeProvider>
+      <LocationProvider>
+        <ReanimatedScreenProvider>
+          <BottomSheetModalProvider>
+            <ActionSheetProvider>
+              {/* <Stack screenOptions={SCREEN_OPTIONS}>
                 <Stack.Screen name="index" options={INDEX_OPTIONS} />
                 <Stack.Screen name="modal" options={MODAL_OPTIONS} />
               </Stack> */}
-
-                <Tabs>
-                  <Tabs.Screen name="(index)" title="Recherche" systemImage="magnify" />
-                  <Tabs.Screen name="(map)" title="Carte" systemImage="map" />
-                  <Tabs.Screen name="(settings)" title="Profile" systemImage="cog" />
-                  <Tabs.Screen name="+not-found" title="Non trouvé" options={{ href: null }} />
-                </Tabs>
-              </ActionSheetProvider>
-            </BottomSheetModalProvider>
-          </ReanimatedScreenProvider>
-        </LocationProvider>
-      </ThemeProvider>
-    </>
+              <Tabs>
+                <Tabs.Screen name="(index)" title="Recherche" systemImage="magnify" />
+                <Tabs.Screen name="(map)" title="Carte" systemImage="map" />
+                <Tabs.Screen name="(settings)" title="Profile" systemImage="cog" />
+                <Tabs.Screen name="+not-found" title="Non trouvé" options={{ href: null }} />
+              </Tabs>
+            </ActionSheetProvider>
+          </BottomSheetModalProvider>
+          <Toaster />
+        </ReanimatedScreenProvider>
+      </LocationProvider>
+    </ThemeProvider>
   );
 }
 

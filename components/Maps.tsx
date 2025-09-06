@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { observer } from '@legendapp/state/react';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
-import { ClipboardButton } from '~/components/ClipboardButton';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
+import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
-import { getCategoryInfo } from '~/utils/categoryFormatter';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -24,30 +24,7 @@ function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'pla
   return (
     <View className="flex-1 p-4">
       {selectedPlace ? (
-        <View className="gap-3">
-          <View className="flex-row items-center gap-3">
-            <Text variant="heading">{getCategoryInfo(selectedPlace.category).emoji}</Text>
-            <View className="flex-1">
-              <Text variant="heading" numberOfLines={2}>
-                {selectedPlace.name}
-              </Text>
-              <Text className="text-sm text-muted-foreground">
-                {selectedPlace.category || 'Activité'}
-              </Text>
-            </View>
-          </View>
-          {selectedPlace.description && (
-            <Text className="text-sm" numberOfLines={3}>
-              {selectedPlace.description}
-            </Text>
-          )}
-          {selectedPlace.address && (
-            <>
-              <Text className="text-sm text-muted-foreground">📍 {selectedPlace.address}</Text>
-              <ClipboardButton address={selectedPlace.address} />
-            </>
-          )}
-        </View>
+        <PlaceDetails data={selectedPlace} />
       ) : (
         <View className="flex-1 items-center justify-center">
           <Text className="text-muted-foreground">
@@ -180,8 +157,10 @@ const MapsContent = observer(() => {
     <>
       {renderMap()}
       {showBottomSheet && (
-        <Sheet ref={bottomSheetModalRef} snapPoints={[300]}>
-          <PlaceBottomSheetContent selectedPlace={selectedPlace} />
+        <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
+          <BottomSheetScrollView>
+            <PlaceBottomSheetContent selectedPlace={selectedPlace} />
+          </BottomSheetScrollView>
         </Sheet>
       )}
     </>

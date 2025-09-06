@@ -1,7 +1,9 @@
 import * as Clipboard from 'expo-clipboard';
+import { toast } from 'sonner-native';
 
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
+import { parseArrayToString } from '~/utils/parseArrayToString';
 
 interface ClipboardButtonProps {
   address: string | string[];
@@ -9,7 +11,8 @@ interface ClipboardButtonProps {
 
 export function ClipboardButton({ address }: ClipboardButtonProps) {
   async function copyToClipboard() {
-    await Clipboard.setStringAsync(Array.isArray(address) ? address.join(', ') : address);
+    await Clipboard.setStringAsync(parseArrayToString(address));
+    toast.success('Adresse copiée dans le presse-papiers');
   }
 
   return (
