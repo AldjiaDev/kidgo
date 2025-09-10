@@ -59,17 +59,17 @@ const MapsContent = observer(() => {
   };
 
   // Function to handle add place button click
-  const handleAddPlaceClick = () => {
+  function handleAddPlaceClick() {
     addPlaceSheetRef.current?.present();
-  };
+  }
 
   // Function to handle successful place addition
-  const handlePlaceAdded = () => {
+  function handlePlaceAdded() {
     addPlaceSheetRef.current?.dismiss();
-  };
+  }
 
   // Common camera position logic
-  const getCameraPosition = () => {
+  function getCameraPosition() {
     return location
       ? {
           coordinates: {
@@ -79,7 +79,7 @@ const MapsContent = observer(() => {
           zoom: 13,
         }
       : LILLE_COORDINATES;
-  };
+  }
 
   // @todo migrate Location state to a context provider
   useEffect(() => {
