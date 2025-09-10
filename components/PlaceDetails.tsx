@@ -1,4 +1,4 @@
-import { Linking, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { Icon } from '@roninoss/icons';
 import * as WebBrowser from 'expo-web-browser';
 
@@ -12,9 +12,10 @@ import { parseArrayToString } from '~/utils/parseArrayToString';
 
 interface PlaceDetailsProps {
   data: Tables<'places'>;
+  onClose?: () => void;
 }
 
-export function PlaceDetails({ data }: PlaceDetailsProps) {
+export function PlaceDetails({ data, onClose }: PlaceDetailsProps) {
   const { colors } = useColorScheme();
   const {
     name,
@@ -46,6 +47,11 @@ export function PlaceDetails({ data }: PlaceDetailsProps) {
             {category || 'Activité'}
           </Text>
         </View>
+        {onClose && (
+          <TouchableOpacity onPress={onClose} className="p-2">
+            <Icon name="close" size={24} color={colors.grey} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {description && <Text variant="body">{description}</Text>}

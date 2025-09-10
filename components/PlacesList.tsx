@@ -94,6 +94,11 @@ const PlacesListContent = observer(() => {
     );
   }
 
+  function handleCloseAllSheets() {
+    placeDetailsSheetRef.current?.dismiss();
+    setSelectedPlace(null);
+  }
+
   function renderItem({ item: place }: { item: Tables<'places'> & { distance: number | null } }) {
     const categoryInfo = getCategoryInfo(place.category);
 
@@ -165,7 +170,7 @@ const PlacesListContent = observer(() => {
       <Sheet ref={placeDetailsSheetRef} snapPoints={['65%', '85%']}>
         {selectedPlace && (
           <View className="px-4">
-            <PlaceDetails data={selectedPlace} />
+            <PlaceDetails data={selectedPlace} onClose={handleCloseAllSheets} />
           </View>
         )}
       </Sheet>
