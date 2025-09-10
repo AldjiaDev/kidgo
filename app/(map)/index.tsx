@@ -25,7 +25,7 @@ export default function MapScreen() {
         className="bottom-safe-offset-16 absolute left-4">
         <Text>Liste des lieux</Text>
       </Button>
-      <Sheet ref={placesBottomSheetRef} snapPoints={['50%', '85%']} index={0}>
+      <Sheet ref={placesBottomSheetRef} snapPoints={['65%', '85%']} index={0}>
         <PlacesList />
       </Sheet>
     </SafeAreaView>

@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { LegendList } from '@legendapp/list';
 import { observer } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
-import { Link } from 'expo-router';
 import { cssInterop } from 'nativewind';
 
+import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
+import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { getCategoryInfo } from '~/utils/categoryFormatter';
@@ -21,6 +22,8 @@ const PlacesListContent = observer(() => {
   const places = places$.get();
   const { colors } = useColorScheme();
   const { location, requestPermission, hasPermission } = useLocation();
+  const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
+  const placeDetailsSheetRef = useSheetRef();
 
   // Get user's current location
   useEffect(() => {
@@ -94,84 +97,79 @@ const PlacesListContent = observer(() => {
   function renderItem({ item: place }: { item: Tables<'places'> & { distance: number | null } }) {
     const categoryInfo = getCategoryInfo(place.category);
 
+    const handlePlacePress = () => {
+      setSelectedPlace(place);
+      placeDetailsSheetRef.current?.present();
+    };
+
     return (
-      <Link
-        href={{
-          pathname: '/(index)/modal',
-          params: {
-            id: place.id,
-            name: place.name || '',
-            description: place.description || '',
-            address: place.address || '',
-            category: place.category || '',
-            area_type: place.area_type || '',
-            price_range: place.price_range || '',
-            opening_hours: place.opening_hours || '',
-            website_url: place.website_url || '',
-            latitude: String(place.latitude || ''),
-            longitude: String(place.longitude || ''),
-          },
-        }}
-        asChild>
-        <TouchableOpacity className="px-4 py-3">
-          <View className="flex-row items-center gap-3">
-            <View
-              className={`h-12 w-12 items-center justify-center rounded-lg ${categoryInfo.backgroundColor}`}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  lineHeight: 28,
-                }}>
-                {categoryInfo.emoji}
+      <TouchableOpacity className="px-4 py-3" onPress={handlePlacePress}>
+        <View className="flex-row items-center gap-3">
+          <View
+            className={`h-12 w-12 items-center justify-center rounded-lg ${categoryInfo.backgroundColor}`}>
+            <Text
+              style={{
+                fontSize: 20,
+                lineHeight: 28,
+              }}>
+              {categoryInfo.emoji}
+            </Text>
+          </View>
+          <View className="flex-1 gap-1">
+            <View className="flex-row items-center justify-between">
+              <Text className="font-medium text-foreground" numberOfLines={1}>
+                {place.name}
               </Text>
-            </View>
-            <View className="flex-1 gap-1">
-              <View className="flex-row items-center justify-between">
-                <Text className="font-medium text-foreground" numberOfLines={1}>
-                  {place.name}
-                </Text>
-                {place.distance !== null && (
-                  <Text className="text-xs text-muted-foreground">
-                    {place.distance < 1
-                      ? `${Math.round(place.distance * 1000)}m`
-                      : `${place.distance.toFixed(1)}km`}
-                  </Text>
-                )}
-              </View>
-              <View className="flex-row items-center gap-2">
-                {place.category && (
-                  <Text className="text-sm text-muted-foreground">{place.category}</Text>
-                )}
-                {place.price_range && (
-                  <>
-                    <Text className="text-sm text-muted-foreground">•</Text>
-                    <Text className="text-sm text-muted-foreground">{place.price_range}</Text>
-                  </>
-                )}
-              </View>
-              {place.address && (
-                <Text className="text-sm text-muted-foreground" numberOfLines={1}>
-                  {place.address}
+              {place.distance !== null && (
+                <Text className="text-xs text-muted-foreground">
+                  {place.distance < 1
+                    ? `${Math.round(place.distance * 1000)}m`
+                    : `${place.distance.toFixed(1)}km`}
                 </Text>
               )}
             </View>
-            <Icon name="chevron-right" size={16} color={colors.grey} />
+            <View className="flex-row items-center gap-2">
+              {place.category && (
+                <Text className="text-sm text-muted-foreground">{place.category}</Text>
+              )}
+              {place.price_range && (
+                <>
+                  <Text className="text-sm text-muted-foreground">•</Text>
+                  <Text className="text-sm text-muted-foreground">{place.price_range}</Text>
+                </>
+              )}
+            </View>
+            {place.address && (
+              <Text className="text-sm text-muted-foreground" numberOfLines={1}>
+                {place.address}
+              </Text>
+            )}
           </View>
-        </TouchableOpacity>
-      </Link>
+          <Icon name="chevron-right" size={16} color={colors.grey} />
+        </View>
+      </TouchableOpacity>
     );
   }
 
   return (
-    <LegendList
-      data={validPlaces}
-      estimatedItemSize={80}
-      contentContainerClassName="py-2"
-      keyExtractor={keyExtractor}
-      ItemSeparatorComponent={renderItemSeparator}
-      renderItem={renderItem}
-      recycleItems
-    />
+    <>
+      <LegendList
+        data={validPlaces}
+        estimatedItemSize={80}
+        contentContainerClassName="py-2"
+        keyExtractor={keyExtractor}
+        ItemSeparatorComponent={renderItemSeparator}
+        renderItem={renderItem}
+        recycleItems
+      />
+      <Sheet ref={placeDetailsSheetRef} snapPoints={['65%', '85%']}>
+        {selectedPlace && (
+          <View className="px-4">
+            <PlaceDetails data={selectedPlace} />
+          </View>
+        )}
+      </Sheet>
+    </>
   );
 });
 
