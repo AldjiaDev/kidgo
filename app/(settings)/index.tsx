@@ -1,11 +1,16 @@
 import { Link } from 'expo-router';
 
+import Account from '~/components/Account';
 import { AppVersion } from '~/components/AppVersion';
+import Auth from '~/components/Auth';
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
+import { useAuth } from '~/hooks/useAuth';
 
 export default function SettingsScreen() {
+  const { session, isAuthenticated } = useAuth();
+
   return (
     <BodyScrollView
       contentContainerStyle={{
@@ -13,11 +18,7 @@ export default function SettingsScreen() {
         paddingHorizontal: 8,
         gap: 2,
       }}>
-      <Link href="/(settings)/profile" asChild>
-        <Button variant="primary" className="w-full">
-          <Text>Mon profil</Text>
-        </Button>
-      </Link>
+      {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
       <AppVersion />
       {__DEV__ && (
         <>
