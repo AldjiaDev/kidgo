@@ -1,4 +1,4 @@
-import Stack from '~/components/ui/Stack';
+import { Stack } from 'expo-router';
 
 export const unstable_settings = {
   anchor: 'index',
@@ -11,6 +11,7 @@ export default function TabLayout() {
     <Stack
       screenOptions={{
         title: '',
+        headerShown: false,
       }}
     />
   );
