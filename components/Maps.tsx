@@ -145,6 +145,7 @@ const MapsContent = observer(() => {
           properties={{
             ...commonMapProps.properties,
             mapType: AppleMaps.MapType.STANDARD,
+            isMyLocationEnabled: true,
           }}
         />
       );
