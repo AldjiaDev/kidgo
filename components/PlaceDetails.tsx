@@ -2,6 +2,7 @@ import { TouchableOpacity, View } from 'react-native';
 import { Icon } from '@roninoss/icons';
 import * as WebBrowser from 'expo-web-browser';
 
+import { AppleMapsButton } from '~/components/AppleMapsButton';
 import { ClipboardButton } from '~/components/ClipboardButton';
 import { Text } from '~/components/nativewindui/Text';
 import { WazeButton } from '~/components/WazeButton';
@@ -115,6 +116,7 @@ export function PlaceDetails({ data, onClose }: PlaceDetailsProps) {
             <View className="gap-2">
               <ClipboardButton address={address} />
               <WazeButton address={address} />
+              <AppleMapsButton address={address} />
             </View>
           </>
         )}
