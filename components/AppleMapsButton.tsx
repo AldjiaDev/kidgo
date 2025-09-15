@@ -1,5 +1,4 @@
 import { Alert } from 'react-native';
-import * as Device from 'expo-device';
 import * as Linking from 'expo-linking';
 import { toast } from 'sonner-native';
 
@@ -14,7 +13,7 @@ type AppleMapsButtonProps = {
   children?: React.ReactNode;
 };
 
-function openAppleMaps({
+async function openAppleMaps({
   address,
   lat,
   lng,
@@ -23,58 +22,44 @@ function openAppleMaps({
   lat?: number;
   lng?: number;
 }) {
-  return async function () {
-    // Check if running on simulator
-    const isSimulator = !Device.isDevice;
+  let appleMapsUrl = '';
+  let fallbackUrl = '';
 
-    if (isSimulator) {
-      Alert.alert(
-        'Simulateur détecté',
-        'La fonctionnalité Apple Maps ne fonctionne pas sur le simulateur. Veuillez tester sur un appareil physique.',
-        [{ text: 'OK', style: 'default' }]
-      );
-      return;
-    }
+  if (address) {
+    const addressStr = parseArrayToString(address);
+    const encodedAddress = encodeURIComponent(addressStr);
+    appleMapsUrl = `maps://?q=${encodedAddress}`;
+    fallbackUrl = `https://maps.apple.com/?q=${encodedAddress}`;
+  } else if (lat && lng) {
+    appleMapsUrl = `maps://?ll=${lat},${lng}`;
+    fallbackUrl = `https://maps.apple.com/?ll=${lat},${lng}`;
+  } else {
+    console.warn('Aucune adresse ou coordonnées fournies pour Apple Maps.');
+    toast.error("Impossible d'ouvrir Apple Maps : adresse ou coordonnées manquantes.");
+    return;
+  }
 
-    let appleMapsUrl = '';
-    let fallbackUrl = '';
-
-    if (address) {
-      const addressStr = parseArrayToString(address);
-      const encodedAddress = encodeURIComponent(addressStr);
-      appleMapsUrl = `maps://?q=${encodedAddress}`;
-      fallbackUrl = `https://maps.apple.com/?q=${encodedAddress}`;
-    } else if (lat && lng) {
-      appleMapsUrl = `maps://?ll=${lat},${lng}`;
-      fallbackUrl = `https://maps.apple.com/?ll=${lat},${lng}`;
+  try {
+    const supported = await Linking.canOpenURL(appleMapsUrl);
+    if (supported) {
+      await Linking.openURL(appleMapsUrl);
     } else {
-      console.warn('Aucune adresse ou coordonnées fournies pour Apple Maps.');
-      toast.error("Impossible d'ouvrir Apple Maps : adresse ou coordonnées manquantes.");
-      return;
+      await Linking.openURL(fallbackUrl);
     }
-
-    try {
-      const supported = await Linking.canOpenURL(appleMapsUrl);
-      if (supported) {
-        await Linking.openURL(appleMapsUrl);
-      } else {
-        await Linking.openURL(fallbackUrl);
-      }
-    } catch {
-      Alert.alert(
-        'Erreur',
-        "Impossible d'ouvrir Apple Maps. Assurez-vous que l'application est installée.",
-        [{ text: 'OK', style: 'default' }]
-      );
-    }
-  };
+  } catch {
+    Alert.alert(
+      'Erreur',
+      "Impossible d'ouvrir Apple Maps. Assurez-vous que l'application est installée.",
+      [{ text: 'OK', style: 'default' }]
+    );
+  }
 }
 
 export function AppleMapsButton({ address, lat, lng, children }: AppleMapsButtonProps) {
   return (
     <Button
       variant="tonal"
-      onPress={openAppleMaps({ address, lat, lng })}
+      onPress={() => openAppleMaps({ address, lat, lng })}
       className="flex-row items-center gap-2">
       <Text>Ouvrir Apple Maps</Text>
       {children}
