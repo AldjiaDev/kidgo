@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Alert, View } from 'react-native';
 
+import { EmailKeyboardAccessory } from '~/components/keyboard/EmailKeyboardAccessory';
 import { Button } from '~/components/nativewindui/Button';
 import { Form, FormItem, FormSection } from '~/components/nativewindui/Form';
 import { Text } from '~/components/nativewindui/Text';
@@ -12,6 +13,7 @@ export default function Auth() {
   const [password, setPassword] = useState('');
   const [isVisble, setIsVisble] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isEmailFocused, setIsEmailFocused] = useState(false);
 
   async function signInWithEmail() {
     setLoading(true);
@@ -43,6 +45,19 @@ export default function Auth() {
     setIsVisble((prev) => !prev);
   }
 
+  function handleEmailSuggestion(suggestion: string) {
+    // Check if email already contains @ symbol
+    const currentEmail = email.trim();
+    if (currentEmail.includes('@')) {
+      // Replace domain part
+      const localPart = currentEmail.split('@')[0];
+      setEmail(localPart + suggestion);
+    } else {
+      // Append domain
+      setEmail(currentEmail + suggestion);
+    }
+  }
+
   return (
     <View className="mt-10 p-3">
       <View className="mb-5 w-full py-1">
@@ -58,6 +73,8 @@ export default function Auth() {
                 autoCapitalize="none"
                 autoComplete="email"
                 autoCorrect={false}
+                onFocus={() => setIsEmailFocused(true)}
+                onBlur={() => setIsEmailFocused(false)}
               />
             </FormItem>
           </FormSection>
@@ -94,6 +111,9 @@ export default function Auth() {
           <Text>Se connecter</Text>
         </Button>
       </View>
+
+      {/* Email keyboard accessory */}
+      <EmailKeyboardAccessory enabled={isEmailFocused} onSuggestionPress={handleEmailSuggestion} />
     </View>
   );
 }
