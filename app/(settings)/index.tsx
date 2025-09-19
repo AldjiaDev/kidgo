@@ -1,3 +1,4 @@
+import { View } from 'react-native';
 import { Link } from 'expo-router';
 
 import Account from '~/components/Account';
@@ -19,6 +20,16 @@ export default function SettingsScreen() {
         gap: 2,
       }}>
       {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
+
+      {/* Feedback Link */}
+      <View className="mt-4">
+        <Link href="/(settings)/feedback" asChild>
+          <Button variant="tonal">
+            <Text>💬 Donner son avis</Text>
+          </Button>
+        </Link>
+      </View>
+
       <AppVersion />
       {__DEV__ && (
         <>

@@ -20,6 +20,7 @@ export default function TabLayout() {
         title: 'Settings',
       }}>
       <Stack.Screen name="index" options={INDEX_OPTIONS} />
+      <Stack.Screen name="feedback" options={FEEDBACK_OPTIONS} />
       <Stack.Screen name="playground" />
       <Stack.Screen name="playground-todos" />
     </Stack>
@@ -30,6 +31,10 @@ const INDEX_OPTIONS = {
   headerLargeTitle: true,
   title: 'Profile',
   headerRight: () => <ThemeToggle />,
+} as const;
+
+const FEEDBACK_OPTIONS = {
+  title: 'Feedback',
 } as const;
 
 function SettingsIcon() {
