@@ -43,8 +43,8 @@ export function PlaceItem({ place }: { place: Tables<'places'> }) {
             }}>
             <Text
               style={{
-                fontSize: 40,
-                lineHeight: 48,
+                fontSize: 52,
+                lineHeight: 64,
               }}>
               {categoryInfo.emoji}
             </Text>
