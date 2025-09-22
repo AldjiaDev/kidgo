@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 import { toast } from 'sonner-native';
 
 import { Button } from '~/components/nativewindui/Button';
@@ -8,6 +8,7 @@ import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { useAuth } from '~/hooks/useAuth';
+import { createGitHubIssue } from '~/utils/github-api';
 
 interface FeedbackFormData {
   category: string;
@@ -44,17 +45,28 @@ export default function FeedbackScreen() {
     try {
       setIsSubmitting(true);
 
-      Alert.alert('Feedback reçu', "Merci pour votre retour ! Nous l'examinerons attentivement.", [
-        {
-          text: 'OK',
-          onPress: () => {
-            reset();
-            toast.success('Feedback envoyé avec succès');
-          },
-        },
-      ]);
-    } catch {
-      toast.error("Erreur lors de l'envoi du feedback");
+      // Create GitHub issue with the feedback
+      const result = await createGitHubIssue({
+        category: data.category,
+        message: data.message,
+        userEmail: session?.user?.email,
+      });
+
+      if (result.success) {
+        // Success: show confirmation and reset form
+        toast.success('Feedback envoyé', {
+          description:
+            "Merci pour votre retour ! Nous l'examinerons attentivement et vous répondrons si nécessaire.",
+        });
+        reset();
+      } else {
+        // GitHub API failed
+        throw new Error(result.error || 'Erreur lors de la création du feedback');
+      }
+    } catch (error) {
+      // Handle all errors
+      const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
+      toast.error("Erreur lors de l'envoi du feedback", { description: errorMessage });
     } finally {
       setIsSubmitting(false);
     }
@@ -91,7 +103,7 @@ export default function FeedbackScreen() {
                 {FEEDBACK_CATEGORIES.map((category) => (
                   <Button
                     key={category}
-                    variant={value === category ? 'default' : 'tonal'}
+                    variant={value === category ? 'primary' : 'tonal'}
                     onPress={() => onChange(category)}
                     className="justify-start">
                     <Text>{category}</Text>
@@ -123,7 +135,7 @@ export default function FeedbackScreen() {
                 multiline
                 numberOfLines={6}
                 placeholder="Décrivez votre feedback en détail..."
-                error={errors.message?.message}
+                errorMessage={errors.message?.message}
               />
             </View>
           )}
