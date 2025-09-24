@@ -1,5 +1,9 @@
 import React from 'react';
+import { View } from 'react-native';
+import { Link } from 'expo-router';
 
+import { Button } from '~/components/nativewindui/Button';
+import { Text } from '~/components/nativewindui/Text';
 import { PlacesSection } from '~/components/PlacesSection';
 import { SearchResults } from '~/components/SearchResuts';
 import { Loading } from '~/components/Skeleton';
@@ -30,6 +34,13 @@ export default function HomeScreen() {
           </>
         )}
       </React.Suspense>
+      <View className="mt-4 px-4">
+        <Link href="/(index)/feedback" asChild>
+          <Button variant="tonal">
+            <Text>💬 Donner son avis</Text>
+          </Button>
+        </Link>
+      </View>
     </BodyScrollView>
   );
 }

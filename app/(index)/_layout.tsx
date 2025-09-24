@@ -14,9 +14,15 @@ export default function TabLayout() {
       }}>
       <Stack.Screen name="index" />
       <Stack.Screen name="modal" options={MODAL_OPTIONS} />
+      <Stack.Screen name="feedback" options={FEEDBACK_OPTIONS} />
     </Stack>
   );
 }
+
+const FEEDBACK_OPTIONS = {
+  headerLargeTitle: true,
+  title: 'Feedback',
+} as const;
 
 const MODAL_OPTIONS = {
   presentation: 'modal',

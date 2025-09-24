@@ -9,7 +9,7 @@ import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { useAuth } from '~/hooks/useAuth';
 
 export default function SettingsScreen() {
-  const { session, isAuthenticated } = useAuth();
+  const { session } = useAuth();
 
   return (
     <BodyScrollView
@@ -19,6 +19,7 @@ export default function SettingsScreen() {
         gap: 2,
       }}>
       {session && session.user ? <Account key={session.user.id} session={session} /> : <Auth />}
+
       <AppVersion />
       {__DEV__ && (
         <>

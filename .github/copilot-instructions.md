@@ -9,7 +9,7 @@ This file provides guidance to GitHub Copilot (https://docs.github.com/en/copilo
 ## How to Solve Problems
 
 - !! Say "I- REMEMBER HOW TO SOLVE PROBLEMS" before planning any change and reproduce this entire list from the first perspective with and in future tense:
-- Plan every change! This is mathematics. You _need_ to plan. Don't just rush with edits. Make every edit meaningful.
+- Plan every change! This is programming. You _need_ to plan. Don't just rush with edits. Make every edit meaningful.
 - Always restate the problem before any change to the code.
 - If something didn't work out, summarize _why_ it didn't work out first.
 - Keep track of whether your _high-level_ approach makes sense.
