@@ -12,7 +12,7 @@ const OWNER = 'weshipit';
 const APP_NAME = 'Kid GO';
 const BUNDLE_IDENTIFIER = 'com.weshipit.kidgo';
 const PACKAGE_NAME = 'com.weshipit.kidgo';
-const ICON = './assets/images/icons/iOS-Prod.png';
+const ICON = './assets/images/icons/ios.icon';
 const ADAPTIVE_ICON = './assets/images/icons/Android-Prod.png';
 const SCHEME = 'kidgo';
 
