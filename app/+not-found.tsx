@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Link, Stack } from 'expo-router';
+import { Link } from 'expo-router';
 
 import { Text } from '~/components/nativewindui/Text';
 

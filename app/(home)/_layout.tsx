@@ -8,16 +8,18 @@ export { ErrorBoundary } from 'expo-router';
 
 export default function TabLayout() {
   return (
-    <Stack
-      screenOptions={{
-        title: 'Recherche',
-      }}>
-      <Stack.Screen name="index" />
+    <Stack>
+      <Stack.Screen name="index" options={INDEX_OPTIONS} />
       <Stack.Screen name="modal" options={MODAL_OPTIONS} />
       <Stack.Screen name="feedback" options={FEEDBACK_OPTIONS} />
     </Stack>
   );
 }
+
+const INDEX_OPTIONS = {
+  headerLargeTitle: true,
+  title: 'KidGO',
+} as const;
 
 const FEEDBACK_OPTIONS = {
   headerLargeTitle: true,

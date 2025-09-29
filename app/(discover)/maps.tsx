@@ -8,7 +8,7 @@ import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlacesList } from '~/components/PlacesList';
 
-export default function MapScreen() {
+export default function MapsScreen() {
   const placesSheetRef = useSheetRef();
 
   const handleSnapPress = useCallback(() => {

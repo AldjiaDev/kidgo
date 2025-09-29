@@ -35,7 +35,7 @@ export default function HomeScreen() {
         )}
       </React.Suspense>
       <View className="mt-4 px-4">
-        <Link href="/(index)/feedback" asChild>
+        <Link href="/feedback" asChild>
           <Button variant="tonal">
             <Text>💬 Donner son avis</Text>
           </Button>
