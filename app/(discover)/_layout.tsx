@@ -10,7 +10,7 @@ export default function TabLayout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ title: 'Découvrir', headerShown: false }} />
-      <Stack.Screen name="maps" options={{ title: 'Maps', headerShown: false }} />
+      <Stack.Screen name="maps" options={{ title: '', headerTransparent: true }} />
 
       <Stack.Screen name="settings" options={{ title: 'Settings' }} />
     </Stack>
