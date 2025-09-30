@@ -1,52 +1,32 @@
-import * as React from 'react';
 import * as AvatarPrimitive from '@rn-primitives/avatar';
 
 import { cn } from '~/lib/cn';
 
-const Avatar = React.forwardRef<AvatarPrimitive.RootRef, AvatarPrimitive.RootProps>(
-  ({ alt, className, ...props }, ref) => {
-    return (
-      <AvatarPrimitive.Root
-        ref={ref}
-        alt={alt}
-        className={cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className)}
-        {...props}
-      />
-    );
-  }
-);
+function Avatar({ className, ...props }: AvatarPrimitive.RootProps) {
+  return (
+    <AvatarPrimitive.Root
+      className={cn('relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full', className)}
+      {...props}
+    />
+  );
+}
 
-Avatar.displayName = AvatarPrimitive.Root.displayName;
+function AvatarImage({ className, ...props }: AvatarPrimitive.ImageProps) {
+  return (
+    <AvatarPrimitive.Image className={cn('aspect-square h-full w-full', className)} {...props} />
+  );
+}
 
-const AvatarImage = React.forwardRef<AvatarPrimitive.ImageRef, AvatarPrimitive.ImageProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <AvatarPrimitive.Image
-        ref={ref}
-        className={cn('aspect-square h-full w-full', className)}
-        {...props}
-      />
-    );
-  }
-);
-
-AvatarImage.displayName = AvatarPrimitive.Image.displayName;
-
-const AvatarFallback = React.forwardRef<AvatarPrimitive.FallbackRef, AvatarPrimitive.FallbackProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <AvatarPrimitive.Fallback
-        ref={ref}
-        className={cn(
-          'flex h-full w-full items-center justify-center rounded-full bg-muted',
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
-
-AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
+function AvatarFallback({ className, ...props }: AvatarPrimitive.FallbackProps) {
+  return (
+    <AvatarPrimitive.Fallback
+      className={cn(
+        'flex h-full w-full items-center justify-center rounded-full bg-muted',
+        className
+      )}
+      {...props}
+    />
+  );
+}
 
 export { Avatar, AvatarFallback, AvatarImage };
