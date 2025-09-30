@@ -36,8 +36,6 @@ export default function ModalScreen() {
         style={Platform.OS === 'ios' ? 'light' : colorScheme === 'dark' ? 'light' : 'dark'}
       />
 
-      <Stack.Screen options={{ title: '' }} />
-
       <ScrollView className="flex-1" contentContainerStyle={{ padding: 16 }}>
         <PlaceDetails data={data} />
       </ScrollView>
