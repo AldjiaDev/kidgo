@@ -82,6 +82,7 @@ export function LocationProvider({ children }: LocationProviderProps) {
           {
             text: 'Autoriser',
             style: 'default',
+            isPreferred: true,
             onPress: () => resolve(true),
           },
         ],

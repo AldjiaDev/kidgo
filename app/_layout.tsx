@@ -33,10 +33,10 @@ AppState.addEventListener('change', (state) => {
 export default function TabLayout() {
   return (
     <ThemeProvider>
-      <LocationProvider>
-        <ReanimatedScreenProvider>
-          <BottomSheetModalProvider>
-            <ActionSheetProvider>
+      <ReanimatedScreenProvider>
+        <BottomSheetModalProvider>
+          <ActionSheetProvider>
+            <LocationProvider>
               <NativeTabs>
                 <NativeTabs.Trigger name="(home)">
                   <Label>Acceuil</Label>
@@ -47,11 +47,11 @@ export default function TabLayout() {
                   <Label>Découvrir</Label>
                 </NativeTabs.Trigger>
               </NativeTabs>
-            </ActionSheetProvider>
-          </BottomSheetModalProvider>
-          <Toaster />
-        </ReanimatedScreenProvider>
-      </LocationProvider>
+            </LocationProvider>
+          </ActionSheetProvider>
+        </BottomSheetModalProvider>
+        <Toaster />
+      </ReanimatedScreenProvider>
     </ThemeProvider>
   );
 }
