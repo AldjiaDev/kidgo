@@ -15,7 +15,7 @@ export function PlaceItem({ place }: { place: Tables<'places'> }) {
     <View className="mr-4">
       <Link
         href={{
-          pathname: '/(index)/modal',
+          pathname: '/(home)/modal',
           params: {
             id: place.id,
             name: place.name || '',

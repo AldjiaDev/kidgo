@@ -5,7 +5,7 @@ import { BottomTabBarButtonProps, BottomTabNavigationOptions } from '@react-navi
 import { PlatformPressable } from '@react-navigation/elements';
 import { Icon, type MaterialIconName } from '@roninoss/icons';
 import * as Haptics from 'expo-haptics';
-import { Tabs as NativeTabs } from 'expo-router';
+import { Label, NativeTabs } from 'expo-router/unstable-native-tabs';
 
 import BlurTabBarBackground from './TabBarBackground';
 

@@ -62,6 +62,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     plugins: [
       'expo-router',
       'expo-web-browser',
+      'expo-maps',
+      'expo-font',
       [
         'expo-splash-screen',
         {

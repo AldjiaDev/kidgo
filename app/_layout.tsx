@@ -4,11 +4,11 @@ import { AppState } from 'react-native';
 import { ReanimatedScreenProvider } from 'react-native-screens/reanimated';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
 import { Toaster } from 'sonner-native';
 
 import '../global.css';
 
-import Tabs from '~/components/ui/Tabs';
 import { ThemeProvider } from '~/components/ui/ThemeProvider';
 import { LocationProvider } from '~/contexts/LocationContext';
 import { supabase } from '~/utils/supabase-legend';
@@ -30,23 +30,23 @@ AppState.addEventListener('change', (state) => {
   }
 });
 
-export default function RootLayout() {
+export default function TabLayout() {
   return (
     <ThemeProvider>
       <LocationProvider>
         <ReanimatedScreenProvider>
           <BottomSheetModalProvider>
             <ActionSheetProvider>
-              {/* <Stack screenOptions={SCREEN_OPTIONS}>
-                <Stack.Screen name="index" options={INDEX_OPTIONS} />
-                <Stack.Screen name="modal" options={MODAL_OPTIONS} />
-              </Stack> */}
-              <Tabs>
-                <Tabs.Screen name="(index)" title="Recherche" systemImage="magnify" />
-                <Tabs.Screen name="(map)" title="Carte" systemImage="map" />
-                <Tabs.Screen name="(settings)" title="Profile" systemImage="cog" />
-                <Tabs.Screen name="+not-found" title="Non trouvé" options={{ href: null }} />
-              </Tabs>
+              <NativeTabs>
+                <NativeTabs.Trigger name="(home)">
+                  <Label>Acceuil</Label>
+                  <Icon sf="house.fill" drawable="custom_android_drawable" />
+                </NativeTabs.Trigger>
+                <NativeTabs.Trigger name="(discover)">
+                  <Icon sf="map" drawable="custom_map_drawable" />
+                  <Label>Découvrir</Label>
+                </NativeTabs.Trigger>
+              </NativeTabs>
             </ActionSheetProvider>
           </BottomSheetModalProvider>
           <Toaster />
@@ -55,7 +55,3 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
-
-const SCREEN_OPTIONS = {
-  animation: 'ios_from_right', // for android
-} as const;
