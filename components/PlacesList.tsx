@@ -3,8 +3,10 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { LegendList } from '@legendapp/list';
 import { observer } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
+import { Link } from 'expo-router';
 import { cssInterop } from 'nativewind';
 
+import { Button } from '~/components/nativewindui/Button';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
@@ -108,6 +110,13 @@ const PlacesListContent = observer(() => {
     };
 
     return (
+      // <Link
+      //   // href={`/(discover)/${place.id}`}
+      //   href={{
+      //     pathname: '/(discover)/[id]',
+      //     params: { ...selectedPlace },
+      //   }}
+      //   asChild>
       <TouchableOpacity className="px-4 py-3" onPress={handlePlacePress}>
         <View className="flex-row items-center gap-3">
           <View
@@ -153,11 +162,19 @@ const PlacesListContent = observer(() => {
           <Icon name="chevron-right" size={16} color={colors.grey} />
         </View>
       </TouchableOpacity>
+      //   </Link>
     );
   }
 
   return (
     <>
+      <Button
+        variant="primary"
+        onPress={() => {
+          placeDetailsSheetRef.current?.present();
+        }}>
+        Afficher la bottom sheet
+      </Button>
       <LegendList
         data={validPlaces}
         estimatedItemSize={80}
