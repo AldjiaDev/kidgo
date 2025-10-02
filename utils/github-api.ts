@@ -182,11 +182,10 @@ _Ce feedback a été automatiquement créé depuis l'application KidGo._`;
  */
 function getCategoryLabel(category: string): string {
   const labelMap: Record<string, string> = {
-    "Amélioration de l'application": 'enhancement',
+    "Amélioration de l'application": 'feature',
     'Problème technique': 'bug',
     'Nouveau lieu à ajouter': 'new-place',
     'Lieu incorrect': 'data-issue',
-    'Suggestion générale': 'suggestion',
     Autre: 'other',
   };
 
