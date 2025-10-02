@@ -75,8 +75,6 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
 
   return (
     <View className="flex-1 p-4">
-      <Text className="mb-4 text-2xl font-bold">Ajouter un lieu</Text>
-
       <Controller
         control={control}
         name="name"
@@ -125,9 +123,9 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         name="category"
         render={({ field: { onChange, value } }) => {
           // Store the onChange function for use in the sheet
-          if (categoryOnChange !== onChange) {
-            setCategoryOnChange(() => onChange);
-          }
+          // if (categoryOnChange !== onChange) {
+          //   setCategoryOnChange(() => onChange);
+          // }
 
           return (
             <View className="mb-4">
@@ -153,9 +151,9 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         name="price_range"
         render={({ field: { onChange, value } }) => {
           // Store the onChange function for use in the sheet
-          if (priceOnChange !== onChange) {
-            setPriceOnChange(() => onChange);
-          }
+          // if (priceOnChange !== onChange) {
+          //   setPriceOnChange(() => onChange);
+          // }
 
           return (
             <View className="mb-4">

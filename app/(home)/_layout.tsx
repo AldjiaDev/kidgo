@@ -31,6 +31,15 @@ export default function TabLayout() {
           title: 'Feedback',
         }}
       />
+      <Stack.Screen
+        name="new-place"
+        options={{
+          headerLargeTitle: true,
+          title: 'Ajouter un lieu',
+          presentation: 'modal',
+          animation: 'slide_from_bottom', // for android
+        }}
+      />
     </Stack>
   );
 }

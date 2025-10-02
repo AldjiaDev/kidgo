@@ -42,10 +42,8 @@ function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'pla
 const MapsContent = observer(() => {
   const places = places$.get();
   const { location, requestPermission, hasPermission } = useLocation();
-  const { isAuthenticated } = useAuth();
 
   const bottomSheetModalRef = useSheetRef();
-  const addPlaceSheetRef = useSheetRef();
 
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
 
@@ -57,16 +55,6 @@ const MapsContent = observer(() => {
       bottomSheetModalRef.current?.present();
     }
   };
-
-  // Function to handle add place button click
-  function handleAddPlaceClick() {
-    addPlaceSheetRef.current?.present();
-  }
-
-  // Function to handle successful place addition
-  function handlePlaceAdded() {
-    addPlaceSheetRef.current?.dismiss();
-  }
 
   // Common camera position logic
   function getCameraPosition() {
@@ -172,34 +160,12 @@ const MapsContent = observer(() => {
   return (
     <>
       {renderMap()}
-      {/* Floating Action Button - Only show for authenticated users */}
-      {showBottomSheet && isAuthenticated && (
-        <View className="absolute bottom-28 right-4 z-20 shadow-lg">
-          <Pressable
-            onPress={handleAddPlaceClick}
-            className="h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
-            style={({ pressed }) => ({
-              opacity: pressed ? 0.8 : 1,
-            })}>
-            <Icon name="plus" size={24} color="white" />
-          </Pressable>
-        </View>
-      )}
       {/* Place Details Bottom Sheet */}
       {showBottomSheet && (
         <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
           <BottomSheetScrollView>
             <PlaceBottomSheetContent selectedPlace={selectedPlace} />
           </BottomSheetScrollView>
-        </Sheet>
-      )}
-      {/* Add Place Bottom Sheet */}
-      {showBottomSheet && (
-        <Sheet ref={addPlaceSheetRef} snapPoints={['80%']}>
-          <AddPlaceForm
-            onSubmit={handlePlaceAdded}
-            onCancel={() => addPlaceSheetRef.current?.dismiss()}
-          />
         </Sheet>
       )}
     </>
