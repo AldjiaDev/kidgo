@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
 import { observer } from '@legendapp/state/react';
+import Fuse from 'fuse.js';
 
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceItem } from '~/components/PlacesSection';
@@ -14,17 +16,33 @@ export const SearchResults = observer(({ searchValue }: { searchValue: string })
     return <SkeletonSection />;
   }
 
-  // Filter places by search value across multiple fields
-  const searchResults = Object.values(places).filter(
-    (place: Tables<'places'>) =>
-      place.name !== null &&
-      !place.deleted &&
-      (place.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-        (place.category && place.category.toLowerCase().includes(searchValue.toLowerCase())) ||
-        (place.description &&
-          place.description.toLowerCase().includes(searchValue.toLowerCase())) ||
-        (place.address && place.address.toLowerCase().includes(searchValue.toLowerCase())))
-  );
+  // Fuzzy search configuration
+  const fuse = useMemo(() => {
+    const validPlaces = Object.values(places).filter(
+      (place: Tables<'places'>) => place.name !== null && !place.deleted
+    );
+
+    return new Fuse(validPlaces, {
+      keys: [
+        { name: 'name', weight: 2 },
+        { name: 'category', weight: 1.5 },
+        { name: 'description', weight: 1 },
+        { name: 'address', weight: 1 },
+      ],
+      threshold: 0.4,
+      includeScore: true,
+      minMatchCharLength: 2,
+    });
+  }, [places]);
+
+  // Perform fuzzy search
+  const searchResults = useMemo(() => {
+    if (!searchValue.trim()) {
+      return [];
+    }
+    const results = fuse.search(searchValue);
+    return results.map((result) => result.item);
+  }, [fuse, searchValue]);
 
   if (searchResults.length === 0) {
     return (

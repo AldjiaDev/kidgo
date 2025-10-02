@@ -76,7 +76,10 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
     },
     ref
   ) => {
-    const inputRef = useAugmentedRef({ ref, methods: { focus, blur, clear } });
+    const inputRef = useAugmentedRef({
+      ref,
+      methods: { focus, blur, clear },
+    });
     const [isFocused, setIsFocused] = React.useState(false);
 
     const [value = '', onChangeText] = useControllableState({
@@ -163,15 +166,12 @@ const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
               {...props}
             />
           </InputWrapper>
-          {!materialHideActionIcons && (
-            <>
-              {!!errorMessage ? (
-                <MaterialErrorIcon />
-              ) : (
-                !!value && isFocused && <MaterialClearIcon clearText={clear} editable={editable} />
-              )}
-            </>
-          )}
+          {!materialHideActionIcons &&
+            (errorMessage ? (
+              <MaterialErrorIcon />
+            ) : (
+              !!value && isFocused && <MaterialClearIcon clearText={clear} editable={editable} />
+            ))}
           {rightView}
         </View>
       </Pressable>
@@ -298,7 +298,9 @@ function MaterialLabel(props: MaterialLabelProps) {
   });
   const animatedTextStyle = useAnimatedStyle(() => {
     return {
-      fontSize: withTiming(isLiftedDerived.value ? 10 : 17, { duration: 200 }),
+      fontSize: withTiming(isLiftedDerived.value ? 10 : 17, {
+        duration: 200,
+      }),
     };
   });
   return (
@@ -332,9 +334,7 @@ function MaterialClearIcon(props: MaterialClearIconProps) {
         disabled={props.editable === false}
         className="flex-1 justify-center px-2 active:opacity-65"
         onPress={props.clearText}>
-        {/* @todo fix cross icon */}
-        {/* <CrossIcon color={colors.grey2} /> */}
-        <Icon name="xmark" color={colors.grey2} />
+        <Icon color={colors.grey2} name="close-circle-outline" size={24} />
       </Pressable>
     </Animated.View>
   );
@@ -348,9 +348,15 @@ function MaterialErrorIcon() {
       entering={FadeIn.duration(200)}
       exiting={FadeOut.duration(200)}
       className="justify-center pr-2">
-      {/* @todo fix cross icon */}
-      {/* <CrossIcon color={colors.destructive} /> */}
-      <Icon name="xmark" color={colors.destructive} />
+      <Icon
+        color={colors.destructive}
+        name="close-circle-outline"
+        materialIcon={{
+          name: 'alert-circle',
+          type: 'MaterialCommunityIcons',
+        }}
+        size={24}
+      />
     </Animated.View>
   );
 }
