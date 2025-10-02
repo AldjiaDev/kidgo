@@ -6,6 +6,8 @@
 
 First time here? Follow [setup guide](./docs/setup.md) to get started.
 
+More info on [docs](./docs).
+
 Install dependencies and launch the app:
 
 ```console
