@@ -78,7 +78,6 @@ export type Database = {
       places: {
         Row: {
           address: string | null;
-          age_groups: number[] | null;
           area_type: string | null;
           category: string | null;
           created_at: string | null;
@@ -95,7 +94,6 @@ export type Database = {
         };
         Insert: {
           address?: string | null;
-          age_groups?: number[] | null;
           area_type?: string | null;
           category?: string | null;
           created_at?: string | null;
@@ -112,7 +110,6 @@ export type Database = {
         };
         Update: {
           address?: string | null;
-          age_groups?: number[] | null;
           area_type?: string | null;
           category?: string | null;
           created_at?: string | null;
@@ -266,7 +263,7 @@ export type Database = {
       };
       l2_normalize: {
         Args: { '': string } | { '': unknown } | { '': unknown };
-        Returns: string;
+        Returns: unknown;
       };
       sparsevec_out: {
         Args: { '': unknown };
