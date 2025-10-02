@@ -24,3 +24,5 @@ android
 .metro-health-check*
 
 .env.*
+# Project uses bun, not npm
+package-lock.json
