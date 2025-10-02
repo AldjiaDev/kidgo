@@ -14,6 +14,7 @@ export type Database = {
           duration: unknown | null;
           end_time: string | null;
           id: string;
+          image_url: string | null;
           name: string | null;
           place_id: string | null;
           start_time: string | null;
@@ -23,6 +24,7 @@ export type Database = {
           duration?: unknown | null;
           end_time?: string | null;
           id: string;
+          image_url?: string | null;
           name?: string | null;
           place_id?: string | null;
           start_time?: string | null;
@@ -32,6 +34,7 @@ export type Database = {
           duration?: unknown | null;
           end_time?: string | null;
           id?: string;
+          image_url?: string | null;
           name?: string | null;
           place_id?: string | null;
           start_time?: string | null;
@@ -84,6 +87,7 @@ export type Database = {
           deleted: boolean | null;
           description: string | null;
           id: string;
+          image_url: string | null;
           latitude: number | null;
           longitude: number | null;
           name: string | null;
@@ -100,6 +104,7 @@ export type Database = {
           deleted?: boolean | null;
           description?: string | null;
           id: string;
+          image_url?: string | null;
           latitude?: number | null;
           longitude?: number | null;
           name?: string | null;
@@ -116,6 +121,7 @@ export type Database = {
           deleted?: boolean | null;
           description?: string | null;
           id?: string;
+          image_url?: string | null;
           latitude?: number | null;
           longitude?: number | null;
           name?: string | null;
