@@ -34,9 +34,9 @@ export default function TabLayout() {
   return (
     <ThemeProvider>
       <ReanimatedScreenProvider>
-        <BottomSheetModalProvider>
-          <ActionSheetProvider>
-            <LocationProvider>
+        <LocationProvider>
+          <BottomSheetModalProvider>
+            <ActionSheetProvider>
               <NativeTabs>
                 <NativeTabs.Trigger name="(home)">
                   <Label>Acceuil</Label>
@@ -47,9 +47,9 @@ export default function TabLayout() {
                   <Label>Découvrir</Label>
                 </NativeTabs.Trigger>
               </NativeTabs>
-            </LocationProvider>
-          </ActionSheetProvider>
-        </BottomSheetModalProvider>
+            </ActionSheetProvider>
+          </BottomSheetModalProvider>
+        </LocationProvider>
         <Toaster />
       </ReanimatedScreenProvider>
     </ThemeProvider>
