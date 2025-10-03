@@ -5,6 +5,7 @@ import { observer } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { cssInterop } from 'nativewind';
 
+import { FilterBar } from '~/components/FilterBar';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
@@ -23,6 +24,8 @@ const PlacesListContent = observer(() => {
   const { colors } = useColorScheme();
   const { location, requestPermission, hasPermission } = useLocation();
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedPriceRange, setSelectedPriceRange] = useState<string | null>(null);
   const placeDetailsSheetRef = useSheetRef();
 
   // Get user's current location
@@ -56,7 +59,11 @@ const PlacesListContent = observer(() => {
             place.latitude !== null &&
             place.longitude !== null &&
             place.name !== null &&
-            !place.deleted
+            !place.deleted &&
+            // Filter by category if selected
+            (selectedCategory === null || place.category === selectedCategory) &&
+            // Filter by price range if selected
+            (selectedPriceRange === null || place.price_range === selectedPriceRange)
         )
         .map((place: Tables<'places'>) => {
           let distance = null;
@@ -158,6 +165,12 @@ const PlacesListContent = observer(() => {
 
   return (
     <>
+      <FilterBar
+        selectedCategory={selectedCategory}
+        selectedPriceRange={selectedPriceRange}
+        onCategoryChange={setSelectedCategory}
+        onPriceRangeChange={setSelectedPriceRange}
+      />
       <LegendList
         data={validPlaces}
         estimatedItemSize={80}
