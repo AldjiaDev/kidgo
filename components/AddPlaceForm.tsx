@@ -8,47 +8,8 @@ import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { useLocation } from '~/contexts/LocationContext';
+import { CATEGORIES, PRICE_RANGES } from '~/utils/constants';
 import { addPlace } from '~/utils/supabase-legend';
-
-const CATEGORIES = [
-  'Accrobranche',
-  'Arène',
-  'Bibliothèque',
-  'Bowling',
-  'Centre aquatique',
-  'Centre commercial',
-  'Centre culturel',
-  'Centre de sciences',
-  'Château',
-  'Cinéma',
-  'Église',
-  'Escape game',
-  'Ferme',
-  'Hippodrome',
-  'Jardin',
-  'Jardin botanique',
-  'Karting',
-  'Lac',
-  'Laser game',
-  'Librairie',
-  'Marché',
-  'Mini golf',
-  'Musée',
-  'Opéra',
-  'Parc',
-  "Parc d'attractions",
-  'Parc de loisirs',
-  'Parc de trampolines',
-  'Patinoire',
-  'Piscine',
-  'Place',
-  'Quartier',
-  'Site historique',
-  'Théâtre',
-  'Zoo',
-];
-
-const PRICE_RANGES = ['Gratuit', '€', '€€', '€€€'];
 
 interface AddPlaceFormProps {
   onSubmit?: () => void;
