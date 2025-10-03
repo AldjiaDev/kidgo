@@ -25,7 +25,6 @@ const PlacesListContent = observer(() => {
   const { location, requestPermission, hasPermission } = useLocation();
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string | null>(null);
   const placeDetailsSheetRef = useSheetRef();
 
   // Get user's current location
@@ -61,9 +60,7 @@ const PlacesListContent = observer(() => {
             place.name !== null &&
             !place.deleted &&
             // Filter by category if selected
-            (selectedCategory === null || place.category === selectedCategory) &&
-            // Filter by price range if selected
-            (selectedPriceRange === null || place.price_range === selectedPriceRange)
+            (selectedCategory === null || place.category === selectedCategory)
         )
         .map((place: Tables<'places'>) => {
           let distance = null;
@@ -165,12 +162,7 @@ const PlacesListContent = observer(() => {
 
   return (
     <>
-      <FilterBar
-        selectedCategory={selectedCategory}
-        selectedPriceRange={selectedPriceRange}
-        onCategoryChange={setSelectedCategory}
-        onPriceRangeChange={setSelectedPriceRange}
-      />
+      <FilterBar selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
       <LegendList
         data={validPlaces}
         estimatedItemSize={80}
