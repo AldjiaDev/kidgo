@@ -1,7 +1,7 @@
 import { ScrollView, View } from 'react-native';
 
-export const POSTER_WIDTH = 140;
-export const POSTER_HEIGHT = 210;
+export const POSTER_WIDTH = 120;
+export const POSTER_HEIGHT = 160;
 
 export function Loading() {
   return (

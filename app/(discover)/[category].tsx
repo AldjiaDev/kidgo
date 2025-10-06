@@ -3,18 +3,17 @@ import { TouchableOpacity, View } from 'react-native';
 import { LegendList } from '@legendapp/list';
 import { observer } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
+import { useLocalSearchParams } from 'expo-router';
 import { cssInterop } from 'nativewind';
 
-import { FilterBar } from '~/components/FilterBar';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
-import { VStack } from '~/components/ui/Views';
 import { useLocation } from '~/contexts/LocationContext';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { calculateDistance } from '~/utils/calculate-distance';
 import { getCategoryInfo } from '~/utils/categoryFormatter';
 import { Tables } from '~/utils/database.types';
+import { filterValidPlaces } from '~/utils/filter-valid-places';
 import { places$ } from '~/utils/supabase-legend';
 
 cssInterop(LegendList, {
@@ -22,7 +21,9 @@ cssInterop(LegendList, {
   contentContainerClassName: 'contentContainerStyle',
 });
 
-const PlacesListContent = observer(() => {
+const CategoryScreenContent = observer(() => {
+  const { category: rawCategory } = useLocalSearchParams<{ category: string }>();
+  const category = rawCategory ? decodeURIComponent(rawCategory) : null;
   const places = places$.get();
   const { colors } = useColorScheme();
   const { location, requestPermission, hasPermission } = useLocation();
@@ -36,55 +37,19 @@ const PlacesListContent = observer(() => {
     }
   }, [hasPermission, requestPermission]);
 
-  // Filter places that have valid coordinates and are nearby
-  const validPlaces = places
-    ? Object.values(places)
-        .filter(
-          (place: Tables<'places'>) =>
-            place.latitude !== null &&
-            place.longitude !== null &&
-            place.name !== null &&
-            !place.deleted
-        )
-        .map((place: Tables<'places'>) => {
-          let distance = null;
-          if (location && place.latitude && place.longitude) {
-            distance = calculateDistance(
-              location.coords.latitude,
-              location.coords.longitude,
-              parseFloat(String(place.latitude)),
-              parseFloat(String(place.longitude))
-            );
-          }
-          return { ...place, distance };
-        })
-        .filter((place) => !location || place.distance === null || place.distance <= 50) // Within 50km
-        .sort((a, b) => {
-          // Sort by distance if available, otherwise by name
-          if (a.distance !== null && b.distance !== null) {
-            return a.distance - b.distance;
-          }
-          if (a.distance !== null) return -1;
-          if (b.distance !== null) return 1;
-          return (a.name || '').localeCompare(b.name || '');
-        })
-    : [];
+  // Filter places by the selected category
+  const validPlaces = filterValidPlaces(places, location, category);
 
   function keyExtractor(item: Tables<'places'> & { distance: number | null }) {
     return item.id;
   }
 
   function renderItemSeparator() {
-    return (
-      <View className="px-4">
-        <View className="border-b border-border" />
-      </View>
-    );
+    return <View className="mx-4 h-px bg-border" />;
   }
 
   function handleCloseAllSheets() {
     placeDetailsSheetRef.current?.dismiss();
-    setSelectedPlace(null);
   }
 
   function renderItem({ item: place }: { item: Tables<'places'> & { distance: number | null } }) {
@@ -144,14 +109,23 @@ const PlacesListContent = observer(() => {
     );
   }
 
+  if (validPlaces.length === 0) {
+    return (
+      <View className="flex-1">
+        <View className="flex-1 items-center justify-center p-8">
+          <Text variant="heading" className="mb-2 text-center">
+            Aucun lieu trouvé
+          </Text>
+          <Text variant="body" className="text-center text-muted-foreground">
+            Il n&apos;y a pas encore de lieux dans cette catégorie.
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <>
-      <VStack className="gap-4 pt-4">
-        <Text variant="heading" className="px-4">
-          Filtrer par catégorie
-        </Text>
-        <FilterBar />
-      </VStack>
       <LegendList
         data={validPlaces}
         estimatedItemSize={80}
@@ -172,6 +146,6 @@ const PlacesListContent = observer(() => {
   );
 });
 
-export function PlacesList() {
-  return <PlacesListContent />;
+export default function CategoryScreen() {
+  return <CategoryScreenContent />;
 }
