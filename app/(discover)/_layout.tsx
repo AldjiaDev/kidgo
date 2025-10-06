@@ -11,7 +11,20 @@ export default function TabLayout() {
     <Stack>
       <Stack.Screen name="index" options={{ title: 'Découvrir', headerShown: false }} />
       <Stack.Screen name="maps" options={{ title: '', headerTransparent: true }} />
-
+      <Stack.Screen
+        name="[category]"
+        options={({ route }) => ({
+          title: (route.params as any)?.category || 'Catégorie',
+          headerShown: true,
+          headerTransparent: true,
+          headerBlurEffect: 'systemChromeMaterial',
+          headerShadowVisible: true,
+          headerLargeTitleShadowVisible: false,
+          headerLargeStyle: {
+            backgroundColor: 'transparent',
+          },
+        })}
+      />
       <Stack.Screen name="settings" options={{ title: 'Settings', headerTransparent: true }} />
     </Stack>
   );
