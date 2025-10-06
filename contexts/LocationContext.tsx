@@ -1,9 +1,10 @@
-import React, {
+import {
   createContext,
   ReactNode,
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import { Alert, Platform } from 'react-native';
@@ -28,6 +29,7 @@ export function LocationProvider({ children }: LocationProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasPermission, setHasPermission] = useState(false);
+  const isRequestingPermission = useRef(false);
 
   const getCurrentLocation = useCallback(async () => {
     try {
@@ -92,7 +94,13 @@ export function LocationProvider({ children }: LocationProviderProps) {
   };
 
   const requestPermission = async () => {
+    // Prevent multiple simultaneous permission requests
+    if (isRequestingPermission.current) {
+      return;
+    }
+
     try {
+      isRequestingPermission.current = true;
       setIsLoading(true);
       setError(null);
 
@@ -137,6 +145,7 @@ export function LocationProvider({ children }: LocationProviderProps) {
       setError('Erreur lors de la demande de permission');
     } finally {
       setIsLoading(false);
+      isRequestingPermission.current = false;
     }
   };
 
