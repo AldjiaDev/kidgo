@@ -1,10 +1,11 @@
 import 'expo-dev-client';
 
-import { AppState } from 'react-native';
+import { useEffect } from 'react';
+import { AppState, Platform } from 'react-native';
 import { ReanimatedScreenProvider } from 'react-native-screens/reanimated';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { Tabs } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
 import { Toaster } from 'sonner-native';
 
@@ -31,28 +32,53 @@ AppState.addEventListener('change', (state) => {
   }
 });
 
-export default function TabLayout() {
+export default function RootLayout() {
   return (
     <ThemeProvider>
       <ReanimatedScreenProvider>
         <LocationProvider>
           <BottomSheetModalProvider>
             <ActionSheetProvider>
-              <NativeTabs>
-                <NativeTabs.Trigger name="(home)">
-                  <Label>Acceuil</Label>
-                  <Icon sf="house.fill" drawable="custom_android_drawable" />
-                </NativeTabs.Trigger>
-                <NativeTabs.Trigger name="(discover)">
-                  <Icon sf="map" drawable="custom_map_drawable" />
-                  <Label>Découvrir</Label>
-                </NativeTabs.Trigger>
-              </NativeTabs>
+              <RootNavigator />
             </ActionSheetProvider>
           </BottomSheetModalProvider>
         </LocationProvider>
         <Toaster />
       </ReanimatedScreenProvider>
     </ThemeProvider>
+  );
+}
+
+function RootNavigator() {
+  const router = useRouter();
+
+  // run Storybook with `npm run storybook` command
+  useEffect(() => {
+    if (process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true') {
+      // fix for Expo Router navigation issue on iOS
+      // see https://github.com/expo/router/issues/740#issuecomment-1629471113
+      if (Platform.OS === 'ios') {
+        setTimeout(() => {
+          router.replace('/storybook');
+        }, 1);
+      } else {
+        setImmediate(() => {
+          router.replace('/storybook');
+        });
+      }
+    }
+  }, []);
+
+  return (
+    <NativeTabs>
+      <NativeTabs.Trigger name="(home)">
+        <Label>Acceuil</Label>
+        <Icon sf="house.fill" drawable="custom_android_drawable" />
+      </NativeTabs.Trigger>
+      <NativeTabs.Trigger name="(discover)">
+        <Icon sf="map" drawable="custom_map_drawable" />
+        <Label>Découvrir</Label>
+      </NativeTabs.Trigger>
+    </NativeTabs>
   );
 }
