@@ -11,7 +11,7 @@ import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { getCategoryInfo } from '~/utils/categoryFormatter';
+import { getCategoryInfo } from '~/utils/category-formatter';
 import { Tables } from '~/utils/database.types';
 import { filterValidPlaces } from '~/utils/filter-valid-places';
 import { places$ } from '~/utils/supabase-legend';
