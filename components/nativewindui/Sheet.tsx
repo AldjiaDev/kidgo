@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useRef } from 'react';
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
@@ -10,7 +11,7 @@ import { useColorScheme } from '~/lib/useColorScheme';
 const Sheet = React.forwardRef<
   BottomSheetModal,
   React.ComponentPropsWithoutRef<typeof BottomSheetModal>
->(({ index = 0, backgroundStyle, style, handleIndicatorStyle, ...props }, ref) => {
+>(({ index = 1, backgroundStyle, style, handleIndicatorStyle, ...props }, ref) => {
   const { colors } = useColorScheme();
 
   const renderBackdrop = React.useCallback(
@@ -20,7 +21,7 @@ const Sheet = React.forwardRef<
   return (
     <BottomSheetModal
       ref={ref}
-      index={0}
+      index={index}
       backgroundStyle={
         backgroundStyle ?? {
           backgroundColor: colors.card,
@@ -46,7 +47,7 @@ const Sheet = React.forwardRef<
 });
 
 function useSheetRef() {
-  return React.useRef<BottomSheetModal>(null);
+  return useRef<BottomSheetModal>(null);
 }
 
 Sheet.displayName = 'Sheet';
