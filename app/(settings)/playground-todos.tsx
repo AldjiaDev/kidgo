@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FlatList, Text, TextInput, TouchableOpacity } from 'react-native';
 import { observer } from '@legendapp/state/react';
 
+import { TaskKeyboardAccessory } from '~/components/keyboard/TaskKeyboardAccessory';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { Tables } from '~/utils/database.types';
 import { addTodo, todos$ as _todos$, toggleDone } from '~/utils/supabase-legend';
@@ -14,18 +15,33 @@ export default function PlaygroundTodosScreen() {
   // The text input component to add a new todo.
   function NewTodo() {
     const [text, setText] = useState('');
-    const handleSubmitEditing = ({ nativeEvent: { text } }) => {
+    const [isTextInputFocused, setIsTextInputFocused] = useState(false);
+
+    const handleSubmitEditing = ({ nativeEvent: { text } }: { nativeEvent: { text: string } }) => {
       setText('');
       addTodo(text);
     };
+
+    function handleTaskSuggestion(suggestion: string) {
+      setText(suggestion);
+    }
+
     return (
-      <TextInput
-        value={text}
-        onChangeText={(text) => setText(text)}
-        onSubmitEditing={handleSubmitEditing}
-        placeholder="Que voulez vous faire aujourd'hui ?"
-        className="mt-4 h-16 flex-none rounded-lg border-2 border-gray-500 p-4 text-xl"
-      />
+      <>
+        <TextInput
+          value={text}
+          onChangeText={(text) => setText(text)}
+          onSubmitEditing={handleSubmitEditing}
+          onFocus={() => setIsTextInputFocused(true)}
+          onBlur={() => setIsTextInputFocused(false)}
+          placeholder="Que voulez vous faire aujourd'hui ?"
+          className="mt-4 h-16 flex-none rounded-lg border-2 border-gray-500 p-4 text-xl"
+        />
+        <TaskKeyboardAccessory
+          enabled={isTextInputFocused}
+          onSuggestionPress={handleTaskSuggestion}
+        />
+      </>
     );
   }
 
