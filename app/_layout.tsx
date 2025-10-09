@@ -4,6 +4,7 @@ import { AppState } from 'react-native';
 import { ReanimatedScreenProvider } from 'react-native-screens/reanimated';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { Tabs } from 'expo-router';
 import { Icon, Label, NativeTabs } from 'expo-router/unstable-native-tabs';
 import { Toaster } from 'sonner-native';
 

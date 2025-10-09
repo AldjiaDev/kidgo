@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { SearchBarProps } from 'react-native-screens';
 import { useNavigation } from 'expo-router';
 
@@ -9,9 +9,9 @@ import { COLORS } from '~/theme/colors';
 export function useHeaderSearchBar(props: SearchBarProps = {}) {
   const { colorScheme, colors } = useColorScheme();
   const navigation = useNavigation();
-  const [search, setSearch] = React.useState('');
+  const [search, setSearch] = useState('');
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       headerSearchBarOptions: {
         placeholder: 'Search...',

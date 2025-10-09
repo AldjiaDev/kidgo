@@ -20,12 +20,6 @@ export default function NewPlaceScreen() {
   const categorySheetRef = useSheetRef();
   const priceSheetRef = useSheetRef();
 
-  // ref
-  const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ['25%'], []);
-
   function handlePlaceAdded(data) {
     console.log('🚀 ~ handlePlaceAdded ~ data:', data);
   }
@@ -35,8 +29,8 @@ export default function NewPlaceScreen() {
   }
 
   function openPriceSheet() {
-    console.log('🚀 ~ openPriceSheet ~ bottomSheetRef:', bottomSheetRef);
-    bottomSheetRef?.current?.snapToIndex(0);
+    console.log('🚀 ~ openPriceSheet ~ bottomSheetRef:', categorySheetRef);
+    categorySheetRef?.current?.snapToIndex(0);
   }
 
   return (
@@ -53,7 +47,7 @@ export default function NewPlaceScreen() {
           setCategoryOnChange={setCategoryOnChange}
           priceOnChange={priceOnChange}
           setPriceOnChange={setPriceOnChange}
-          categorySheetRef={categorySheetRef}
+          // categorySheetRef={categorySheetRef}
           priceSheetRef={priceSheetRef}
           isSubmitting={isSubmitting}
           setIsSubmitting={setIsSubmitting}
@@ -69,7 +63,7 @@ export default function NewPlaceScreen() {
       <Sheet ref={categorySheetRef} snapPoints={['40%', '80%']}>
         <View className="flex-1 p-4">
           <Text className="mb-4 text-lg font-semibold">Sélectionnez une catégorie</Text>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          {/* <ScrollView showsVerticalScrollIndicator={false}>
             {CATEGORIES.map((category) => (
               <Pressable
                 key={category}
@@ -81,17 +75,12 @@ export default function NewPlaceScreen() {
                 <Text className="text-foreground">{category}</Text>
               </Pressable>
             ))}
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </Sheet>
 
       {/* Price Selection Sheet */}
-      <Sheet
-        ref={priceSheetRef}
-        snapPoints={['40%', '80%']} // add bottom inset to elevate the sheet
-        bottomInset={46}
-        // set `detached` to true
-        detached={true}>
+      <Sheet ref={priceSheetRef} snapPoints={['40%', '80%']}>
         <View className="flex-1 p-4">
           <Text className="mb-4 text-lg font-semibold">Sélectionnez une gamme de prix</Text>
           {PRICE_RANGES.map((price) => (
@@ -107,18 +96,6 @@ export default function NewPlaceScreen() {
           ))}
         </View>
       </Sheet>
-
-      <BottomSheet
-        ref={bottomSheetRef}
-        snapPoints={snapPoints}
-        // add bottom inset to elevate the sheet
-        bottomInset={46}
-        // set `detached` to true
-        detached={true}>
-        <View>
-          <Text>Awesome 🎉</Text>
-        </View>
-      </BottomSheet>
     </KeyboardAvoidingView>
   );
 }
