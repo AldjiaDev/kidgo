@@ -5,7 +5,7 @@ import { Maps } from '~/components/Maps';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { PlacesList } from '~/components/PlacesList';
 
-export default function MapsScreen() {
+export default function MapScreen() {
   const placesSheetRef = useSheetRef();
 
   return (

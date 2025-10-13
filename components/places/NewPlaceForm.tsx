@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, ScrollView, View } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import * as Location from 'expo-location';
 import { toast } from 'sonner-native';
 
@@ -11,12 +12,12 @@ import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { useLocation } from '~/contexts/LocationContext';
 import { addPlace } from '~/utils/supabase-legend';
 
-interface AddPlaceFormProps {
+interface NewPlaceFormProps {
   onSubmit: () => void;
   onCancel: () => void;
   categoryOnChange: ((value: string) => void) | null;
   priceOnChange: ((value: string) => void) | null;
-  categorySheetRef: React.RefObject<any>;
+
   priceSheetRef: React.RefObject<any>;
   isSubmitting: boolean;
   setIsSubmitting: (value: boolean) => void;
@@ -33,19 +34,18 @@ interface FormData {
   price_range: string;
 }
 
-export function AddPlaceForm({
+export function NewPlaceForm({
   onSubmit,
   onCancel,
   categoryOnChange,
   priceOnChange,
-  categorySheetRef,
   priceSheetRef,
   isSubmitting,
   setIsSubmitting,
   location,
   setPriceOnChange,
   setCategoryOnChange,
-}: AddPlaceFormProps) {
+}: NewPlaceFormProps) {
   const {
     control,
     handleSubmit,
@@ -86,6 +86,8 @@ export function AddPlaceForm({
       setIsSubmitting(false);
     }
   };
+
+  const categoriesModalRef = useRef<BottomSheetModal>(null);
 
   return (
     <View className="flex-1 p-4">
@@ -137,15 +139,15 @@ export function AddPlaceForm({
         name="category"
         render={({ field: { onChange, value } }) => {
           // Store the onChange function for use in the sheet
-          if (categoryOnChange !== onChange) {
-            setCategoryOnChange(() => onChange);
-          }
+          // if (categoryOnChange !== onChange) {
+          //   setCategoryOnChange(() => onChange);
+          // }
 
           return (
             <View className="mb-4">
               <Text className="mb-2 text-sm font-medium text-foreground">Catégorie</Text>
               <Pressable
-                onPress={() => categorySheetRef.current?.present()}
+                onPress={() => categoriesModalRef.current?.present()}
                 className="rounded-md border border-input bg-background px-3 py-3"
                 disabled={isSubmitting}>
                 <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>

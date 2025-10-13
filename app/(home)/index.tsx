@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Icon } from '@roninoss/icons';
 import { Link } from 'expo-router';
 
-import { AddPlaceForm } from '~/components/AddPlaceForm';
+import { NewPlaceForm } from '~/components/places/NewPlaceForm';
 import { Button } from '~/components/nativewindui/Button';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
@@ -73,7 +73,7 @@ export default function HomeScreen() {
 
       <Sheet ref={addPlaceSheetRef} snapPoints={['65%', '85%']}>
         <Text variant="largeTitle">Ajouter un lieu</Text>
-        {/* <AddPlaceForm
+        {/* <NewPlaceForm
           onSubmit={handlePlaceAdded}
           onCancel={() => addPlaceSheetRef.current?.dismiss()}
         /> */}

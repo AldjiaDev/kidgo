@@ -1,8 +1,8 @@
-import { AddPlaceForm } from '~/components/AddPlaceForm';
+import { NewPlaceForm } from '~/components/places/NewPlaceForm';
 
 export default {
-  title: 'Components/AddPlaceForm',
-  component: AddPlaceForm,
+  title: 'Components/NewPlaceForm',
+  component: NewPlaceForm,
 };
 
 export const Default = () => {
@@ -10,7 +10,7 @@ export const Default = () => {
     console.log('change');
   }
   return (
-    <AddPlaceForm
+    <NewPlaceForm
       onSubmit={() => {}}
       onCancel={() => {}}
       categoryOnChange={null}

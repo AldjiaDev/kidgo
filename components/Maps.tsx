@@ -5,7 +5,7 @@ import { observer } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
-import { AddPlaceForm } from '~/components/AddPlaceForm';
+import { NewPlaceForm } from '~/components/places/NewPlaceForm';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
