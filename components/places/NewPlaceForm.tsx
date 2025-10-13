@@ -9,6 +9,7 @@ import { Button } from '~/components/nativewindui/Button';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
+import { CategoriesBottomSheet } from '~/components/places/CategoriesBottomSheet';
 import { useLocation } from '~/contexts/LocationContext';
 import { addPlace } from '~/utils/supabase-legend';
 
@@ -89,8 +90,14 @@ export function NewPlaceForm({
 
   const categoriesModalRef = useRef<BottomSheetModal>(null);
 
+  const handleCategorySelect = (category: string) => {
+    categoryOnChange?.(category);
+    categoriesModalRef.current?.dismiss();
+  };
+
   return (
-    <View className="flex-1 p-4">
+    <>
+      <View className="flex-1 p-4">
       <Controller
         control={control}
         name="name"
@@ -139,9 +146,9 @@ export function NewPlaceForm({
         name="category"
         render={({ field: { onChange, value } }) => {
           // Store the onChange function for use in the sheet
-          // if (categoryOnChange !== onChange) {
-          //   setCategoryOnChange(() => onChange);
-          // }
+          if (categoryOnChange !== onChange) {
+            setCategoryOnChange(() => onChange);
+          }
 
           return (
             <View className="mb-4">
@@ -220,5 +227,8 @@ export function NewPlaceForm({
         </Button>
       </View>
     </View>
+
+    <CategoriesBottomSheet ref={categoriesModalRef} onItemPress={handleCategorySelect} />
+    </>
   );
 }

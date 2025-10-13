@@ -17,7 +17,6 @@ export default function NewPlaceScreen() {
   const [categoryOnChange, setCategoryOnChange] = useState<((value: string) => void) | null>(null);
   const [priceOnChange, setPriceOnChange] = useState<((value: string) => void) | null>(null);
   const { location } = useLocation();
-  const categorySheetRef = useSheetRef();
   const priceSheetRef = useSheetRef();
 
   function handlePlaceAdded(data) {
@@ -29,8 +28,8 @@ export default function NewPlaceScreen() {
   }
 
   function openPriceSheet() {
-    console.log('🚀 ~ openPriceSheet ~ bottomSheetRef:', categorySheetRef);
-    categorySheetRef?.current?.snapToIndex(0);
+    console.log('🚀 ~ openPriceSheet ~ priceSheetRef:', priceSheetRef);
+    priceSheetRef?.current?.present();
   }
 
   return (
@@ -68,7 +67,7 @@ export default function NewPlaceScreen() {
               key={price}
               onPress={() => {
                 priceOnChange?.(price);
-                // priceSheetRef.current?.dismiss();
+                priceSheetRef.current?.dismiss();
               }}
               className="border-b border-border py-3">
               <Text className="text-foreground">{price}</Text>
