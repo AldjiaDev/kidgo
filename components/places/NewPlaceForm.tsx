@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Pressable, ScrollView, View } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import * as Location from 'expo-location';
 import { toast } from 'sonner-native';
 
 import { Button } from '~/components/nativewindui/Button';
@@ -8,12 +10,20 @@ import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { useLocation } from '~/contexts/LocationContext';
-import { CATEGORIES, PRICE_RANGES } from '~/utils/constants';
 import { addPlace } from '~/utils/supabase-legend';
 
-interface AddPlaceFormProps {
-  onSubmit?: () => void;
-  onCancel?: () => void;
+interface NewPlaceFormProps {
+  onSubmit: () => void;
+  onCancel: () => void;
+  categoryOnChange: ((value: string) => void) | null;
+  priceOnChange: ((value: string) => void) | null;
+
+  priceSheetRef: React.RefObject<any>;
+  isSubmitting: boolean;
+  setIsSubmitting: (value: boolean) => void;
+  location: Location.LocationObject;
+  setPriceOnChange: (fn: (value: string) => void) => void;
+  setCategoryOnChange: (fn: (value: string) => void) => void;
 }
 
 interface FormData {
@@ -24,14 +34,18 @@ interface FormData {
   price_range: string;
 }
 
-export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [categoryOnChange, setCategoryOnChange] = useState<((value: string) => void) | null>(null);
-  const [priceOnChange, setPriceOnChange] = useState<((value: string) => void) | null>(null);
-  const { location } = useLocation();
-  const categorySheetRef = useSheetRef();
-  const priceSheetRef = useSheetRef();
-
+export function NewPlaceForm({
+  onSubmit,
+  onCancel,
+  categoryOnChange,
+  priceOnChange,
+  priceSheetRef,
+  isSubmitting,
+  setIsSubmitting,
+  location,
+  setPriceOnChange,
+  setCategoryOnChange,
+}: NewPlaceFormProps) {
   const {
     control,
     handleSubmit,
@@ -73,10 +87,10 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
     }
   };
 
+  const categoriesModalRef = useRef<BottomSheetModal>(null);
+
   return (
     <View className="flex-1 p-4">
-      <Text className="mb-4 text-2xl font-bold">Ajouter un lieu</Text>
-
       <Controller
         control={control}
         name="name"
@@ -125,15 +139,15 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
         name="category"
         render={({ field: { onChange, value } }) => {
           // Store the onChange function for use in the sheet
-          if (categoryOnChange !== onChange) {
-            setCategoryOnChange(() => onChange);
-          }
+          // if (categoryOnChange !== onChange) {
+          //   setCategoryOnChange(() => onChange);
+          // }
 
           return (
             <View className="mb-4">
               <Text className="mb-2 text-sm font-medium text-foreground">Catégorie</Text>
               <Pressable
-                onPress={() => categorySheetRef.current?.present()}
+                onPress={() => categoriesModalRef.current?.present()}
                 className="rounded-md border border-input bg-background px-3 py-3"
                 disabled={isSubmitting}>
                 <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
@@ -205,44 +219,6 @@ export function AddPlaceForm({ onSubmit, onCancel }: AddPlaceFormProps) {
           <Text>{isSubmitting ? 'Ajout...' : 'Ajouter'}</Text>
         </Button>
       </View>
-
-      {/* Category Selection Sheet */}
-      <Sheet ref={categorySheetRef} snapPoints={['50%']}>
-        <View className="flex-1 p-4">
-          <Text className="mb-4 text-lg font-semibold">Sélectionnez une catégorie</Text>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {CATEGORIES.map((category) => (
-              <Pressable
-                key={category}
-                onPress={() => {
-                  categoryOnChange?.(category);
-                  categorySheetRef.current?.dismiss();
-                }}
-                className="border-b border-border py-3">
-                <Text className="text-foreground">{category}</Text>
-              </Pressable>
-            ))}
-          </ScrollView>
-        </View>
-      </Sheet>
-
-      {/* Price Selection Sheet */}
-      <Sheet ref={priceSheetRef} snapPoints={['40%']}>
-        <View className="flex-1 p-4">
-          <Text className="mb-4 text-lg font-semibold">Sélectionnez une gamme de prix</Text>
-          {PRICE_RANGES.map((price) => (
-            <Pressable
-              key={price}
-              onPress={() => {
-                priceOnChange?.(price);
-                priceSheetRef.current?.dismiss();
-              }}
-              className="border-b border-border py-3">
-              <Text className="text-foreground">{price}</Text>
-            </Pressable>
-          ))}
-        </View>
-      </Sheet>
     </View>
   );
 }

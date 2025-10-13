@@ -12,7 +12,7 @@ function Header() {
     <View className="flex-row items-center justify-between px-4 pt-4">
       <View className="flex-row items-center">
         <Link href="/(discover)/settings">
-          <Avatar alt={'DL'}>
+          <Avatar alt={'KGO'}>
             <AvatarFallback>
               <Text className="text-foreground">KGO</Text>
             </AvatarFallback>
@@ -22,7 +22,7 @@ function Header() {
           Découvrir
         </Text>
       </View>
-      <Link href="/(discover)/maps" asChild>
+      <Link href="/(discover)/map" asChild>
         <Button variant="tonal">
           <Text>Carte</Text>
         </Button>

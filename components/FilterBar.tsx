@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { cssInterop } from 'nativewind';
 
 import { Text } from '~/components/nativewindui/Text';
-import { getCategoryInfo } from '~/utils/categoryFormatter';
+import { getCategoryInfo } from '~/utils/category-formatter';
 import { CATEGORIES } from '~/utils/constants';
 
 cssInterop(LegendList, {
