@@ -1,7 +1,7 @@
 import { Loading, SkeletonItem, SkeletonSection } from '~/components/Skeleton';
 
 export default {
-  title: 'Components/Skeleton',
+  title: 'Skeleton',
   component: Loading,
 };
 

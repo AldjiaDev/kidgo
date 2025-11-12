@@ -1,7 +1,7 @@
 import { NewPlaceForm } from '~/components/places/NewPlaceForm';
 
 export default {
-  title: 'Components/NewPlaceForm',
+  title: 'NewPlaceForm',
   component: NewPlaceForm,
 };
 
