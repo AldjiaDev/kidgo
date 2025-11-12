@@ -5,10 +5,10 @@ import { observer } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
-import { NewPlaceForm } from '~/components/places/NewPlaceForm';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
+import { NewPlaceForm } from '~/components/places/NewPlaceForm';
 import { useLocation } from '~/contexts/LocationContext';
 import { useAuth } from '~/hooks/useAuth';
 import { Tables } from '~/utils/database.types';
@@ -154,20 +154,16 @@ const MapsContent = observer(() => {
     }
   };
 
-  // Only show bottom sheet on mobile platforms
-  const showBottomSheet = Platform.OS === 'ios' || Platform.OS === 'android';
-
   return (
     <>
       {renderMap()}
       {/* Place Details Bottom Sheet */}
-      {showBottomSheet && (
-        <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
-          <BottomSheetScrollView>
-            <PlaceBottomSheetContent selectedPlace={selectedPlace} />
-          </BottomSheetScrollView>
-        </Sheet>
-      )}
+
+      <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
+        <BottomSheetScrollView>
+          <PlaceBottomSheetContent selectedPlace={selectedPlace} />
+        </BottomSheetScrollView>
+      </Sheet>
     </>
   );
 });

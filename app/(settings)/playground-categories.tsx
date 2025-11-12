@@ -4,7 +4,6 @@ import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { categoryMap } from '~/utils/category-formatter';
 
 export default function PlaygroundCategories() {
-  //render all categories
   const categories = Object.keys(categoryMap);
 
   return (
