@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { observer } from '@legendapp/state/react';
+import { observer, use$ } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
@@ -39,8 +39,8 @@ function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'pla
   );
 }
 
-const MapsContent = observer(() => {
-  const places = places$.get();
+export function Maps() {
+  const places = use$(places$);
   const { location, requestPermission, hasPermission } = useLocation();
 
   const bottomSheetModalRef = useSheetRef();
@@ -166,8 +166,4 @@ const MapsContent = observer(() => {
       </Sheet>
     </>
   );
-});
-
-export function Maps() {
-  return <MapsContent />;
 }

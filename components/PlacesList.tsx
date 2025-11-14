@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { LegendList } from '@legendapp/list';
-import { observer } from '@legendapp/state/react';
+import { use$ } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { cssInterop } from 'nativewind';
 
@@ -22,8 +22,8 @@ cssInterop(LegendList, {
   contentContainerClassName: 'contentContainerStyle',
 });
 
-const PlacesListContent = observer(() => {
-  const places = places$.get();
+export function PlacesList() {
+  const places = use$(places$);
   const { colors } = useColorScheme();
   const { location, requestPermission, hasPermission } = useLocation();
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
@@ -91,8 +91,9 @@ const PlacesListContent = observer(() => {
     const categoryInfo = getCategoryInfo(place.category);
 
     const handlePlacePress = () => {
-      setSelectedPlace(place);
       placeDetailsSheetRef.current?.present();
+      // setSelectedPlace(place);
+      console.log('🚀 ~ handlePlacePress ~ place:', place);
     };
 
     return (
@@ -147,9 +148,6 @@ const PlacesListContent = observer(() => {
   return (
     <>
       <VStack className="gap-4 pt-4">
-        <Text variant="heading" className="px-4">
-          Filtrer par catégorie
-        </Text>
         <FilterBar />
       </VStack>
       <LegendList
@@ -170,8 +168,4 @@ const PlacesListContent = observer(() => {
       </Sheet>
     </>
   );
-});
-
-export function PlacesList() {
-  return <PlacesListContent />;
 }
