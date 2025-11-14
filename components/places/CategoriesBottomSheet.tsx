@@ -1,5 +1,5 @@
 import { forwardRef, useCallback } from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
@@ -8,19 +8,18 @@ import { Text } from '~/components/nativewindui/Text';
 import { CATEGORIES } from '~/utils/constants';
 
 interface CategoriesBottomSheetProps {
-  index?: number;
   onItemPress: (category: string) => void;
   ref: React.RefObject<BottomSheetModal | null>;
 }
 
 export const CategoriesBottomSheet = forwardRef<BottomSheetModal, CategoriesBottomSheetProps>(
-  ({ index, onItemPress }, ref) => {
+  ({ onItemPress }, ref) => {
     const DATA = CATEGORIES;
 
     const renderItem = useCallback(
       (item: string, index: number) => (
         <Pressable
-          key={item}
+          key={`${item}-${index}`}
           onPress={() => onItemPress(item)}
           className="border-b border-border py-3">
           <Text className="text-foreground">{item}</Text>
@@ -30,7 +29,7 @@ export const CategoriesBottomSheet = forwardRef<BottomSheetModal, CategoriesBott
     );
 
     return (
-      <Sheet ref={ref} key="CategoriesSheet" name="CategoriesSheet" snapPoints={['40%', '80%']}>
+      <Sheet ref={ref} name="CategoriesSheet" snapPoints={['40%', '80%']}>
         <SafeAreaView className="flex-1 p-4" edges={['top', 'bottom']}>
           <Text className="mb-4 text-lg font-semibold">Sélectionnez une catégorie</Text>
 

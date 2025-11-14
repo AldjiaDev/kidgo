@@ -1,17 +1,14 @@
-import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Pressable, ScrollView, View } from 'react-native';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { Pressable, View } from 'react-native';
 import * as Location from 'expo-location';
 import { toast } from 'sonner-native';
 
 import { Button } from '~/components/nativewindui/Button';
-import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
+import { useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { CategoriesBottomSheet } from '~/components/places/CategoriesBottomSheet';
 import { PriceRangeBottomSheet } from '~/components/places/PriceRangeBottomSheet';
-import { useLocation } from '~/contexts/LocationContext';
 import { addPlace } from '~/utils/supabase-legend';
 
 interface NewPlaceFormProps {
@@ -81,8 +78,16 @@ export function NewPlaceForm({
     }
   };
 
-  const categoriesSheetRef = useRef<BottomSheetModal>(null);
-  const priceRangeSheetRef = useRef<BottomSheetModal>(null);
+  const categoriesSheetRef = useSheetRef();
+  const priceRangeSheetRef = useSheetRef();
+
+  function openCategoriesSheet() {
+    categoriesSheetRef.current?.present();
+  }
+
+  function openPriceRangeSheet() {
+    priceRangeSheetRef.current?.present();
+  }
 
   return (
     <View className="flex-1 p-4">
@@ -142,7 +147,7 @@ export function NewPlaceForm({
             <View className="mb-4">
               <Text className="mb-2 text-sm font-medium text-foreground">Catégorie</Text>
               <Pressable
-                onPress={() => categoriesSheetRef.current?.present()}
+                onPress={openCategoriesSheet}
                 className="rounded-md border border-input bg-background px-3 py-3"
                 disabled={isSubmitting}>
                 <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
@@ -170,7 +175,7 @@ export function NewPlaceForm({
             <View className="mb-4">
               <Text className="mb-2 text-sm font-medium text-foreground">Prix</Text>
               <Pressable
-                onPress={() => priceRangeSheetRef.current?.present()}
+                onPress={openPriceRangeSheet}
                 className="rounded-md border border-input bg-background px-3 py-3"
                 disabled={isSubmitting}>
                 <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
