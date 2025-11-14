@@ -1,5 +1,6 @@
 import { forwardRef, useCallback } from 'react';
 import { Pressable, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import { Sheet } from '~/components/nativewindui/Sheet';
@@ -29,24 +30,14 @@ export const CategoriesBottomSheet = forwardRef<BottomSheetModal, CategoriesBott
     );
 
     return (
-      <Sheet
-        ref={ref}
-        key="CategoriesSheet"
-        name="CategoriesSheet"
-        index={1}
-        snapPoints={['40%', '80%']}>
-        <View className="flex-1 p-4">
+      <Sheet ref={ref} key="CategoriesSheet" name="CategoriesSheet" snapPoints={['40%', '80%']}>
+        <SafeAreaView className="flex-1 p-4" edges={['top', 'bottom']}>
           <Text className="mb-4 text-lg font-semibold">Sélectionnez une catégorie</Text>
 
-          <BottomSheetScrollView
-            keyboardDismissMode="on-drag"
-            keyboardShouldPersistTaps="never"
-            // style={scrollViewStyle}
-            // contentContainerStyle={scrollViewContentContainer}
-          >
+          <BottomSheetScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="never">
             {DATA.map(renderItem)}
           </BottomSheetScrollView>
-        </View>
+        </SafeAreaView>
       </Sheet>
     );
   }

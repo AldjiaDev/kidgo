@@ -10,7 +10,7 @@ import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { CategoriesBottomSheet } from '~/components/places/CategoriesBottomSheet';
-// import { PriceRangeBottomSheet } from '~/components/places/PriceRangeBottomSheet';
+import { PriceRangeBottomSheet } from '~/components/places/PriceRangeBottomSheet';
 import { useLocation } from '~/contexts/LocationContext';
 import { addPlace } from '~/utils/supabase-legend';
 
@@ -217,16 +217,16 @@ export function NewPlaceForm({
 
       <CategoriesBottomSheet
         ref={categoriesSheetRef}
-        onItemPress={function (category: string): void {
-          throw new Error('Function not implemented.');
+        onItemPress={(category: string) => {
+          console.log('🚀 ~ NewPlaceForm ~ category:', category);
         }}
       />
-      {/* <PriceRangeBottomSheet
+      <PriceRangeBottomSheet
         ref={priceRangeSheetRef}
-        onItemPress={function (category: string): void {
-          throw new Error('Function not implemented.');
+        onItemPress={(price: string) => {
+          console.log('🚀 ~ NewPlaceForm ~ price:', price);
         }}
-      /> */}
+      />
     </View>
   );
 }
