@@ -9,14 +9,11 @@ export const Default = () => {
   function handleLog() {
     console.log('change');
   }
+
   return (
     <NewPlaceForm
       onSubmit={() => {}}
       onCancel={() => {}}
-      categoryOnChange={null}
-      priceOnChange={null}
-      categorySheetRef={undefined}
-      priceSheetRef={undefined}
       isSubmitting={false}
       setIsSubmitting={handleLog}
       location={{

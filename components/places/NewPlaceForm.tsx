@@ -9,16 +9,15 @@ import { Button } from '~/components/nativewindui/Button';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
+import { CategoriesBottomSheet } from '~/components/places/CategoriesBottomSheet';
+// import { PriceRangeBottomSheet } from '~/components/places/PriceRangeBottomSheet';
 import { useLocation } from '~/contexts/LocationContext';
 import { addPlace } from '~/utils/supabase-legend';
 
 interface NewPlaceFormProps {
   onSubmit: () => void;
   onCancel: () => void;
-  categoryOnChange: ((value: string) => void) | null;
-  priceOnChange: ((value: string) => void) | null;
 
-  priceSheetRef: React.RefObject<any>;
   isSubmitting: boolean;
   setIsSubmitting: (value: boolean) => void;
   location: Location.LocationObject;
@@ -37,14 +36,9 @@ interface FormData {
 export function NewPlaceForm({
   onSubmit,
   onCancel,
-  categoryOnChange,
-  priceOnChange,
-  priceSheetRef,
   isSubmitting,
   setIsSubmitting,
   location,
-  setPriceOnChange,
-  setCategoryOnChange,
 }: NewPlaceFormProps) {
   const {
     control,
@@ -87,7 +81,8 @@ export function NewPlaceForm({
     }
   };
 
-  const categoriesModalRef = useRef<BottomSheetModal>(null);
+  const categoriesSheetRef = useRef<BottomSheetModal>(null);
+  const priceRangeSheetRef = useRef<BottomSheetModal>(null);
 
   return (
     <View className="flex-1 p-4">
@@ -147,7 +142,7 @@ export function NewPlaceForm({
             <View className="mb-4">
               <Text className="mb-2 text-sm font-medium text-foreground">Catégorie</Text>
               <Pressable
-                onPress={() => categoriesModalRef.current?.present()}
+                onPress={() => categoriesSheetRef.current?.present()}
                 className="rounded-md border border-input bg-background px-3 py-3"
                 disabled={isSubmitting}>
                 <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
@@ -167,15 +162,15 @@ export function NewPlaceForm({
         name="price_range"
         render={({ field: { onChange, value } }) => {
           // Store the onChange function for use in the sheet
-          if (priceOnChange !== onChange) {
-            setPriceOnChange(() => onChange);
-          }
+          // if (priceOnChange !== onChange) {
+          //   setPriceOnChange(() => onChange);
+          // }
 
           return (
             <View className="mb-4">
               <Text className="mb-2 text-sm font-medium text-foreground">Prix</Text>
               <Pressable
-                onPress={() => priceSheetRef.current?.present()}
+                onPress={() => priceRangeSheetRef.current?.present()}
                 className="rounded-md border border-input bg-background px-3 py-3"
                 disabled={isSubmitting}>
                 <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
@@ -219,6 +214,19 @@ export function NewPlaceForm({
           <Text>{isSubmitting ? 'Ajout...' : 'Ajouter'}</Text>
         </Button>
       </View>
+
+      <CategoriesBottomSheet
+        ref={categoriesSheetRef}
+        onItemPress={function (category: string): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
+      {/* <PriceRangeBottomSheet
+        ref={priceRangeSheetRef}
+        onItemPress={function (category: string): void {
+          throw new Error('Function not implemented.');
+        }}
+      /> */}
     </View>
   );
 }

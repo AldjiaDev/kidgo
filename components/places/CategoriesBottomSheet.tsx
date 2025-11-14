@@ -1,14 +1,15 @@
 import { forwardRef, useCallback } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import { Sheet } from '~/components/nativewindui/Sheet';
+import { Text } from '~/components/nativewindui/Text';
 import { CATEGORIES } from '~/utils/constants';
 
 interface CategoriesBottomSheetProps {
   index?: number;
   onItemPress: (category: string) => void;
-  // categoryOnChange?: ((value: string) => void) | null;
+  ref: React.RefObject<BottomSheetModal | null>;
 }
 
 export const CategoriesBottomSheet = forwardRef<BottomSheetModal, CategoriesBottomSheetProps>(
