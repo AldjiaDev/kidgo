@@ -15,15 +15,14 @@ import { addPlace } from '~/utils/supabase-legend';
 interface NewPlaceFormProps {
   onSubmit: () => void;
   onCancel: () => void;
-
   isSubmitting: boolean;
   setIsSubmitting: (value: boolean) => void;
   location: Location.LocationObject | null;
-  setPriceOnChange: (fn: (value: string) => void) => void;
-  setCategoryOnChange: (fn: (value: string) => void) => void;
+  setPriceOnChange?: (fn: (value: string) => void) => void;
+  setCategoryOnChange?: (fn: (value: string) => void) => void;
 }
 
-interface FormData {
+export interface NewPlaceFormData {
   name: string;
   category: string;
   description: string;
@@ -42,8 +41,9 @@ export function NewPlaceForm({
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isValid },
-  } = useForm<FormData>({
+  } = useForm<NewPlaceFormData>({
     defaultValues: {
       name: '',
       category: '',
@@ -54,7 +54,7 @@ export function NewPlaceForm({
     mode: 'onChange',
   });
 
-  const onSubmitForm = async (data: FormData) => {
+  const onSubmitForm = async function (data: NewPlaceFormData) {
     setIsSubmitting(true);
 
     try {
@@ -83,11 +83,33 @@ export function NewPlaceForm({
   const priceRangeSheetRef = useSheetRef();
 
   function openCategoriesSheet() {
+    console.log('🚀 ~ openCategoriesSheet ~ categoriesSheetRef:', categoriesSheetRef);
+    console.log(
+      '🚀 ~ openCategoriesSheet ~ categoriesSheetRef.current:',
+      categoriesSheetRef.current
+    );
     categoriesSheetRef.current?.present();
   }
 
   function openPriceRangeSheet() {
+    console.log('🚀 ~ openPriceRangeSheet ~ priceRangeSheetRef:', priceRangeSheetRef);
+    console.log(
+      '🚀 ~ openPriceRangeSheet ~ priceRangeSheetRef.current:',
+      priceRangeSheetRef.current
+    );
     priceRangeSheetRef.current?.present();
+  }
+
+  function handleCategorySelect(category: string) {
+    console.log('🚀 ~ NewPlaceForm ~ category:', category);
+    setValue('category', category, { shouldValidate: true });
+    categoriesSheetRef.current?.dismiss();
+  }
+
+  function handlePriceRangeSelect(price: string) {
+    console.log('🚀 ~ NewPlaceForm ~ price:', price);
+    setValue('price_range', price, { shouldValidate: true });
+    priceRangeSheetRef.current?.dismiss();
   }
 
   return (
@@ -138,7 +160,7 @@ export function NewPlaceForm({
       <Controller
         control={control}
         name="category"
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { value } }) => (
           <PressableInput
             label="Catégorie"
             value={value}
@@ -153,7 +175,7 @@ export function NewPlaceForm({
       <Controller
         control={control}
         name="price_range"
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { value } }) => (
           <PressableInput
             label="Prix"
             value={value}
@@ -195,18 +217,8 @@ export function NewPlaceForm({
         </Button>
       </View>
 
-      <CategoriesBottomSheet
-        ref={categoriesSheetRef}
-        onItemPress={(category: string) => {
-          console.log('🚀 ~ NewPlaceForm ~ category:', category);
-        }}
-      />
-      <PriceRangeBottomSheet
-        ref={priceRangeSheetRef}
-        onItemPress={(price: string) => {
-          console.log('🚀 ~ NewPlaceForm ~ price:', price);
-        }}
-      />
+      <CategoriesBottomSheet ref={categoriesSheetRef} onItemPress={handleCategorySelect} />
+      <PriceRangeBottomSheet ref={priceRangeSheetRef} onItemPress={handlePriceRangeSelect} />
     </View>
   );
 }

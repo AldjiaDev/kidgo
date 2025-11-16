@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { router } from 'expo-router';
 
-import { NewPlaceForm } from '~/components/places/NewPlaceForm';
+import { NewPlaceForm, NewPlaceFormData } from '~/components/places/NewPlaceForm';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { useLocation } from '~/contexts/LocationContext';
 
@@ -11,7 +11,7 @@ export default function NewPlaceScreen() {
   const [categoryOnChange, setCategoryOnChange] = useState<((value: string) => void) | null>(null);
   const { location } = useLocation();
 
-  function handlePlaceAdded(data) {
+  function handlePlaceAdded(data: NewPlaceFormData) {
     console.log('🚀 ~ handlePlaceAdded ~ data:', data);
   }
 

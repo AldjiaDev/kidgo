@@ -1,6 +1,6 @@
 import { forwardRef, useCallback } from 'react';
 import { Pressable, View } from 'react-native';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
 import { Sheet } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
@@ -32,7 +32,9 @@ export const PriceRangeBottomSheet = forwardRef<BottomSheetModal, PriceRangeBott
         <View className="flex-1 p-4">
           <Text className="mb-4 text-lg font-semibold">Sélectionnez une gamme de prix</Text>
 
-          {DATA.map(renderItem)}
+          <BottomSheetScrollView keyboardDismissMode="on-drag" keyboardShouldPersistTaps="never">
+            {DATA.map(renderItem)}
+          </BottomSheetScrollView>
         </View>
       </Sheet>
     );
