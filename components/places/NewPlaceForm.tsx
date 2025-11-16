@@ -13,7 +13,6 @@ import { PressableInput } from '~/components/PressableInput';
 import { addPlace } from '~/utils/supabase-legend';
 
 interface NewPlaceFormProps {
-  onSubmit: () => void;
   onCancel: () => void;
   isSubmitting: boolean;
   setIsSubmitting: (value: boolean) => void;
@@ -31,7 +30,6 @@ export interface NewPlaceFormData {
 }
 
 export function NewPlaceForm({
-  onSubmit,
   onCancel,
   isSubmitting,
   setIsSubmitting,
@@ -70,7 +68,6 @@ export function NewPlaceForm({
 
       // Reset form
       reset();
-      onSubmit?.();
       toast.success('Lieu ajouté ! Notre équipe va vérifier les informations.');
     } catch {
       // Handle error silently - Legend State will retry automatically

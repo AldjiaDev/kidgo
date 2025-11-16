@@ -27,7 +27,10 @@ export function PressableInput({
       <Pressable
         onPress={onPress}
         className="rounded-md border border-input bg-background px-3 py-3"
-        disabled={disabled}>
+        disabled={disabled}
+        style={({ pressed }) => ({
+          opacity: pressed ? 0.8 : 1,
+        })}>
         <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
           {value || placeholder}
         </Text>

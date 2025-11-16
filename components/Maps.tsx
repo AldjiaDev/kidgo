@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { observer, use$ } from '@legendapp/state/react';
-import { Icon } from '@roninoss/icons';
+import { use$ } from '@legendapp/state/react';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
-import { NewPlaceForm } from '~/components/places/NewPlaceForm';
 import { useLocation } from '~/contexts/LocationContext';
-import { useAuth } from '~/hooks/useAuth';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -158,7 +155,6 @@ export function Maps() {
     <>
       {renderMap()}
       {/* Place Details Bottom Sheet */}
-
       <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
         <BottomSheetScrollView>
           <PlaceBottomSheetContent selectedPlace={selectedPlace} />

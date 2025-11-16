@@ -1,9 +1,8 @@
 import { Pressable, View } from 'react-native';
 import { Icon } from '@roninoss/icons';
-import { Link } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 
 import { ThemeToggle } from '~/components/ThemeToggle';
-import Stack from '~/components/ui/Stack';
 import { cn } from '~/lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';
 
