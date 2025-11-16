@@ -1,5 +1,5 @@
 import { Controller, useForm } from 'react-hook-form';
-import { Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import * as Location from 'expo-location';
 import { toast } from 'sonner-native';
 
@@ -9,6 +9,7 @@ import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { CategoriesBottomSheet } from '~/components/places/CategoriesBottomSheet';
 import { PriceRangeBottomSheet } from '~/components/places/PriceRangeBottomSheet';
+import { PressableInput } from '~/components/PressableInput';
 import { addPlace } from '~/utils/supabase-legend';
 
 interface NewPlaceFormProps {
@@ -17,7 +18,7 @@ interface NewPlaceFormProps {
 
   isSubmitting: boolean;
   setIsSubmitting: (value: boolean) => void;
-  location: Location.LocationObject;
+  location: Location.LocationObject | null;
   setPriceOnChange: (fn: (value: string) => void) => void;
   setCategoryOnChange: (fn: (value: string) => void) => void;
 }
@@ -137,57 +138,31 @@ export function NewPlaceForm({
       <Controller
         control={control}
         name="category"
-        render={({ field: { onChange, value } }) => {
-          // Store the onChange function for use in the sheet
-          // if (categoryOnChange !== onChange) {
-          //   setCategoryOnChange(() => onChange);
-          // }
-
-          return (
-            <View className="mb-4">
-              <Text className="mb-2 text-sm font-medium text-foreground">Catégorie</Text>
-              <Pressable
-                onPress={openCategoriesSheet}
-                className="rounded-md border border-input bg-background px-3 py-3"
-                disabled={isSubmitting}>
-                <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
-                  {value || 'Sélectionnez une catégorie...'}
-                </Text>
-              </Pressable>
-              {errors.category && (
-                <Text className="mt-1 text-sm text-destructive">{errors.category.message}</Text>
-              )}
-            </View>
-          );
-        }}
+        render={({ field: { onChange, value } }) => (
+          <PressableInput
+            label="Catégorie"
+            value={value}
+            placeholder="Sélectionnez une catégorie..."
+            onPress={openCategoriesSheet}
+            disabled={isSubmitting}
+            errorMessage={errors.category?.message}
+          />
+        )}
       />
 
       <Controller
         control={control}
         name="price_range"
-        render={({ field: { onChange, value } }) => {
-          // Store the onChange function for use in the sheet
-          // if (priceOnChange !== onChange) {
-          //   setPriceOnChange(() => onChange);
-          // }
-
-          return (
-            <View className="mb-4">
-              <Text className="mb-2 text-sm font-medium text-foreground">Prix</Text>
-              <Pressable
-                onPress={openPriceRangeSheet}
-                className="rounded-md border border-input bg-background px-3 py-3"
-                disabled={isSubmitting}>
-                <Text className={value ? 'text-foreground' : 'text-muted-foreground'}>
-                  {value || 'Sélectionnez une gamme de prix...'}
-                </Text>
-              </Pressable>
-              {errors.price_range && (
-                <Text className="mt-1 text-sm text-destructive">{errors.price_range.message}</Text>
-              )}
-            </View>
-          );
-        }}
+        render={({ field: { onChange, value } }) => (
+          <PressableInput
+            label="Prix"
+            value={value}
+            placeholder="Sélectionnez une gamme de prix..."
+            onPress={openPriceRangeSheet}
+            disabled={isSubmitting}
+            errorMessage={errors.price_range?.message}
+          />
+        )}
       />
 
       <Controller
