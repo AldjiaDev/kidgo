@@ -1,21 +1,19 @@
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import { Alert, Platform } from 'react-native';
+import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import * as Device from 'expo-device';
 import * as Location from 'expo-location';
+
+type LocationStatus = 'idle' | 'loading' | 'done' | 'error';
 
 interface LocationContextType {
   location: Location.LocationObject | null;
-  isLoading: boolean;
-  error: string | null;
-  requestPermission: () => Promise<void>;
+  errorMsg: string | null;
+  status: LocationStatus;
   hasPermission: boolean;
+  isDeviceSupported: boolean;
+  getCurrentLocation: () => Promise<void>;
+  requestPermission: () => Promise<boolean>;
+  clearError: () => void;
 }
 
 const LocationContext = createContext<LocationContextType | undefined>(undefined);
@@ -26,135 +24,123 @@ interface LocationProviderProps {
 
 export function LocationProvider({ children }: LocationProviderProps) {
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [status, setStatus] = useState<LocationStatus>('idle');
   const [hasPermission, setHasPermission] = useState(false);
-  const isRequestingPermission = useRef(false);
+  const [isDeviceSupported, setIsDeviceSupported] = useState(true);
 
-  const getCurrentLocation = useCallback(async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const currentLocation = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.Balanced,
-      });
-
-      setLocation(currentLocation);
-    } catch {
-      setError("Impossible d'obtenir votre position actuelle");
-    } finally {
-      setIsLoading(false);
+  // Check if device supports location services
+  useEffect(() => {
+    function checkDeviceSupport() {
+      if (Platform.OS === 'android' && !Device.isDevice) {
+        setIsDeviceSupported(false);
+        setErrorMsg(
+          'Oops, this will not work on Snack in an Android Emulator. Try it on your device!'
+        );
+        setStatus('error');
+        return;
+      }
+      setIsDeviceSupported(true);
     }
+
+    checkDeviceSupport();
   }, []);
 
-  const checkPermissionStatus = useCallback(async () => {
-    try {
-      const { status } = await Location.getForegroundPermissionsAsync();
-      setHasPermission(status === 'granted');
-
-      if (status === 'granted') {
-        getCurrentLocation();
-      }
-    } catch {
-      setError('Erreur lors de la vérification des permissions');
-    }
-  }, [getCurrentLocation]);
-
-  // Check initial permission status
-  useEffect(() => {
-    checkPermissionStatus();
-  }, [checkPermissionStatus]);
-
-  const showPermissionOnboarding = () => {
-    return new Promise<boolean>((resolve) => {
-      Alert.alert(
-        '📍 Localisation',
-        'KidGO souhaite accéder à votre position pour :\n\n' +
-          '• Vous montrer les activités près de chez vous\n' +
-          '• Calculer les distances et temps de trajet\n' +
-          '• Vous proposer des suggestions personnalisées\n\n' +
-          'Vos données de localisation restent privées et ne sont jamais partagées.',
-        [
-          {
-            text: 'Plus tard',
-            style: 'cancel',
-            onPress: () => resolve(false),
-          },
-          {
-            text: 'Autoriser',
-            style: 'default',
-            isPreferred: true,
-            onPress: () => resolve(true),
-          },
-        ],
-        { cancelable: false }
-      );
-    });
-  };
-
-  const requestPermission = async () => {
-    // Prevent multiple simultaneous permission requests
-    if (isRequestingPermission.current) {
-      return;
-    }
-
-    try {
-      isRequestingPermission.current = true;
-      setIsLoading(true);
-      setError(null);
-
-      // Show onboarding first
-      const userAccepted = await showPermissionOnboarding();
-      if (!userAccepted) {
+  const getCurrentLocation = useCallback(
+    async function getCurrentLocation() {
+      if (!isDeviceSupported) {
         return;
       }
 
-      const { status } = await Location.requestForegroundPermissionsAsync();
+      try {
+        setStatus('loading');
+        setErrorMsg(null);
 
-      if (status === 'granted') {
+        const currentLocation = await Location.getCurrentPositionAsync({
+          accuracy: Location.Accuracy.Balanced,
+        });
+
+        setLocation(currentLocation);
+        setStatus('done');
+      } catch {
+        setErrorMsg('Failed to get current location');
+        setStatus('error');
+      }
+    },
+    [isDeviceSupported]
+  );
+
+  const requestPermission = useCallback(
+    async function requestPermission(): Promise<boolean> {
+      if (!isDeviceSupported) {
+        return false;
+      }
+
+      try {
+        setStatus('loading');
+        setErrorMsg(null);
+
+        const { status: permissionStatus } = await Location.requestForegroundPermissionsAsync();
+
+        if (permissionStatus !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          setHasPermission(false);
+          setStatus('error');
+          return false;
+        }
+
         setHasPermission(true);
         await getCurrentLocation();
-      } else {
-        setError("Permission d'accès à la localisation refusée");
-        setHasPermission(false);
-
-        // Show additional guidance for denied permission
-        Alert.alert(
-          'Permission refusée',
-          'Pour utiliser cette fonctionnalité, vous pouvez activer la localisation dans les paramètres de votre appareil.',
-          [
-            { text: 'OK', style: 'default' },
-            {
-              text: 'Paramètres',
-              style: 'default',
-              onPress: () => {
-                if (Platform.OS === 'ios') {
-                  // On iOS, we can't directly open settings, but we can guide the user
-                  Alert.alert(
-                    'Paramètres iOS',
-                    "Allez dans Réglages > KidGO > Localisation pour activer l'accès à votre position."
-                  );
-                }
-              },
-            },
-          ]
-        );
+        return true;
+      } catch {
+        setErrorMsg('Error requesting location permission');
+        setStatus('error');
+        return false;
       }
-    } catch {
-      setError('Erreur lors de la demande de permission');
-    } finally {
-      setIsLoading(false);
-      isRequestingPermission.current = false;
+    },
+    [isDeviceSupported, getCurrentLocation]
+  );
+
+  const clearError = useCallback(function clearError() {
+    setErrorMsg(null);
+    setStatus('idle');
+  }, []);
+
+  // Check initial permission status
+  useEffect(() => {
+    async function checkInitialPermission() {
+      if (!isDeviceSupported) {
+        return;
+      }
+
+      try {
+        const { status: permissionStatus } = await Location.getForegroundPermissionsAsync();
+
+        if (permissionStatus === 'granted') {
+          setHasPermission(true);
+          await getCurrentLocation();
+        } else {
+          setHasPermission(false);
+          setStatus('idle');
+        }
+      } catch {
+        // Silently handle permission check error
+        setStatus('error');
+      }
     }
-  };
+
+    checkInitialPermission();
+  }, [isDeviceSupported, getCurrentLocation]);
 
   const value: LocationContextType = {
     location,
-    isLoading,
-    error,
-    requestPermission,
+    errorMsg,
+    status,
     hasPermission,
+    isDeviceSupported,
+    getCurrentLocation,
+    requestPermission,
+    clearError,
   };
 
   return <LocationContext.Provider value={value}>{children}</LocationContext.Provider>;
