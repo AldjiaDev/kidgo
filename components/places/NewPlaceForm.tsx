@@ -83,31 +83,19 @@ export function NewPlaceForm({
   const priceRangeSheetRef = useSheetRef();
 
   function openCategoriesSheet() {
-    console.log('🚀 ~ openCategoriesSheet ~ categoriesSheetRef:', categoriesSheetRef);
-    console.log(
-      '🚀 ~ openCategoriesSheet ~ categoriesSheetRef.current:',
-      categoriesSheetRef.current
-    );
     categoriesSheetRef.current?.present();
   }
 
   function openPriceRangeSheet() {
-    console.log('🚀 ~ openPriceRangeSheet ~ priceRangeSheetRef:', priceRangeSheetRef);
-    console.log(
-      '🚀 ~ openPriceRangeSheet ~ priceRangeSheetRef.current:',
-      priceRangeSheetRef.current
-    );
     priceRangeSheetRef.current?.present();
   }
 
   function handleCategorySelect(category: string) {
-    console.log('🚀 ~ NewPlaceForm ~ category:', category);
     setValue('category', category, { shouldValidate: true });
     categoriesSheetRef.current?.dismiss();
   }
 
   function handlePriceRangeSelect(price: string) {
-    console.log('🚀 ~ NewPlaceForm ~ price:', price);
     setValue('price_range', price, { shouldValidate: true });
     priceRangeSheetRef.current?.dismiss();
   }
