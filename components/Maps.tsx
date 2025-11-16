@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { observer } from '@legendapp/state/react';
-import { Icon } from '@roninoss/icons';
+import { use$ } from '@legendapp/state/react';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
-import { AddPlaceForm } from '~/components/AddPlaceForm';
 import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
-import { useAuth } from '~/hooks/useAuth';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -39,13 +36,11 @@ function PlaceBottomSheetContent({ selectedPlace }: { selectedPlace: Tables<'pla
   );
 }
 
-const MapsContent = observer(() => {
-  const places = places$.get();
+export function Maps() {
+  const places = use$(places$);
   const { location, requestPermission, hasPermission } = useLocation();
-  const { isAuthenticated } = useAuth();
 
   const bottomSheetModalRef = useSheetRef();
-  const addPlaceSheetRef = useSheetRef();
 
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
 
@@ -57,16 +52,6 @@ const MapsContent = observer(() => {
       bottomSheetModalRef.current?.present();
     }
   };
-
-  // Function to handle add place button click
-  function handleAddPlaceClick() {
-    addPlaceSheetRef.current?.present();
-  }
-
-  // Function to handle successful place addition
-  function handlePlaceAdded() {
-    addPlaceSheetRef.current?.dismiss();
-  }
 
   // Common camera position logic
   function getCameraPosition() {
@@ -166,46 +151,15 @@ const MapsContent = observer(() => {
     }
   };
 
-  // Only show bottom sheet on mobile platforms
-  const showBottomSheet = Platform.OS === 'ios' || Platform.OS === 'android';
-
   return (
     <>
       {renderMap()}
-      {/* Floating Action Button - Only show for authenticated users */}
-      {showBottomSheet && isAuthenticated && (
-        <View className="absolute bottom-28 right-4 z-20 shadow-lg">
-          <Pressable
-            onPress={handleAddPlaceClick}
-            className="h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
-            style={({ pressed }) => ({
-              opacity: pressed ? 0.8 : 1,
-            })}>
-            <Icon name="plus" size={24} color="white" />
-          </Pressable>
-        </View>
-      )}
       {/* Place Details Bottom Sheet */}
-      {showBottomSheet && (
-        <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
-          <BottomSheetScrollView>
-            <PlaceBottomSheetContent selectedPlace={selectedPlace} />
-          </BottomSheetScrollView>
-        </Sheet>
-      )}
-      {/* Add Place Bottom Sheet */}
-      {showBottomSheet && (
-        <Sheet ref={addPlaceSheetRef} snapPoints={['80%']}>
-          <AddPlaceForm
-            onSubmit={handlePlaceAdded}
-            onCancel={() => addPlaceSheetRef.current?.dismiss()}
-          />
-        </Sheet>
-      )}
+      <Sheet ref={bottomSheetModalRef} snapPoints={['75%']}>
+        <BottomSheetScrollView>
+          <PlaceBottomSheetContent selectedPlace={selectedPlace} />
+        </BottomSheetScrollView>
+      </Sheet>
     </>
   );
-});
-
-export function Maps() {
-  return <MapsContent />;
 }

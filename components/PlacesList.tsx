@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { LegendList } from '@legendapp/list';
-import { observer } from '@legendapp/state/react';
+import { use$ } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { cssInterop } from 'nativewind';
 
 import { FilterBar } from '~/components/FilterBar';
-import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
+import { Sheet, useBottomSheet } from '~/components/nativewindui/Sheet';
 import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { VStack } from '~/components/ui/Views';
 import { useLocation } from '~/contexts/LocationContext';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { calculateDistance } from '~/utils/calculate-distance';
-import { getCategoryInfo } from '~/utils/categoryFormatter';
+import { getCategoryInfo } from '~/utils/category-formatter';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -22,12 +23,12 @@ cssInterop(LegendList, {
   contentContainerClassName: 'contentContainerStyle',
 });
 
-const PlacesListContent = observer(() => {
-  const places = places$.get();
+export function PlacesList() {
+  const places = use$(places$);
   const { colors } = useColorScheme();
   const { location, requestPermission, hasPermission } = useLocation();
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
-  const placeDetailsSheetRef = useSheetRef();
+  const { ref, close, open } = useBottomSheet();
 
   // Get user's current location
   useEffect(() => {
@@ -83,8 +84,8 @@ const PlacesListContent = observer(() => {
   }
 
   function handleCloseAllSheets() {
-    placeDetailsSheetRef.current?.dismiss();
     setSelectedPlace(null);
+    close();
   }
 
   function renderItem({ item: place }: { item: Tables<'places'> & { distance: number | null } }) {
@@ -92,7 +93,8 @@ const PlacesListContent = observer(() => {
 
     const handlePlacePress = () => {
       setSelectedPlace(place);
-      placeDetailsSheetRef.current?.present();
+      open();
+      console.log('🚀 ~ handlePlacePress ~ place:', place);
     };
 
     return (
@@ -147,9 +149,6 @@ const PlacesListContent = observer(() => {
   return (
     <>
       <VStack className="gap-4 pt-4">
-        <Text variant="heading" className="px-4">
-          Filtrer par catégorie
-        </Text>
         <FilterBar />
       </VStack>
       <LegendList
@@ -161,17 +160,15 @@ const PlacesListContent = observer(() => {
         renderItem={renderItem}
         recycleItems
       />
-      <Sheet ref={placeDetailsSheetRef} snapPoints={['65%', '85%']}>
-        {selectedPlace && (
-          <View className="px-4">
-            <PlaceDetails data={selectedPlace} onClose={handleCloseAllSheets} />
-          </View>
-        )}
+      <Sheet ref={ref} snapPoints={['65%', '85%']}>
+        <BottomSheetScrollView>
+          {selectedPlace && (
+            <View className="px-4">
+              <PlaceDetails data={selectedPlace} onClose={handleCloseAllSheets} />
+            </View>
+          )}
+        </BottomSheetScrollView>
       </Sheet>
     </>
   );
-});
-
-export function PlacesList() {
-  return <PlacesListContent />;
 }

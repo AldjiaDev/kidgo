@@ -38,6 +38,11 @@ export default function SettingsScreen() {
               <Text>Playground Categories</Text>
             </Button>
           </Link>
+          <Link href="/_sitemap" asChild>
+            <Button>
+              <Text>Sitemap</Text>
+            </Button>
+          </Link>
         </>
       )}
     </BodyScrollView>

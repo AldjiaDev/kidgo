@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
-import { observer } from '@legendapp/state/react';
+import { use$ } from '@legendapp/state/react';
 import Fuse from 'fuse.js';
 
 import { Text } from '~/components/nativewindui/Text';
@@ -9,12 +9,8 @@ import { SkeletonSection } from '~/components/Skeleton';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
-export const SearchResults = observer(({ searchValue }: { searchValue: string }) => {
-  const places = places$.get();
-
-  if (!places) {
-    return <SkeletonSection />;
-  }
+export function SearchResults({ searchValue }: { searchValue: string }) {
+  const places = use$(places$);
 
   // Fuzzy search configuration
   const fuse = useMemo(() => {
@@ -43,6 +39,10 @@ export const SearchResults = observer(({ searchValue }: { searchValue: string })
     const results = fuse.search(searchValue);
     return results.map((result) => result.item);
   }, [fuse, searchValue]);
+
+  if (!places) {
+    return <SkeletonSection />;
+  }
 
   if (searchResults.length === 0) {
     return (
@@ -73,4 +73,4 @@ export const SearchResults = observer(({ searchValue }: { searchValue: string })
       </ScrollView>
     </View>
   );
-});
+}

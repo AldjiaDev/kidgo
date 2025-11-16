@@ -80,7 +80,6 @@ export function addPlace(placeData: {
   address?: string;
   latitude?: number;
   longitude?: number;
-  age_groups?: number[];
   area_type?: string;
   price_range?: string;
   opening_hours?: string;
@@ -100,7 +99,7 @@ export const places$ = observable(
     collection: 'places',
     select: (from) =>
       from.select(
-        'id,name,opening_hours,address,age_groups,description,website_url,category,area_type,latitude,longitude,price_range,created_at,updated_at,deleted'
+        'id,name,opening_hours,address,description,website_url,category,area_type,latitude,longitude,price_range,image_url,created_at,updated_at,deleted'
       ),
     actions: ['read', 'create', 'update', 'delete'],
     realtime: true,

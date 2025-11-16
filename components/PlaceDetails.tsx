@@ -7,9 +7,9 @@ import { ClipboardButton } from '~/components/ClipboardButton';
 import { Text } from '~/components/nativewindui/Text';
 import { WazeButton } from '~/components/WazeButton';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { getCategoryInfo } from '~/utils/categoryFormatter';
+import { getCategoryInfo } from '~/utils/category-formatter';
 import { Tables } from '~/utils/database.types';
-import { parseArrayToString } from '~/utils/parseArrayToString';
+import { parseArrayToString } from '~/utils/parse-array-to-string';
 
 interface PlaceDetailsProps {
   data: Tables<'places'>;

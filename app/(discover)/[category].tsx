@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { LegendList } from '@legendapp/list';
-import { observer } from '@legendapp/state/react';
+import { use$ } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { useLocalSearchParams } from 'expo-router';
 import { cssInterop } from 'nativewind';
@@ -11,7 +11,7 @@ import { Text } from '~/components/nativewindui/Text';
 import { PlaceDetails } from '~/components/PlaceDetails';
 import { useLocation } from '~/contexts/LocationContext';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { getCategoryInfo } from '~/utils/categoryFormatter';
+import { getCategoryInfo } from '~/utils/category-formatter';
 import { Tables } from '~/utils/database.types';
 import { filterValidPlaces } from '~/utils/filter-valid-places';
 import { places$ } from '~/utils/supabase-legend';
@@ -21,10 +21,10 @@ cssInterop(LegendList, {
   contentContainerClassName: 'contentContainerStyle',
 });
 
-const CategoryScreenContent = observer(() => {
+export default function CategoryScreen() {
+  const places = use$(places$);
   const { category: rawCategory } = useLocalSearchParams<{ category: string }>();
   const category = rawCategory ? decodeURIComponent(rawCategory) : null;
-  const places = places$.get();
   const { colors } = useColorScheme();
   const { location, requestPermission, hasPermission } = useLocation();
   const [selectedPlace, setSelectedPlace] = useState<Tables<'places'> | null>(null);
@@ -144,8 +144,4 @@ const CategoryScreenContent = observer(() => {
       </Sheet>
     </>
   );
-});
-
-export default function CategoryScreen() {
-  return <CategoryScreenContent />;
 }

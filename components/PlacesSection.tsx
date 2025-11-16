@@ -1,10 +1,10 @@
 import { ScrollView, View } from 'react-native';
-import { observer } from '@legendapp/state/react';
+import { use$ } from '@legendapp/state/react';
 import { Link } from 'expo-router';
 
 import { Text } from '~/components/nativewindui/Text';
 import { POSTER_HEIGHT, POSTER_WIDTH, SkeletonSection } from '~/components/Skeleton';
-import { getCategoryInfo } from '~/utils/categoryFormatter';
+import { getCategoryInfo } from '~/utils/category-formatter';
 import { Tables } from '~/utils/database.types';
 import { places$ } from '~/utils/supabase-legend';
 
@@ -73,8 +73,8 @@ export function PlaceItem({ place }: { place: Tables<'places'> }) {
   );
 }
 
-export const PlacesSection = observer(({ priceRange }: { priceRange: string }) => {
-  const places = places$.get();
+export function PlacesSection({ priceRange }: { priceRange: string }) {
+  const places = use$(places$);
 
   if (!places) {
     return <SkeletonSection />;
@@ -111,4 +111,4 @@ export const PlacesSection = observer(({ priceRange }: { priceRange: string }) =
       </ScrollView>
     </View>
   );
-});
+}
