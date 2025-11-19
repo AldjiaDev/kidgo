@@ -1,7 +1,7 @@
-import { Button } from 'react-native';
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Stack, useRouter } from 'expo-router';
 
+import { HeaderButton } from '~/app/(discover)/_layout';
 import { useAuth } from '~/hooks/useAuth';
 
 export const unstable_settings = {
@@ -37,11 +37,9 @@ export default function TabLayout() {
           headerLargeTitle: true,
           title: 'KidGO',
           headerRight() {
-            return (
-              isAuthenticated && (
-                <Button title="Ajouter un lieu" onPress={() => router.push('/new-place')} />
-              )
-            );
+            return isAuthenticated ? (
+              <HeaderButton title="Ajouter un lieu" onPress={() => router.navigate('/new-place')} />
+            ) : null;
           },
         }}
       />

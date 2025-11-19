@@ -59,7 +59,7 @@ function RootNavigator() {
       // see https://github.com/expo/router/issues/740#issuecomment-1629471113
       if (Platform.OS === 'ios') {
         setTimeout(() => {
-          router.replace('/storybook');
+          router.replace('/(home)/storybook');
         }, 1);
       } else {
         setImmediate(() => {
