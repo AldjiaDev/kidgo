@@ -22,7 +22,8 @@
       },
       "android": {
         "buildType": "apk"
-      }
+      },
+      "channel": "development:device"
     },
     "preview": {
       "extends": "production",
@@ -40,7 +41,8 @@
       "extends": "preview",
       "ios": {
         "simulator": false
-      }
+      },
+      "channel": "preview:device"
     },
     "production": {
       "channel": "production",
