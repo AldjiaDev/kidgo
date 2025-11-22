@@ -8,7 +8,6 @@ import { useLocation } from '~/contexts/LocationContext';
 
 export default function NewPlaceScreen() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const { location } = useLocation();
 
   function handleCancel() {
