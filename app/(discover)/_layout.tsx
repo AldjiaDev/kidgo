@@ -1,6 +1,7 @@
 import { Button, ButtonProps, DynamicColorIOS } from 'react-native';
 import { Link, Stack, useRouter } from 'expo-router';
 
+import { DEFAULT_STACK_HEADER } from '~/app/(home)/_layout';
 import { Avatar, AvatarFallback } from '~/components/nativewindui/Avatar';
 import { Text } from '~/components/nativewindui/Text';
 export const unstable_settings = {
@@ -21,25 +22,29 @@ export function HeaderButton(props: ButtonProps) {
   );
 }
 
+export function HeaderAvatar() {
+  return (
+    <Link href="/(home)/settings">
+      <Avatar alt={'KGO'}>
+        <AvatarFallback>
+          <Text className="text-foreground">KGO</Text>
+        </AvatarFallback>
+      </Avatar>
+    </Link>
+  );
+}
+
 export default function TabLayout() {
   const router = useRouter();
 
   return (
-    <Stack>
+    <Stack screenOptions={DEFAULT_STACK_HEADER}>
       <Stack.Screen
         name="index"
         options={{
           title: 'Découvrir',
           headerLargeTitle: true,
-          headerLeft: () => (
-            <Link href="/(discover)/settings">
-              <Avatar alt={'KGO'}>
-                <AvatarFallback>
-                  <Text className="text-foreground">KGO</Text>
-                </AvatarFallback>
-              </Avatar>
-            </Link>
-          ),
+          headerLeft: () => <HeaderAvatar />,
           headerRight: () => (
             <HeaderButton title="Carte" onPress={() => router.navigate('/(discover)/map')} />
           ),

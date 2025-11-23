@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
 import { categoryMap } from '~/utils/category-formatter';
 
-export default function PlaygroundCategories() {
+function PlaygroundCategories() {
   const categories = Object.keys(categoryMap);
 
   return (
@@ -49,3 +49,10 @@ export default function PlaygroundCategories() {
     </BodyScrollView>
   );
 }
+
+export default {
+  title: 'Components/Categories',
+  component: PlaygroundCategories,
+};
+
+export const Default = () => <PlaygroundCategories />;

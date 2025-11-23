@@ -24,22 +24,17 @@ export default function SettingsScreen() {
       {__DEV__ && (
         <>
           <Link href="/playground" asChild>
-            <Button>
+            <Button variant="secondary">
               <Text>Playground</Text>
             </Button>
           </Link>
           <Link href="/playground-todos" asChild>
-            <Button>
+            <Button variant="secondary">
               <Text>Playground Todos</Text>
             </Button>
           </Link>
-          <Link href="/playground-categories" asChild>
-            <Button>
-              <Text>Playground Categories</Text>
-            </Button>
-          </Link>
           <Link href="/_sitemap" asChild>
-            <Button>
+            <Button variant="secondary">
               <Text>Sitemap</Text>
             </Button>
           </Link>

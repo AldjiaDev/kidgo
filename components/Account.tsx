@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Session } from '@supabase/supabase-js';
 
@@ -7,18 +7,16 @@ import { Text } from '~/components/nativewindui/Text';
 import { TextField } from '~/components/nativewindui/TextField/TextField';
 import { supabase } from '~/utils/supabase-legend';
 
+type SessionState = 'idle' | 'loading' | 'done' | 'error';
+
 export default function Account({ session }: { session: Session }) {
-  const [loading, setLoading] = useState(true);
+  const [sessionState, setSessionState] = useState<SessionState>('idle');
   const [username, setUsername] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
 
-  useEffect(() => {
-    if (session) getProfile();
-  }, [session]);
-
-  async function getProfile() {
+  const getProfile = useCallback(async () => {
     try {
-      setLoading(true);
+      setSessionState('loading');
       if (!session?.user) throw new Error('No user on the session!');
 
       const { data, error, status } = await supabase
@@ -31,28 +29,32 @@ export default function Account({ session }: { session: Session }) {
       }
 
       if (data) {
-        setUsername(data.username);
-        setAvatarUrl(data.avatar_url);
+        setUsername(data.username || '');
+        setAvatarUrl(data.avatar_url || '');
       }
+      setSessionState('done');
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert(error.message);
       }
-    } finally {
-      setLoading(false);
+      setSessionState('error');
     }
-  }
+  }, [session]);
+
+  useEffect(() => {
+    if (session) getProfile();
+  }, [session, getProfile]);
 
   async function updateProfile({ username, avatar_url }: { username: string; avatar_url: string }) {
     try {
-      setLoading(true);
+      setSessionState('loading');
       if (!session?.user) throw new Error('No user on the session!');
 
       const updates = {
         id: session?.user.id,
         username,
         avatar_url,
-        updated_at: new Date(),
+        updated_at: new Date().toISOString(),
       };
 
       const { error } = await supabase.from('profiles').upsert(updates);
@@ -60,19 +62,19 @@ export default function Account({ session }: { session: Session }) {
       if (error) {
         throw error;
       }
+      setSessionState('done');
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert(error.message);
       }
-    } finally {
-      setLoading(false);
+      setSessionState('error');
     }
   }
 
   return (
     <View className="mt-10 p-3">
       <View className="mt-5 self-stretch py-1">
-        <TextField label="Email" value={session?.user?.email} disabled />
+        <TextField label="Email" value={session?.user?.email || ''} editable={false} />
       </View>
       <View className="self-stretch py-1">
         <TextField
@@ -84,8 +86,8 @@ export default function Account({ session }: { session: Session }) {
       <View className="mt-5 self-stretch py-1">
         <Button
           onPress={() => updateProfile({ username, avatar_url: avatarUrl })}
-          disabled={loading}>
-          <Text>{loading ? 'Chargement ...' : 'Mettre à jour'}</Text>
+          disabled={sessionState === 'loading'}>
+          <Text>{sessionState === 'loading' ? 'Chargement ...' : 'Mettre à jour'}</Text>
         </Button>
       </View>
 
