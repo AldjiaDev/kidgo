@@ -15,7 +15,7 @@ export default function NewPlaceScreen() {
   }
 
   return (
-    <KeyboardAvoidingView className="flex-1">
+    <KeyboardAvoidingView className="flex-1" behavior={'padding'} keyboardVerticalOffset={100}>
       <BodyScrollView
         contentContainerStyle={{
           paddingVertical: 16,
