@@ -1,7 +1,7 @@
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Stack, useRouter } from 'expo-router';
 
-import { HeaderButton } from '~/app/(discover)/_layout';
+import { HeaderAvatar, HeaderButton } from '~/app/(discover)/_layout';
 import { useAuth } from '~/hooks/useAuth';
 
 export const unstable_settings = {
@@ -11,7 +11,7 @@ export const unstable_settings = {
 export { ErrorBoundary } from 'expo-router';
 
 // These are the default stack options for iOS, they disable on other platforms.
-const DEFAULT_STACK_HEADER: NativeStackNavigationOptions =
+export const DEFAULT_STACK_HEADER: NativeStackNavigationOptions =
   process.env.EXPO_OS !== 'ios'
     ? {}
     : {
@@ -36,6 +36,7 @@ export default function TabLayout() {
         options={{
           headerLargeTitle: true,
           title: 'KidGO',
+          headerLeft: () => <HeaderAvatar />,
           headerRight() {
             return isAuthenticated ? (
               <HeaderButton title="Ajouter un lieu" onPress={() => router.navigate('/new-place')} />

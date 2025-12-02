@@ -10,25 +10,25 @@ import { addTodo, todos$ as _todos$, toggleDone } from '~/utils/supabase-legend'
 const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);
 const DONE_ICON = String.fromCodePoint(0x2705);
 
-export default function PlaygroundTodosScreen() {
-  // The text input component to add a new todo.
-  function NewTodo() {
-    const [text, setText] = useState('');
-    const handleSubmitEditing = ({ nativeEvent: { text } }) => {
-      setText('');
-      addTodo(text);
-    };
-    return (
-      <TextInput
-        value={text}
-        onChangeText={(text) => setText(text)}
-        onSubmitEditing={handleSubmitEditing}
-        placeholder="Que voulez vous faire aujourd'hui ?"
-        className="mt-4 h-16 flex-none rounded-lg border-2 border-gray-500 p-4 text-xl"
-      />
-    );
-  }
+// The text input component to add a new todo.
+function NewTodo() {
+  const [text, setText] = useState('');
+  const handleSubmitEditing = ({ nativeEvent: { text } }: { nativeEvent: { text: string } }) => {
+    setText('');
+    addTodo(text);
+  };
+  return (
+    <TextInput
+      value={text}
+      onChangeText={(text) => setText(text)}
+      onSubmitEditing={handleSubmitEditing}
+      placeholder="Que voulez vous faire aujourd'hui ?"
+      className="mt-4 h-16 flex-none rounded-lg border-2 border-gray-500 p-4 text-xl"
+    />
+  );
+}
 
+export default function PlaygroundTodosScreen() {
   // A single todo component, either 'not done' or 'done': press to toggle.
   function Todo({ todo }: { todo: Tables<'todos'> }) {
     function handlePress() {

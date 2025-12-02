@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 
 import Account from '~/components/Account';
 import { AppVersion } from '~/components/AppVersion';
-import Auth from '~/components/Auth';
+import { Auth } from '~/components/Auth';
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
@@ -24,22 +24,17 @@ export default function SettingsScreen() {
       {__DEV__ && (
         <>
           <Link href="/playground" asChild>
-            <Button>
+            <Button variant="secondary">
               <Text>Playground</Text>
             </Button>
           </Link>
           <Link href="/playground-todos" asChild>
-            <Button>
+            <Button variant="secondary">
               <Text>Playground Todos</Text>
             </Button>
           </Link>
-          <Link href="/playground-categories" asChild>
-            <Button>
-              <Text>Playground Categories</Text>
-            </Button>
-          </Link>
           <Link href="/_sitemap" asChild>
-            <Button>
+            <Button variant="secondary">
               <Text>Sitemap</Text>
             </Button>
           </Link>

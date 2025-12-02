@@ -148,9 +148,9 @@ export function PlacesList() {
 
   return (
     <>
-      <VStack className="gap-4 pt-4">
+      {/* <VStack className="gap-4 pt-4">
         <FilterBar />
-      </VStack>
+      </VStack> */}
       <LegendList
         data={validPlaces}
         estimatedItemSize={80}
