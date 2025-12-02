@@ -4,8 +4,8 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { ThemeProvider as NavThemeProvider } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 
-import { useColorScheme, useInitialAndroidBarSync } from '~/lib/useColorScheme';
-import { NAV_THEME } from '~/theme/theme';
+import { useColorScheme, useInitialAndroidBarSync } from '@/lib/useColorScheme';
+import { NAV_THEME } from '@/theme/theme';
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   useInitialAndroidBarSync();

@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 
-import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { categoryMap } from '~/utils/category-formatter';
+import { BodyScrollView } from '@/components/ui/BodyScrollView';
+import { categoryMap } from '@/utils/category-formatter';
 
 function PlaygroundCategories() {
   const categories = Object.keys(categoryMap);

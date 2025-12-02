@@ -17,17 +17,17 @@ import { Icon } from '@roninoss/icons';
 import * as StoreReview from 'expo-store-review';
 import { cssInterop } from 'nativewind';
 
-import { ActivityIndicator } from '~/components/nativewindui/ActivityIndicator';
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/nativewindui/Avatar';
-import { DatePicker } from '~/components/nativewindui/DatePicker';
-import { Picker, PickerItem } from '~/components/nativewindui/Picker';
-import { ProgressIndicator } from '~/components/nativewindui/ProgressIndicator';
-import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
-import { Slider } from '~/components/nativewindui/Slider';
-import { Text } from '~/components/nativewindui/Text';
-import { Toggle } from '~/components/nativewindui/Toggle';
-import { useColorScheme } from '~/lib/useColorScheme';
-import { useHeaderSearchBar } from '~/lib/useHeaderSearchBar';
+import { ActivityIndicator } from '@/components/nativewindui/ActivityIndicator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/nativewindui/Avatar';
+import { DatePicker } from '@/components/nativewindui/DatePicker';
+import { Picker, PickerItem } from '@/components/nativewindui/Picker';
+import { ProgressIndicator } from '@/components/nativewindui/ProgressIndicator';
+import { Sheet, useSheetRef } from '@/components/nativewindui/Sheet';
+import { Slider } from '@/components/nativewindui/Slider';
+import { Text } from '@/components/nativewindui/Text';
+import { Toggle } from '@/components/nativewindui/Toggle';
+import { useColorScheme } from '@/lib/useColorScheme';
+import { useHeaderSearchBar } from '@/lib/useHeaderSearchBar';
 
 cssInterop(LegendList, {
   className: 'style',

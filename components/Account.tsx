@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
 import { Session } from '@supabase/supabase-js';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { TextField } from '~/components/nativewindui/TextField/TextField';
-import { supabase } from '~/utils/supabase-legend';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { TextField } from '@/components/nativewindui/TextField/TextField';
+import { supabase } from '@/utils/supabase-legend';
 
 type SessionState = 'idle' | 'loading' | 'done' | 'error';
 

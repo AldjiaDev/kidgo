@@ -1,7 +1,7 @@
-import Account from '~/components/Account';
-import { Auth } from '~/components/Auth';
-import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { useAuth } from '~/hooks/useAuth';
+import Account from '@/components/Account';
+import { Auth } from '@/components/Auth';
+import { BodyScrollView } from '@/components/ui/BodyScrollView';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function SignInScreen() {
   const { session } = useAuth();

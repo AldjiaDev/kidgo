@@ -2,9 +2,9 @@ import { Platform, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 
-import { PlaceDetails } from '~/components/PlaceDetails';
-import Stack from '~/components/ui/Stack';
-import { useColorScheme } from '~/lib/useColorScheme';
+import { PlaceDetails } from '@/components/PlaceDetails';
+import Stack from '@/components/ui/Stack';
+import { useColorScheme } from '@/lib/useColorScheme';
 
 export default function ModalScreen() {
   const { colorScheme } = useColorScheme();

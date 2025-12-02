@@ -2,8 +2,8 @@ import { Platform } from 'react-native';
 import * as CheckboxPrimitive from '@rn-primitives/checkbox';
 import { Check } from 'lucide-react-native';
 
-import { Icon } from '~/components/ui/icon';
-import { cn } from '~/lib/cn';
+import { Icon } from '@/components/ui/icon';
+import { cn } from '@/lib/cn';
 
 const DEFAULT_HIT_SLOP = 24;
 

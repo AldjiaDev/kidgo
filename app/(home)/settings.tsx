@@ -1,12 +1,12 @@
 import { Link } from 'expo-router';
 
-import Account from '~/components/Account';
-import { AppVersion } from '~/components/AppVersion';
-import { Auth } from '~/components/Auth';
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { useAuth } from '~/hooks/useAuth';
+import Account from '@/components/Account';
+import { AppVersion } from '@/components/AppVersion';
+import { Auth } from '@/components/Auth';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { BodyScrollView } from '@/components/ui/BodyScrollView';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function SettingsScreen() {
   const { session } = useAuth();

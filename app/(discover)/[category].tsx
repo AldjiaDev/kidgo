@@ -6,15 +6,15 @@ import { Icon } from '@roninoss/icons';
 import { useLocalSearchParams } from 'expo-router';
 import { cssInterop } from 'nativewind';
 
-import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
-import { Text } from '~/components/nativewindui/Text';
-import { PlaceDetails } from '~/components/PlaceDetails';
-import { useLocation } from '~/contexts/LocationContext';
-import { useColorScheme } from '~/lib/useColorScheme';
-import { getCategoryInfo } from '~/utils/category-formatter';
-import { Tables } from '~/utils/database.types';
-import { filterValidPlaces } from '~/utils/filter-valid-places';
-import { places$ } from '~/utils/supabase-legend';
+import { Sheet, useSheetRef } from '@/components/nativewindui/Sheet';
+import { Text } from '@/components/nativewindui/Text';
+import { PlaceDetails } from '@/components/PlaceDetails';
+import { useLocation } from '@/contexts/LocationContext';
+import { useColorScheme } from '@/lib/useColorScheme';
+import { getCategoryInfo } from '@/utils/category-formatter';
+import { Tables } from '@/utils/database.types';
+import { filterValidPlaces } from '@/utils/filter-valid-places';
+import { places$ } from '@/utils/supabase-legend';
 
 cssInterop(LegendList, {
   className: 'style',

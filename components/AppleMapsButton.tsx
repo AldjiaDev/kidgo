@@ -2,9 +2,9 @@ import { Alert } from 'react-native';
 import * as Linking from 'expo-linking';
 import { toast } from 'sonner-native';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { parseArrayToString } from '~/utils/parse-array-to-string';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { parseArrayToString } from '@/utils/parse-array-to-string';
 
 type AppleMapsButtonProps = {
   address?: string | string[];

@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { useLocation } from '~/contexts/LocationContext';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { useLocation } from '@/contexts/LocationContext';
 
 export function LocationPermissionBanner() {
   const { hasPermission, isLoading, requestPermission } = useLocation();

@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 import { v4 as uuidv4 } from 'uuid';
 
-import { Database } from '~/utils/database.types';
+import { Database } from '@/utils/database.types';
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL || 'change_me';
 const supabaseAnonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || 'change_me';

@@ -4,7 +4,7 @@ import { useNavigation } from 'expo-router';
 
 import { useColorScheme } from './useColorScheme';
 
-import { COLORS } from '~/theme/colors';
+import { COLORS } from '@/theme/colors';
 
 export function useHeaderSearchBar(props: SearchBarProps = {}) {
   const { colorScheme, colors } = useColorScheme();

@@ -20,8 +20,8 @@ import { useAugmentedRef, useControllableState } from '@rn-primitives/hooks';
 import { Icon } from '@roninoss/icons';
 import { cva } from 'class-variance-authority';
 
-import { cn } from '~/lib/cn';
-import { useColorScheme } from '~/lib/useColorScheme';
+import { cn } from '@/lib/cn';
+import { useColorScheme } from '@/lib/useColorScheme';
 
 type TextFieldProps = TextInputProps & {
   children?: React.ReactNode;

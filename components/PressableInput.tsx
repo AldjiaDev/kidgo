@@ -1,6 +1,6 @@
 import { Pressable, View } from 'react-native';
 
-import { Text } from '~/components/nativewindui/Text';
+import { Text } from '@/components/nativewindui/Text';
 
 interface PressableInputProps {
   label: string;

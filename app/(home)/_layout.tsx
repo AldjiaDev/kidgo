@@ -1,8 +1,8 @@
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Stack, useRouter } from 'expo-router';
 
-import { HeaderAvatar, HeaderButton } from '~/app/(discover)/_layout';
-import { useAuth } from '~/hooks/useAuth';
+import { HeaderAvatar, HeaderButton } from '@/app/(discover)/_layout';
+import { useAuth } from '@/hooks/useAuth';
 
 export const unstable_settings = {
   anchor: 'index',

@@ -1,9 +1,9 @@
 import { Button, ButtonProps, DynamicColorIOS } from 'react-native';
 import { Link, Stack, useRouter } from 'expo-router';
 
-import { DEFAULT_STACK_HEADER } from '~/app/(home)/_layout';
-import { Avatar, AvatarFallback } from '~/components/nativewindui/Avatar';
-import { Text } from '~/components/nativewindui/Text';
+import { DEFAULT_STACK_HEADER } from '@/app/(home)/_layout';
+import { Avatar, AvatarFallback } from '@/components/nativewindui/Avatar';
+import { Text } from '@/components/nativewindui/Text';
 export const unstable_settings = {
   anchor: 'index',
 };

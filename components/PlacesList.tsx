@@ -6,17 +6,17 @@ import { use$ } from '@legendapp/state/react';
 import { Icon } from '@roninoss/icons';
 import { cssInterop } from 'nativewind';
 
-import { FilterBar } from '~/components/FilterBar';
-import { Sheet, useBottomSheet } from '~/components/nativewindui/Sheet';
-import { Text } from '~/components/nativewindui/Text';
-import { PlaceDetails } from '~/components/PlaceDetails';
-import { VStack } from '~/components/ui/Views';
-import { useLocation } from '~/contexts/LocationContext';
-import { useColorScheme } from '~/lib/useColorScheme';
-import { calculateDistance } from '~/utils/calculate-distance';
-import { getCategoryInfo } from '~/utils/category-formatter';
-import { Tables } from '~/utils/database.types';
-import { places$ } from '~/utils/supabase-legend';
+import { FilterBar } from '@/components/FilterBar';
+import { Sheet, useBottomSheet } from '@/components/nativewindui/Sheet';
+import { Text } from '@/components/nativewindui/Text';
+import { PlaceDetails } from '@/components/PlaceDetails';
+import { VStack } from '@/components/ui/Views';
+import { useLocation } from '@/contexts/LocationContext';
+import { useColorScheme } from '@/lib/useColorScheme';
+import { calculateDistance } from '@/utils/calculate-distance';
+import { getCategoryInfo } from '@/utils/category-formatter';
+import { Tables } from '@/utils/database.types';
+import { places$ } from '@/utils/supabase-legend';
 
 cssInterop(LegendList, {
   className: 'style',

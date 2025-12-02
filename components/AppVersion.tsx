@@ -1,7 +1,7 @@
 import * as Application from 'expo-application';
 import * as Updates from 'expo-updates';
 
-import { Text } from '~/components/nativewindui/Text';
+import { Text } from '@/components/nativewindui/Text';
 
 interface AppVersionProps {
   className?: string;

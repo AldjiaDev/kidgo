@@ -1,4 +1,4 @@
-import { NewPlaceForm } from '~/components/places/NewPlaceForm';
+import { NewPlaceForm } from '@/components/places/NewPlaceForm';
 
 export default {
   title: 'NewPlaceForm',

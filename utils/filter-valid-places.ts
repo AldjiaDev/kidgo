@@ -1,7 +1,7 @@
 import { LocationObject } from 'expo-location';
 
-import { calculateDistance } from '~/utils/calculate-distance';
-import { Tables } from '~/utils/database.types';
+import { calculateDistance } from '@/utils/calculate-distance';
+import { Tables } from '@/utils/database.types';
 
 export function filterValidPlaces(
   places: Tables<'places'>[],

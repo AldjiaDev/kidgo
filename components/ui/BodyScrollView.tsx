@@ -4,8 +4,8 @@ import { ScrollViewProps } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useBottomTabOverflow } from '~/components/ui/TabBarBackground';
-import { useScrollToTop } from '~/hooks/useTabToTop';
+import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
+import { useScrollToTop } from '@/hooks/useTabToTop';
 
 export function BodyScrollView(props: ScrollViewProps & { ref?: React.Ref<Animated.ScrollView> }) {
   const paddingBottom = useBottomTabOverflow();

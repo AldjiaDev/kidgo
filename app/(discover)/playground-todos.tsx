@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { FlatList, Text, TextInput, TouchableOpacity } from 'react-native';
 import { observer } from '@legendapp/state/react';
 
-import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { Tables } from '~/utils/database.types';
-import { addTodo, todos$ as _todos$, toggleDone } from '~/utils/supabase-legend';
+import { BodyScrollView } from '@/components/ui/BodyScrollView';
+import { Tables } from '@/utils/database.types';
+import { addTodo, todos$ as _todos$, toggleDone } from '@/utils/supabase-legend';
 
 // Emojis to decorate each todo.
 const NOT_DONE_ICON = String.fromCodePoint(0x1f7e0);

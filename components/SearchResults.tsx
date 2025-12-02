@@ -3,11 +3,11 @@ import { ScrollView, View } from 'react-native';
 import { use$ } from '@legendapp/state/react';
 import Fuse from 'fuse.js';
 
-import { Text } from '~/components/nativewindui/Text';
-import { PlaceItem } from '~/components/PlacesSection';
-import { SkeletonSection } from '~/components/Skeleton';
-import { Tables } from '~/utils/database.types';
-import { places$ } from '~/utils/supabase-legend';
+import { Text } from '@/components/nativewindui/Text';
+import { PlaceItem } from '@/components/PlacesSection';
+import { SkeletonSection } from '@/components/Skeleton';
+import { Tables } from '@/utils/database.types';
+import { places$ } from '@/utils/supabase-legend';
 
 export function SearchResults({ searchValue }: { searchValue: string }) {
   const places = use$(places$);

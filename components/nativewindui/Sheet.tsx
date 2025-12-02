@@ -6,7 +6,7 @@ import {
   BottomSheetModal,
 } from '@gorhom/bottom-sheet';
 
-import { useColorScheme } from '~/lib/useColorScheme';
+import { useColorScheme } from '@/lib/useColorScheme';
 
 const Sheet = forwardRef<BottomSheetModal, React.ComponentPropsWithoutRef<typeof BottomSheetModal>>(
   ({ index = 1, backgroundStyle, style, handleIndicatorStyle, ...props }, ref) => {

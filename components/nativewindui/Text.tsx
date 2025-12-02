@@ -3,7 +3,7 @@ import { UITextView } from 'react-native-uitextview';
 import { cva, VariantProps } from 'class-variance-authority';
 import { cssInterop } from 'nativewind';
 
-import { cn } from '~/lib/cn';
+import { cn } from '@/lib/cn';
 
 cssInterop(UITextView, { className: 'style' });
 

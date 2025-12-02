@@ -8,7 +8,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 
-import { cn } from '~/lib/cn';
+import { cn } from '@/lib/cn';
 
 const DEFAULT_MAX = 100;
 

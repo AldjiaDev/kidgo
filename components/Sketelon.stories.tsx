@@ -1,4 +1,4 @@
-import { Loading, SkeletonItem, SkeletonSection } from '~/components/Skeleton';
+import { Loading, SkeletonItem, SkeletonSection } from '@/components/Skeleton';
 
 export default {
   title: 'Skeleton',

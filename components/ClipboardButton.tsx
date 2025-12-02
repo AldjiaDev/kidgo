@@ -1,9 +1,9 @@
 import * as Clipboard from 'expo-clipboard';
 import { toast } from 'sonner-native';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { parseArrayToString } from '~/utils/parse-array-to-string';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { parseArrayToString } from '@/utils/parse-array-to-string';
 
 interface ClipboardButtonProps {
   address: string | string[];

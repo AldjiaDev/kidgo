@@ -2,9 +2,9 @@ import { forwardRef, useCallback } from 'react';
 import { Pressable, View } from 'react-native';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
-import { Sheet } from '~/components/nativewindui/Sheet';
-import { Text } from '~/components/nativewindui/Text';
-import { PRICE_RANGES } from '~/utils/constants';
+import { Sheet } from '@/components/nativewindui/Sheet';
+import { Text } from '@/components/nativewindui/Text';
+import { PRICE_RANGES } from '@/utils/constants';
 
 interface PriceRangeBottomSheetProps {
   onItemPress: (category: string) => void;

@@ -2,11 +2,11 @@ import { ScrollView, View } from 'react-native';
 import { use$ } from '@legendapp/state/react';
 import { Link } from 'expo-router';
 
-import { Text } from '~/components/nativewindui/Text';
-import { POSTER_HEIGHT, POSTER_WIDTH, SkeletonSection } from '~/components/Skeleton';
-import { getCategoryInfo } from '~/utils/category-formatter';
-import { Tables } from '~/utils/database.types';
-import { places$ } from '~/utils/supabase-legend';
+import { Text } from '@/components/nativewindui/Text';
+import { POSTER_HEIGHT, POSTER_WIDTH, SkeletonSection } from '@/components/Skeleton';
+import { getCategoryInfo } from '@/utils/category-formatter';
+import { Tables } from '@/utils/database.types';
+import { places$ } from '@/utils/supabase-legend';
 
 export function PlaceItem({ place }: { place: Tables<'places'> }) {
   const categoryInfo = getCategoryInfo(place.category);

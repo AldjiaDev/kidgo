@@ -4,12 +4,12 @@ import { View } from 'react-native';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { toast } from 'sonner-native';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { TextField } from '~/components/nativewindui/TextField/TextField';
-import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { useAuth } from '~/hooks/useAuth';
-import { createGitHubIssue } from '~/utils/github-api';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { TextField } from '@/components/nativewindui/TextField/TextField';
+import { BodyScrollView } from '@/components/ui/BodyScrollView';
+import { useAuth } from '@/hooks/useAuth';
+import { createGitHubIssue } from '@/utils/github-api';
 
 interface FeedbackFormData {
   category: string;

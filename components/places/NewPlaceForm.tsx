@@ -3,14 +3,14 @@ import { View } from 'react-native';
 import * as Location from 'expo-location';
 import { toast } from 'sonner-native';
 
-import { Button } from '~/components/nativewindui/Button';
-import { useSheetRef } from '~/components/nativewindui/Sheet';
-import { Text } from '~/components/nativewindui/Text';
-import { TextField } from '~/components/nativewindui/TextField/TextField';
-import { CategoriesBottomSheet } from '~/components/places/CategoriesBottomSheet';
-import { PriceRangeBottomSheet } from '~/components/places/PriceRangeBottomSheet';
-import { PressableInput } from '~/components/PressableInput';
-import { addPlace } from '~/utils/supabase-legend';
+import { Button } from '@/components/nativewindui/Button';
+import { useSheetRef } from '@/components/nativewindui/Sheet';
+import { Text } from '@/components/nativewindui/Text';
+import { TextField } from '@/components/nativewindui/TextField/TextField';
+import { CategoriesBottomSheet } from '@/components/places/CategoriesBottomSheet';
+import { PriceRangeBottomSheet } from '@/components/places/PriceRangeBottomSheet';
+import { PressableInput } from '@/components/PressableInput';
+import { addPlace } from '@/utils/supabase-legend';
 
 interface NewPlaceFormProps {
   onCancel: () => void;

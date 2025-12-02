@@ -2,13 +2,13 @@ import React from 'react';
 import { View } from 'react-native';
 import { Link } from 'expo-router';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { PlacesSection } from '~/components/PlacesSection';
-import { SearchResults } from '~/components/SearchResults';
-import { Loading } from '~/components/Skeleton';
-import { BodyScrollView } from '~/components/ui/BodyScrollView';
-import { useHeaderSearchBar } from '~/lib/useHeaderSearchBar';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { PlacesSection } from '@/components/PlacesSection';
+import { SearchResults } from '@/components/SearchResults';
+import { Loading } from '@/components/Skeleton';
+import { BodyScrollView } from '@/components/ui/BodyScrollView';
+import { useHeaderSearchBar } from '@/lib/useHeaderSearchBar';
 
 export default function HomeScreen() {
   const searchValue = useHeaderSearchBar({

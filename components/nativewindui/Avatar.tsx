@@ -1,6 +1,6 @@
 import * as AvatarPrimitive from '@rn-primitives/avatar';
 
-import { cn } from '~/lib/cn';
+import { cn } from '@/lib/cn';
 
 function Avatar({ className, ...props }: AvatarPrimitive.RootProps) {
   return (

@@ -4,12 +4,12 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { use$ } from '@legendapp/state/react';
 import { AppleMaps, GoogleMaps } from 'expo-maps';
 
-import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
-import { Text } from '~/components/nativewindui/Text';
-import { PlaceDetails } from '~/components/PlaceDetails';
-import { useLocation } from '~/contexts/LocationContext';
-import { Tables } from '~/utils/database.types';
-import { places$ } from '~/utils/supabase-legend';
+import { Sheet, useSheetRef } from '@/components/nativewindui/Sheet';
+import { Text } from '@/components/nativewindui/Text';
+import { PlaceDetails } from '@/components/PlaceDetails';
+import { useLocation } from '@/contexts/LocationContext';
+import { Tables } from '@/utils/database.types';
+import { places$ } from '@/utils/supabase-legend';
 
 const LILLE_COORDINATES = {
   coordinates: {

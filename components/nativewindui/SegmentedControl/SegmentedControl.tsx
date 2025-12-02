@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Pressable, View } from 'react-native';
 import { clsx } from 'clsx';
 
-import { SegmentControlProps } from '~/components/nativewindui/SegmentedControl/SegmentedControl.ios';
-import { Text } from '~/components/nativewindui/Text';
-import { cn } from '~/lib/cn';
+import { SegmentControlProps } from '@/components/nativewindui/SegmentedControl/SegmentedControl.ios';
+import { Text } from '@/components/nativewindui/Text';
+import { cn } from '@/lib/cn';
 
 export function SegmentedControl({
   values,

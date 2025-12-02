@@ -3,9 +3,9 @@ import { Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
-import { Sheet } from '~/components/nativewindui/Sheet';
-import { Text } from '~/components/nativewindui/Text';
-import { CATEGORIES } from '~/utils/constants';
+import { Sheet } from '@/components/nativewindui/Sheet';
+import { Text } from '@/components/nativewindui/Text';
+import { CATEGORIES } from '@/utils/constants';
 
 interface CategoriesBottomSheetProps {
   onItemPress: (category: string) => void;

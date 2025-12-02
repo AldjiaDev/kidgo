@@ -11,9 +11,9 @@ import { Toaster } from 'sonner-native';
 
 import '../global.css';
 
-import { ThemeProvider } from '~/components/ui/ThemeProvider';
-import { LocationProvider } from '~/contexts/LocationContext';
-import { supabase } from '~/utils/supabase-legend';
+import { ThemeProvider } from '@/components/ui/ThemeProvider';
+import { LocationProvider } from '@/contexts/LocationContext';
+import { supabase } from '@/utils/supabase-legend';
 
 export {
   // Catch any errors thrown by the Layout component.

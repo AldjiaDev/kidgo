@@ -1,9 +1,9 @@
 import { View } from 'react-native';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Sheet, useSheetRef } from '~/components/nativewindui/Sheet';
-import { Text } from '~/components/nativewindui/Text';
+import { Button } from '@/components/nativewindui/Button';
+import { Sheet, useSheetRef } from '@/components/nativewindui/Sheet';
+import { Text } from '@/components/nativewindui/Text';
 
 export default {
   title: 'Sheet',

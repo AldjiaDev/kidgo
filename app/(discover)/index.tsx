@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { PlacesList } from '~/components/PlacesList';
+import { PlacesList } from '@/components/PlacesList';
 
 export default function Screen() {
   return (

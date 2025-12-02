@@ -1,6 +1,6 @@
 import { View, ViewProps } from 'react-native';
 
-import { cn } from '~/lib/cn';
+import { cn } from '@/lib/cn';
 
 export function HStack({ className, ...props }: ViewProps) {
   return <View className={cn('flex-row', className)} {...props} />;

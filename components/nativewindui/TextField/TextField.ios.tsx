@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Pressable, TextInput, View } from 'react-native';
 import { useAugmentedRef, useControllableState } from '@rn-primitives/hooks';
 
-import { Text } from '~/components/nativewindui/Text';
-import { TextFieldProps, TextFieldRef } from '~/components/nativewindui/TextField/TextField';
-import { cn } from '~/lib/cn';
+import { Text } from '@/components/nativewindui/Text';
+import { TextFieldProps, TextFieldRef } from '@/components/nativewindui/TextField/TextField';
+import { cn } from '@/lib/cn';
 
 const TextField = React.forwardRef<TextFieldRef, TextFieldProps>(
   (

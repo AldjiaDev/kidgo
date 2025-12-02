@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Alert, View } from 'react-native';
 
-import { Button } from '~/components/nativewindui/Button';
-import { Text } from '~/components/nativewindui/Text';
-import { TextField } from '~/components/nativewindui/TextField/TextField';
-import { Checkbox } from '~/components/ui/checkbox';
-import { HStack } from '~/components/ui/Views';
-import { supabase } from '~/utils/supabase-legend';
+import { Button } from '@/components/nativewindui/Button';
+import { Text } from '@/components/nativewindui/Text';
+import { TextField } from '@/components/nativewindui/TextField/TextField';
+import { Checkbox } from '@/components/ui/checkbox';
+import { HStack } from '@/components/ui/Views';
+import { supabase } from '@/utils/supabase-legend';
 
 export function Auth() {
   const [email, setEmail] = useState('');
