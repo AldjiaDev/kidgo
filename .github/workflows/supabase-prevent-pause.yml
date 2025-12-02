@@ -22,7 +22,7 @@ jobs:
           cache: "yarn"
 
       - name: Install Supabase Client
-        run: yarn add @supabase/supabase-js --force
+        run: yarn add @supabase/supabase-js
 
       - name: Ping Supabase
         env:
