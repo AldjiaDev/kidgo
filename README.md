@@ -11,8 +11,8 @@ More info on [docs](./docs).
 Install dependencies and launch the app:
 
 ```console
-bun install
-bun start
+yarn
+yarn start
 ```
 
 ## Stack
