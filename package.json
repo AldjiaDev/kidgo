@@ -8,10 +8,10 @@
     "start": "expo start",
     "lint": "eslint --ignore-pattern .gitignore --ext .js,.ts,.tsx .",
     "format": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
-    "typecheck": "bun tsc --noEmit",
-    "cache:clear": "watchman watch-del-all && rm -rf node_modules && rm bun.lock && bun install",
+    "typecheck": "yarn tsc --noEmit",
+    "cache:clear": "watchman watch-del-all && rm -rf node_modules && rm yarn.lock && yarn install",
     "web": "expo start --web",
-    "storybook": "bun storybook-generate && EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
+    "storybook": "yarn storybook-generate && EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
     "storybook-generate": "sb-rn-get-stories"
   },
   "dependencies": {
@@ -33,7 +33,7 @@
     "@supabase/supabase-js": "2.55.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "expo": "^54.0.0",
+    "expo": "^54.0.25",
     "expo-application": "~7.0.7",
     "expo-blur": "~15.0.7",
     "expo-clipboard": "~8.0.7",

@@ -2,7 +2,7 @@ import { Link } from 'expo-router';
 
 import Account from '~/components/Account';
 import { AppVersion } from '~/components/AppVersion';
-import Auth from '~/components/Auth';
+import { Auth } from '~/components/Auth';
 import { Button } from '~/components/nativewindui/Button';
 import { Text } from '~/components/nativewindui/Text';
 import { BodyScrollView } from '~/components/ui/BodyScrollView';
